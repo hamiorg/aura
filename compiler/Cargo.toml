@@ -34,7 +34,7 @@ assets = [
   ["target/release/aura", "usr/bin/", "755"],
 ]
 conf-files  = []
-changelog   = "dist/config/deb/changelog"
+changelog   = "../dist/config/deb/changelog"
 
 # ------------------------------------------------------------------ #
 # cargo-generate-rpm configuration (cargo install cargo-generate-rpm)

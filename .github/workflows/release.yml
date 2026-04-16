@@ -72,48 +72,50 @@ jobs:
           if-no-files-found: error
 
   # ------------------------------------------------------------------ #
-  # macOS — native runners (arm64 Apple Silicon + x86_64 Intel)
+  # macOS — single arm64 runner builds both arm64 and x86_64.
+  #
+  # Rust supports cross-compiling x86_64-apple-darwin from arm64 macOS
+  # natively, so we do not need a separate Intel runner.
+  # macos-13 (last Intel runner) is deprecated as of 2025.
   # ------------------------------------------------------------------ #
   build-macos:
-    name: macOS / ${{ matrix.arch }}
-    runs-on: ${{ matrix.runner }}
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          # arm64 — Apple Silicon (M1/M2/M3) — macos-latest is arm64
-          - arch: arm64
-            target: aarch64-apple-darwin
-            runner: macos-latest
-          # x86_64 — Intel Mac — macos-13 is the last Intel runner
-          - arch: x86_64
-            target: x86_64-apple-darwin
-            runner: macos-13
+    name: macOS (arm64 + x86_64)
+    runs-on: macos-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Rust stable
+      - name: Install Rust stable with both targets
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: ${{ matrix.target }}
+          targets: aarch64-apple-darwin,x86_64-apple-darwin
 
-      - name: Build
-        run: cargo build --release --target ${{ matrix.target }} -p compiler
+      - name: Build arm64
+        run: cargo build --release --target aarch64-apple-darwin -p compiler
+
+      - name: Build x86_64
+        run: cargo build --release --target x86_64-apple-darwin -p compiler
 
       - name: Set version from tag
         id: version
         run: echo "version=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
 
-      - name: Package .tar.gz
+      - name: Package .tar.gz (both arches)
         run: bash dist/package/tar.sh ${{ steps.version.outputs.version }}
 
-      - name: Upload artifacts
+      - name: Upload arm64 artifact
         uses: actions/upload-artifact@v4
         with:
-          name: macos-${{ matrix.arch }}
-          path: dist/out/aura-*-macos-${{ matrix.arch }}.tar.gz
+          name: macos-arm64
+          path: dist/out/aura-*-macos-arm64.tar.gz
+          if-no-files-found: error
+
+      - name: Upload x86_64 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-x86_64
+          path: dist/out/aura-*-macos-x86_64.tar.gz
           if-no-files-found: error
 
   # ------------------------------------------------------------------ #

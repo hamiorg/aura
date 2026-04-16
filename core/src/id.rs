@@ -249,7 +249,7 @@ impl IdGen {
       v = v
         .wrapping_mul(6364136223846793005)
         .wrapping_add(1442695040888963407);
-      s.push(CHARSET[v >> 58] as char);
+      s.push(CHARSET[v % CHARSET.len()] as char);
     }
     s
   }

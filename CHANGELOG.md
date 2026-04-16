@@ -13,7 +13,7 @@ Nothing yet.
 
 ---
 
-## [0.1.0-alpha.1] — 2026-04-16 (re-released)
+## [0.2.0-alpha.1] — 2026-04-16
 
 ### Fixed
 
@@ -32,6 +32,18 @@ Nothing yet.
 - **`dist/package/brew.sh` only handled macOS.** Updated to accept all
   four platform checksums and write both `on_macos` and `on_linux` blocks.
   Future releases update the formula correctly from CI.
+
+### Changed
+
+- Release versioning policy: each fix or change now gets its own version
+  tag. No more retagging. `v0.1.0-alpha.1` is superseded by this release.
+
+---
+
+## [0.1.0-alpha.1] — 2026-04-16 — superseded by 0.2.0-alpha.1
+
+> This release was retagged twice after publication, which caused
+> Homebrew checksum mismatches. Use 0.2.0-alpha.1 instead.
 
 ## [0.1.0-alpha.1] — 2026-04-16
 
@@ -155,5 +167,6 @@ of the next development cycle.
 
 ---
 
-[Unreleased]: https://github.com/hamiorg/aura/compare/v0.1.0-alpha.1...HEAD
+[Unreleased]: https://github.com/hamiorg/aura/compare/v0.2.0-alpha.1...HEAD
+[0.2.0-alpha.1]: https://github.com/hamiorg/aura/releases/tag/v0.2.0-alpha.1
 [0.1.0-alpha.1]: https://github.com/hamiorg/aura/releases/tag/v0.1.0-alpha.1

@@ -1,0 +1,20 @@
+#!/bin/bash
+set -e
+
+# pre-remove script for the aura Debian package.
+# Runs before the binary is removed from /usr/bin/aura.
+
+case "$1" in
+  remove | upgrade | deconfigure)
+    # Nothing to clean up for a plain binary installation.
+    # Shell completions would be removed here if they were installed.
+    ;;
+  failed-upgrade)
+    ;;
+  *)
+    echo "prerm called with unknown argument: $1" >&2
+    exit 1
+    ;;
+esac
+
+exit 0

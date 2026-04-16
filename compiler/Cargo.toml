@@ -1,0 +1,45 @@
+[package]
+name        = "compiler"
+version     = "0.1.0-alpha.1"
+edition     = "2021"
+description = "AURA toolchain CLI — compile .aura source to .atom/.hami/.atlas"
+license     = "MIT"
+homepage    = "https://hami.aduki.org"
+repository  = "https://github.com/aduki-org/hami"
+keywords    = ["aura", "compiler", "media", "metadata", "toolchain"]
+categories  = ["command-line-utilities", "multimedia"]
+
+[[bin]]
+name = "aura"
+path = "src/main.rs"
+
+[dependencies]
+aura = { path = "../core" }
+clap = { version = "4", features = ["derive"] }
+
+[dev-dependencies]
+# none yet
+
+# ------------------------------------------------------------------ #
+# cargo-deb configuration (cargo install cargo-deb)
+# ------------------------------------------------------------------ #
+[package.metadata.deb]
+name       = "aura"
+maintainer = "Aduki <hello@aduki.org>"
+section    = "utils"
+priority   = "optional"
+# The binary path is remapped per-target by dist/package/deb.sh
+# using --target; cargo-deb picks up target/{triple}/release/aura.
+assets = [
+  ["target/release/aura", "usr/bin/", "755"],
+]
+conf-files  = []
+changelog   = "dist/config/deb/changelog"
+
+# ------------------------------------------------------------------ #
+# cargo-generate-rpm configuration (cargo install cargo-generate-rpm)
+# ------------------------------------------------------------------ #
+[package.metadata.generate-rpm]
+assets = [
+  { source = "target/release/aura", dest = "/usr/bin/aura", mode = "755" },
+]

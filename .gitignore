@@ -1,0 +1,25 @@
+# Rust build output
+/target/
+target
+
+# Generated release artifacts — produced by dist/package/ scripts
+/dist/out/
+
+# Credentials and local secrets
+.env
+.env.*
+
+# macOS filesystem metadata
+.DS_Store
+
+# Editor and IDE directories
+.idea/
+.vscode/
+
+# Vim swap files
+*.swp
+*.swo
+
+# Note: Cargo.lock is intentionally committed.
+# For a binary crate (the aura CLI) it locks the exact dependency
+# versions used to produce each reproducible release build.

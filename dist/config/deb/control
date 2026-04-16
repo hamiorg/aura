@@ -1,0 +1,15 @@
+Package: aura
+Version: 0.1.0
+Architecture: amd64
+Maintainer: Aduki <hello@aduki.org>
+Installed-Size: 2048
+Section: utils
+Priority: optional
+Homepage: https://hami.aduki.org
+Description: AURA toolchain CLI
+ Compile .aura source files into .atom interval trees, .hami B-Tree
+ manifests, and .atlas DTW alignment files. Manage project history
+ with an append-only take/mark/stream system. Scaffold new AURA
+ projects with aura init.
+ .
+ Part of the Triverse / Hami ecosystem for structured media metadata.

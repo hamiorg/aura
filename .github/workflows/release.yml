@@ -1,0 +1,267 @@
+name: Release
+
+# Trigger: push any tag matching v* (e.g. v0.1.0, v0.1.0-alpha.1)
+on:
+  push:
+    tags:
+      - 'v*'
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  # ------------------------------------------------------------------ #
+  # Linux — cross-compiled musl static binaries (x86_64 + arm64)
+  # Uses `cross` (Docker-based cross-compiler) on an Ubuntu runner.
+  # ------------------------------------------------------------------ #
+  build-linux:
+    name: Linux / ${{ matrix.arch }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: x86_64
+            target: x86_64-unknown-linux-musl
+          - arch: arm64
+            target: aarch64-unknown-linux-musl
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Install cross
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cross
+
+      - name: Install cargo-deb
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-deb
+
+      - name: Install cargo-generate-rpm
+        run: cargo install cargo-generate-rpm --locked
+
+      - name: Build (cross / musl)
+        run: cross build --release --target ${{ matrix.target }} -p compiler
+
+      - name: Set version from tag
+        id: version
+        run: echo "version=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+
+      - name: Package .tar.gz
+        run: bash dist/package/tar.sh ${{ steps.version.outputs.version }}
+
+      - name: Package .deb
+        run: bash dist/package/deb.sh ${{ steps.version.outputs.version }}
+
+      - name: Package .rpm
+        run: bash dist/package/rpm.sh ${{ steps.version.outputs.version }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-${{ matrix.arch }}
+          path: dist/out/aura-*-linux-${{ matrix.arch }}.*
+          if-no-files-found: error
+
+  # ------------------------------------------------------------------ #
+  # macOS — native runners (arm64 Apple Silicon + x86_64 Intel)
+  # ------------------------------------------------------------------ #
+  build-macos:
+    name: macOS / ${{ matrix.arch }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # arm64 — Apple Silicon (M1/M2/M3) — macos-latest is arm64
+          - arch: arm64
+            target: aarch64-apple-darwin
+            runner: macos-latest
+          # x86_64 — Intel Mac — macos-13 is the last Intel runner
+          - arch: x86_64
+            target: x86_64-apple-darwin
+            runner: macos-13
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Build
+        run: cargo build --release --target ${{ matrix.target }} -p compiler
+
+      - name: Set version from tag
+        id: version
+        run: echo "version=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+
+      - name: Package .tar.gz
+        run: bash dist/package/tar.sh ${{ steps.version.outputs.version }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-${{ matrix.arch }}
+          path: dist/out/aura-*-macos-${{ matrix.arch }}.tar.gz
+          if-no-files-found: error
+
+  # ------------------------------------------------------------------ #
+  # Publish GitHub Release
+  # ------------------------------------------------------------------ #
+  release:
+    name: Publish GitHub Release
+    needs: [build-linux, build-macos]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: List artifacts
+        run: ls -lh artifacts/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: aura ${{ github.ref_name }}
+          body: |
+            ## aura ${{ github.ref_name }}
+
+            AURA toolchain CLI — compile `.aura` source files to `.atom` / `.hami` / `.atlas`.
+
+            ---
+
+            ### Install on macOS
+
+            **Homebrew (recommended — auto-updates with `brew upgrade`):**
+            ```bash
+            brew install hamiorg/aura/aura
+            ```
+
+            **Direct download:**
+            ```bash
+            curl -fsSL https://hami.aduki.org/install-mac.sh | bash
+            ```
+
+            ### Install on Linux
+
+            ```bash
+            curl -fsSL https://hami.aduki.org/install.sh | bash
+            ```
+
+            Or pin a specific version:
+            ```bash
+            AURA_VERSION=${{ github.ref_name }} curl -fsSL https://hami.aduki.org/install.sh | bash
+            ```
+
+            ### Install via package manager (Linux)
+
+            **Debian / Ubuntu:**
+            ```bash
+            sudo dpkg -i aura-${{ github.ref_name }}-linux-x86_64.deb
+            ```
+
+            **Fedora / RHEL:**
+            ```bash
+            sudo rpm -i aura-${{ github.ref_name }}-linux-x86_64.rpm
+            ```
+
+            ---
+
+            ### All downloads
+
+            | Platform | Arch   | Formats                   |
+            | -------- | ------ | ------------------------- |
+            | Linux    | x86_64 | `.tar.gz` `.deb` `.rpm`   |
+            | Linux    | arm64  | `.tar.gz` `.deb` `.rpm`   |
+            | macOS    | arm64  | `.tar.gz`                 |
+            | macOS    | x86_64 | `.tar.gz`                 |
+
+            See attached assets below.
+
+          files: artifacts/*
+          draft: false
+          # Tags with a hyphen (e.g. v0.1.0-alpha.1) become pre-releases.
+          prerelease: ${{ contains(github.ref_name, '-') }}
+
+  # ------------------------------------------------------------------ #
+  # Update Homebrew tap — runs after the GitHub Release is published.
+  #
+  # Requires the HOMEBREW_TAP_TOKEN secret: a GitHub PAT with 'repo'
+  # write access to hamiorg/homebrew-aura.
+  #
+  # Create one at: https://github.com/settings/tokens/new
+  # Add it via:    gh secret set HOMEBREW_TAP_TOKEN --repo hamiorg/aura
+  # ------------------------------------------------------------------ #
+  update-brew:
+    name: Update Homebrew tap
+    needs: [release]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download macOS artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: Compute SHA256 checksums
+        id: sha
+        run: |
+          ARM64=$(sha256sum \
+            "artifacts/aura-${GITHUB_REF_NAME}-macos-arm64.tar.gz" \
+            | awk '{print $1}')
+          X86_64=$(sha256sum \
+            "artifacts/aura-${GITHUB_REF_NAME}-macos-x86_64.tar.gz" \
+            | awk '{print $1}')
+          echo "arm64=${ARM64}"    >> "$GITHUB_OUTPUT"
+          echo "x86_64=${X86_64}" >> "$GITHUB_OUTPUT"
+          echo "[brew] arm64  sha256: ${ARM64}"
+          echo "[brew] x86_64 sha256: ${X86_64}"
+
+      - name: Clone Homebrew tap
+        env:
+          HOMEBREW_TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+        run: |
+          git clone \
+            "https://x-access-token:${HOMEBREW_TAP_TOKEN}@github.com/hamiorg/homebrew-aura.git" \
+            tap
+
+      - name: Update formula
+        run: |
+          bash dist/package/brew.sh \
+            "${GITHUB_REF_NAME}" \
+            "${{ steps.sha.outputs.arm64 }}" \
+            "${{ steps.sha.outputs.x86_64 }}" \
+            tap
+
+      - name: Commit and push formula
+        working-directory: tap
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Formula/aura.rb
+          git commit -m "aura ${GITHUB_REF_NAME}"
+          git push

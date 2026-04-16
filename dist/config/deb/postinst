@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e
+
+# post-install script for the aura Debian package.
+# Runs after the binary has been placed at /usr/bin/aura.
+
+case "$1" in
+  configure)
+    # Confirm the binary is executable and report the installed version.
+    if [ -x /usr/bin/aura ]; then
+      echo "aura installed to /usr/bin/aura"
+      /usr/bin/aura --version 2>/dev/null || true
+    fi
+    ;;
+  abort-upgrade | abort-remove | abort-deconfigure)
+    ;;
+  *)
+    echo "postinst called with unknown argument: $1" >&2
+    exit 1
+    ;;
+esac
+
+exit 0

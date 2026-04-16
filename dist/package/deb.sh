@@ -49,9 +49,13 @@ build_deb() {
 
   cd "${WORKSPACE}"
   # --no-build: binary is already compiled; cargo-deb just packages it.
+  # --no-strip: cross-compiled binaries cannot be stripped by the host strip
+  #             tool (it is architecture-specific). musl binaries are already
+  #             lean; stripping is optional for packaging.
   # --target:   tells cargo-deb where to find the binary.
   cargo deb \
     --no-build \
+    --no-strip \
     --target "${target}" \
     -p compiler \
     --deb-version "${VERSION#v}" \

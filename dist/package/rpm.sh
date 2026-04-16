@@ -32,6 +32,19 @@ if ! command -v cargo-generate-rpm &>/dev/null; then
   exit 1
 fi
 
+# RPM Version must be numbers and dots only — no hyphens allowed.
+# Split a SemVer pre-release tag like v0.1.0-alpha.1 into:
+#   RPM_VER  = "0.1.0"   (the part before the first hyphen)
+#   RPM_REL  = "alpha.1" (the pre-release identifier, or "1" for stable)
+VERSION_PLAIN="${VERSION#v}"
+if [[ "${VERSION_PLAIN}" == *-* ]]; then
+  RPM_VER="${VERSION_PLAIN%%-*}"
+  RPM_REL="${VERSION_PLAIN#*-}"
+else
+  RPM_VER="${VERSION_PLAIN}"
+  RPM_REL="1"
+fi
+
 build_rpm() {
   local target="${1}"
   local arch_label="${2}"
@@ -48,11 +61,14 @@ build_rpm() {
   echo "[rpm] building  linux-${arch_label}  (rpm arch: ${rpm_arch})"
 
   cd "${WORKSPACE}"
+  # RPM Version and Release are passed as quoted TOML string values.
+  # version = base semver (e.g. "0.1.0"), release = pre-release or "1".
   cargo generate-rpm \
     --target "${target}" \
     -p compiler \
     --arch "${rpm_arch}" \
-    --set-metadata "version=${VERSION#v}" \
+    --set-metadata "version='${RPM_VER}'" \
+    --set-metadata "release='${RPM_REL}'" \
     --output "${outfile}"
 
   local size

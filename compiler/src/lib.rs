@@ -39,6 +39,7 @@ pub mod emit;
 pub mod error;
 pub mod hist;
 pub mod lex;
+pub mod lint;
 pub mod ns;
 pub mod parse;
 

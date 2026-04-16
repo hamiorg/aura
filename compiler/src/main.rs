@@ -52,6 +52,9 @@ enum Cmd {
   Lint {
     #[arg(long)]
     project: Option<PathBuf>,
+    /// Enable W006: warn on keys outside the standard AURA vocabulary.
+    #[arg(long)]
+    strict: bool,
   },
   /// Generate a new typed ID.
   Generate {
@@ -194,7 +197,7 @@ fn main() -> Result<()> {
       strict,
     }),
     Cmd::Validate { project, strict } => cmd::compile::validate(&project.unwrap_or(cwd), strict),
-    Cmd::Lint { project } => cmd::compile::lint(&project.unwrap_or(cwd)),
+    Cmd::Lint { project, strict } => cmd::compile::lint(&project.unwrap_or(cwd), strict),
     Cmd::Generate { type_name } => cmd::gen::run(&type_name),
     Cmd::Init {
       kind,

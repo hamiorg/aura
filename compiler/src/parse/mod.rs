@@ -33,6 +33,7 @@
 
 pub mod ast;
 pub mod inherit;
+pub mod parse;
 pub mod resolve;
 pub mod time;
 
@@ -40,5 +41,6 @@ pub use ast::{
   Child, Document, Field, FieldMarker, Namespace, NodeType, RefBody, Reference, TimeExpr, Value,
 };
 pub use inherit::InheritExpander;
+pub use parse::Parser;
 pub use resolve::{ForwardArc, Resolver, Status, SymbolTable};
 pub use time::{parse_seconds, TimeNorm};

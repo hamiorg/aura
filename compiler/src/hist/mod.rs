@@ -34,6 +34,7 @@
 
 pub mod delta;
 pub mod replay;
+pub mod serial;
 pub mod store;
 
 pub use delta::DeltaEngine;

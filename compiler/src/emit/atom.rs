@@ -190,6 +190,12 @@ impl AtomEmitter {
       self.nodes[i].max = m;
     }
   }
+
+  /// Returns the number of interval nodes accumulated so far.
+  /// Used by compile_one() to decide whether to write the .atom file.
+  pub fn node_count(&self) -> usize {
+    self.nodes.len()
+  }
 }
 
 impl Default for AtomEmitter {
@@ -203,7 +209,6 @@ impl Default for AtomEmitter {
 
 /// Extracts the `time` field from a namespace's children and normalizes it.
 fn extract_interval(ns: &Namespace<'_>) -> Result<Interval> {
-  
   use crate::parse::time::TimeNorm;
 
   for child in &ns.children {

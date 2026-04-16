@@ -285,16 +285,38 @@ impl<'src> Scanner<'src> {
   }
 
   fn scan_key_or_bare(&mut self, start: usize) -> Result<Token<'src>> {
-    while let Some(b) = self.peek() {
-      if is_key_cont(b) {
+    loop {
+      let Some(b) = self.peek() else { break };
+
+      if b == b':' {
+        // Stop at `::` when followed by whitespace / newline / EOF.
+        // This correctly ends `schema::` (opener) while preserving
+        // `audio::music` (value) as a single token.
+        if self.peek_at(1) == Some(b':') {
+          let after = self.bytes.get(self.pos + 2).copied();
+          match after {
+            // :: at end-of-word → stop (ScopeOpen will be scanned next)
+            None | Some(b' ') | Some(b'\t') | Some(b'\n') | Some(b'\r') => break,
+            // :: in the middle (e.g. audio::music) → keep going
+            _ => {
+              self.pos += 1;
+            }
+          }
+        } else {
+          // Single colon (e.g. 00:04:32 in a timestamp) — include it.
+          self.pos += 1;
+        }
+      } else if b == b'/' {
+        // Include `/` so that slash-paths like `verse/one` are single tokens.
+        self.pos += 1;
+      } else if is_key_cont(b) {
         self.pos += 1;
       } else {
         break;
       }
     }
+
     let s = self.slice(start, self.pos);
-    // Heuristic: if the text looks like a time literal it's a Bare.
-    // Otherwise it's a Key.
     let kind = if looks_like_time(s) {
       Kind::Time(s)
     } else {
@@ -308,21 +330,31 @@ impl<'src> Scanner<'src> {
 // Byte classification helpers
 
 fn is_key_start(b: u8) -> bool {
-  b.is_ascii_alphabetic() || b == b'_'
+  // Allow digits so bare values like `1.0.0`, `0000-00-00`, and time
+  // literals like `22s` all enter scan_key_or_bare. looks_like_time()
+  // then decides whether to emit Kind::Time or Kind::Key.
+  b.is_ascii_alphanumeric() || b == b'_'
 }
 
 fn is_key_cont(b: u8) -> bool {
-  b.is_ascii_alphanumeric() || b == b'-' || b == b'_' || b == b'.' || b == b':'
+  // Note: `:` and `/` are NOT in this set.
+  // `:` is handled specially in scan_key_or_bare (stop at `::` end-of-word).
+  // `/` is also handled there (always included for slash-paths).
+  b.is_ascii_alphanumeric() || b == b'-' || b == b'_' || b == b'.'
 }
 
 /// Returns `true` if a bare token looks like a time literal.
 ///
-/// Examples: `22s`, `1m10s`, `00:04:32`, `1m32s`, `48s`
+/// Examples: `22s`, `1m10s`, `00:04:32`, `1m32s`, `48s`, `1h`
+/// Non-examples: `1.0.0` (version), `0000-00-00` (date), `42` (bare int)
 fn looks_like_time(s: &str) -> bool {
   if s.is_empty() {
     return false;
   }
-  let b = s.as_bytes();
-  // Simple heuristic: starts with a digit
-  b[0].is_ascii_digit()
+  // Must start with a digit.
+  if !s.as_bytes()[0].is_ascii_digit() {
+    return false;
+  }
+  // Must end with a recognized time unit OR contain ':' (HH:MM:SS).
+  s.ends_with('s') || s.ends_with('m') || s.ends_with('h') || s.contains(':')
 }

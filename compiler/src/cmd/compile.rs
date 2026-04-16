@@ -1,59 +1,53 @@
-//! `aura compile`, `aura validate`, `aura lint` handlers.
+//! `aura compile`, `aura validate`, `aura lint` command handlers.
 
 use crate::cfg::IgnoreList;
 use crate::emit::{AtomEmitter, HamiEmitter};
 use crate::error::{CompileError, Result};
 use crate::hist::{DeltaReplayer, HistoryStore};
+use crate::lint::Linter;
 use crate::ns::NamespaceLoader;
+use crate::parse::ast::Document;
+use crate::parse::parse::Parser;
 use crate::parse::resolve::Resolver;
-use std::path::PathBuf;
+use std::fs;
+use std::path::{Path, PathBuf};
 
 /// Options passed to the compile command.
 #[derive(Debug, Default)]
 pub struct CompileOpts {
-  /// Project root directory to compile.
   pub project: PathBuf,
-  /// If set, compile a historical take rather than the working draft.
   pub take: Option<String>,
-  /// If `true`, embed HistoryNodes (`0x14`) into the `.atom` output.
   pub embed_history: bool,
-  /// Write output to this directory (default: `dist/`).
   pub out_dir: Option<PathBuf>,
-  /// Treat unresolved references as errors (strict mode).
   pub strict: bool,
 }
 
+// -------------------------------------------------------------------- //
+// compile
+
 /// Runs the full `aura compile` pipeline.
 ///
-/// 1. Load namespace symbol table.
-/// 2. Load ignore list.
-/// 3. If `--take`, replay delta chain to reconstruct virtual source.
-/// 4. Lex + parse each `.aura` source file.
-/// 5. Resolve references.
-/// 6. Normalize time expressions.
-/// 7. Expand `>>` arcs.
-/// 8. Emit `.atom`, `.hami`, `.atlas` to `dist/`.
+/// Parses every `.aura` file in the project, merges all namespaces into
+/// a single document, and emits ONE `.hami` + ONE `.atom` (if interval
+/// nodes are present) to `dist/`.
 pub fn run(opts: &CompileOpts) -> Result<()> {
   let out_dir = opts
     .out_dir
     .clone()
     .unwrap_or_else(|| opts.project.join("dist"));
 
-  // Step 1 — namespace discovery.
+  // Namespace discovery.
   let mut ns_loader = NamespaceLoader::new(&opts.project);
   ns_loader.load()?;
 
-  // Step 2 — ignore list.
+  // Ignore list.
   let ignore = IgnoreList::load(&opts.project)?;
 
-  // Step 3 — optional history replay.
+  // Optional history replay.
   if let Some(take_id) = &opts.take {
     let store = HistoryStore::open(&opts.project)?;
     let replayer = DeltaReplayer::new(&store);
     let state = replayer.reconstruct(take_id)?;
-    // `state` is a HashMap<path, aura_text>.
-    // In the full implementation: feed state into the parse pipeline.
-    // Scaffold: just confirm the reconstruction ran.
     eprintln!(
       "[compile] reconstructed {} nodes from take {}",
       state.len(),
@@ -61,20 +55,57 @@ pub fn run(opts: &CompileOpts) -> Result<()> {
     );
   }
 
-  // Steps 4–8 — per-file pipeline.
-  // Walk all non-excluded `.aura` files under the project root.
-  let mut resolver = Resolver::new(opts.strict);
-  let mut atom_out = AtomEmitter::new();
-  let mut hami_out = HamiEmitter::new();
-
+  // Collect source files.
   let files = collect_aura_files(&opts.project, &ignore)?;
-  for file in &files {
-    compile_one(file, &mut resolver, &mut atom_out, &mut hami_out, &out_dir)?;
+  if files.is_empty() {
+    eprintln!(
+      "[compile] no .aura files found in {}",
+      opts.project.display()
+    );
+    return Ok(());
   }
 
-  // Surface accumulated warnings.
+  fs::create_dir_all(&out_dir)
+    .map_err(|e| CompileError::msg(format!("cannot create {}: {}", out_dir.display(), e)))?;
+
+  // Parse all files and merge into a single document.
+  let mut merged = Document {
+    namespaces: Vec::new(),
+    path: None,
+  };
+  let mut resolver = Resolver::new(opts.strict);
+  let mut parse_errors = 0usize;
+
+  for file in &files {
+    match parse_file(file) {
+      Err(e) => {
+        eprintln!("[error] {}: {}", file.display(), e);
+        parse_errors += 1;
+      }
+      Ok(doc) => {
+        // Lint each file as it is parsed.
+        let lint = Linter::new(opts.strict).lint(&doc, file);
+        lint.print();
+        if lint.has_errors() {
+          parse_errors += 1;
+          continue;
+        }
+        resolver.register_document(&doc, file.to_path_buf());
+        // Absorb this file's namespaces into the merged document.
+        merged.namespaces.extend(doc.namespaces);
+      }
+    }
+  }
+
+  if parse_errors > 0 {
+    return Err(CompileError::msg(format!(
+      "{} file(s) had errors — compilation aborted",
+      parse_errors
+    )));
+  }
+
+  // Surface resolver warnings.
   if let Some(err) = resolver.into_error() {
-    // Non-strict: warnings only. Print and continue.
     for diag in &err.diagnostics {
       eprintln!("{}", diag);
     }
@@ -83,41 +114,172 @@ pub fn run(opts: &CompileOpts) -> Result<()> {
     }
   }
 
-  eprintln!(
-    "[compile] done — {} files processed → {}",
-    files.len(),
-    out_dir.display()
-  );
-  Ok(())
-}
+  // Determine output stem from the project namespace slug or folder name.
+  let stem = project_stem(&opts.project);
 
-/// Validates syntax and reference resolution without emitting output.
-pub fn validate(project: &PathBuf, strict: bool) -> Result<()> {
-  let opts = CompileOpts {
-    project: project.clone(),
-    strict,
-    ..Default::default()
+  // Emit ONE .hami file (all manifests, credits, schema).
+  let hami_bytes = HamiEmitter::new().emit(&merged)?;
+  let hami_path = out_dir.join(format!("{}.hami", stem));
+  fs::write(&hami_path, &hami_bytes)
+    .map_err(|e| CompileError::msg(format!("cannot write {}: {}", hami_path.display(), e)))?;
+
+  // Emit ONE .atom file only if the project has interval-indexed nodes.
+  let mut atom = AtomEmitter::new();
+  let atom_bytes = atom.emit(&merged)?;
+
+  let output_line = if atom.node_count() > 0 {
+    let atom_path = out_dir.join(format!("{}.atom", stem));
+    fs::write(&atom_path, &atom_bytes)
+      .map_err(|e| CompileError::msg(format!("cannot write {}: {}", atom_path.display(), e)))?;
+    format!("{}.hami + {}.atom", stem, stem)
+  } else {
+    format!("{}.hami", stem)
   };
-  // Validation is compile with a /dev/null output dir.
-  // In the full implementation, skip the emit step entirely.
-  run(&opts)
+
+  println!("[compile] {} file(s) → dist/{}", files.len(), output_line);
+  Ok(())
 }
 
-/// Checks for style violations and best-practice warnings.
-pub fn lint(project: &PathBuf) -> Result<()> {
-  // Lint rules (to be implemented):
-  // - Keys not in the standard key list → warning
-  // - Boolean fields using `true`/`false` instead of `live`/`dark`
-  // - Missing `screen` field on person nodes
-  // - `thumbnail` or `artwork` keys used (both removed)
-  eprintln!("[lint] project: {}", project.display());
-  Ok(())
+// -------------------------------------------------------------------- //
+// validate
+
+/// Validate syntax and references without emitting output.
+pub fn validate(project: &PathBuf, strict: bool) -> Result<()> {
+  let ignore = IgnoreList::load(project)?;
+  let files = collect_aura_files(project, &ignore)?;
+  let linter = Linter::new(strict);
+  let mut errors = 0usize;
+
+  for file in &files {
+    match parse_file(file) {
+      Err(e) => {
+        eprintln!("[error] {}: {}", file.display(), e);
+        errors += 1;
+      }
+      Ok(doc) => {
+        let result = linter.lint(&doc, file);
+        result.print();
+        if result.has_errors() {
+          errors += 1;
+        }
+      }
+    }
+  }
+
+  if errors > 0 {
+    Err(CompileError::msg(format!("{} file(s) have errors", errors)))
+  } else {
+    println!("[validate] {} file(s) ok", files.len());
+    Ok(())
+  }
+}
+
+// -------------------------------------------------------------------- //
+// lint
+
+/// Run all lint rules and print diagnostics.
+pub fn lint(project: &PathBuf, strict: bool) -> Result<()> {
+  let ignore = IgnoreList::load(project)?;
+  let files = collect_aura_files(project, &ignore)?;
+  let linter = Linter::new(strict);
+
+  let mut total_diags = 0usize;
+  let mut total_errs = 0usize;
+  let mut parse_errs = 0usize;
+
+  for file in &files {
+    match parse_file(file) {
+      Err(e) => {
+        eprintln!("[parse error] {}: {}", file.display(), e);
+        parse_errs += 1;
+      }
+      Ok(doc) => {
+        let result = linter.lint(&doc, file);
+        total_errs += result
+          .diags
+          .iter()
+          .filter(|d| d.level == crate::error::Level::Error)
+          .count();
+        total_diags += result.diags.len();
+        result.print();
+      }
+    }
+  }
+
+  println!(
+    "[lint] {} file(s)  {} diagnostic(s)  {} error(s)",
+    files.len(),
+    total_diags,
+    total_errs + parse_errs
+  );
+
+  if total_errs + parse_errs > 0 {
+    Err(CompileError::msg("lint found errors"))
+  } else {
+    Ok(())
+  }
 }
 
 // -------------------------------------------------------------------- //
 // Internal helpers
 
-fn collect_aura_files(root: &std::path::Path, ignore: &IgnoreList) -> Result<Vec<PathBuf>> {
+/// Parse a single `.aura` file into a `Document`.
+fn parse_file(file: &Path) -> Result<Document<'static>> {
+  // We need a 'static document for collecting into a merged doc.
+  // Leak the source string so its lifetime is 'static.
+  // This is safe because the process exits after compilation.
+  let src = fs::read_to_string(file)
+    .map_err(|e| CompileError::msg(format!("cannot read {}: {}", file.display(), e)))?;
+  let src: &'static str = Box::leak(src.into_boxed_str());
+
+  Parser::new(src)
+    .parse()
+    .map_err(|e| CompileError::msg(format!("parse error in {}: {}", file.display(), e)))
+}
+
+/// Derive the project output stem from the root manifest ID.
+///
+/// Scans the project root (not subdirectories) for a `.aura` file whose
+/// stem looks like an AURA ID — any name other than `namespace.aura`.
+/// The root manifest is the file `aura init` writes, e.g. `c3yt8vi.aura`.
+///
+/// Falls back to the project folder name if no such file is found.
+fn project_stem(project: &Path) -> String {
+  if let Ok(entries) = fs::read_dir(project) {
+    let mut candidates: Vec<String> = entries
+      .flatten()
+      .filter_map(|e| {
+        let path = e.path();
+        // Only files (not directories) at the project root.
+        if !path.is_file() {
+          return None;
+        }
+        // Only .aura files.
+        if path.extension()?.to_str()? != "aura" {
+          return None;
+        }
+        let stem = path.file_stem()?.to_str()?.to_string();
+        // Exclude namespace.aura — that is an index file, not a manifest.
+        if stem == "namespace" {
+          return None;
+        }
+        Some(stem)
+      })
+      .collect();
+    candidates.sort();
+    if let Some(id) = candidates.into_iter().next() {
+      return id;
+    }
+  }
+  // Fallback: project folder name.
+  project
+    .file_name()
+    .and_then(|n| n.to_str())
+    .unwrap_or("project")
+    .to_string()
+}
+
+fn collect_aura_files(root: &Path, ignore: &IgnoreList) -> Result<Vec<PathBuf>> {
   let mut files = Vec::new();
   collect_recursive(root, root, ignore, &mut files)?;
   files.sort();
@@ -125,45 +287,27 @@ fn collect_aura_files(root: &std::path::Path, ignore: &IgnoreList) -> Result<Vec
 }
 
 fn collect_recursive(
-  root: &std::path::Path,
-  dir: &std::path::Path,
+  root: &Path,
+  dir: &Path,
   ignore: &IgnoreList,
   out: &mut Vec<PathBuf>,
 ) -> Result<()> {
-  let entries = std::fs::read_dir(dir)
-    .map_err(|e| CompileError::msg(format!("cannot read directory `{}`: {}", dir.display(), e)))?;
+  let entries = fs::read_dir(dir)
+    .map_err(|e| CompileError::msg(format!("cannot read {}: {}", dir.display(), e)))?;
+
   for entry in entries.flatten() {
     let path = entry.path();
     let rel = path.strip_prefix(root).unwrap_or(&path);
+
     if ignore.is_excluded(rel) {
       continue;
     }
+
     if path.is_dir() {
       collect_recursive(root, &path, ignore, out)?;
     } else if path.extension().and_then(|e| e.to_str()) == Some("aura") {
       out.push(path);
     }
   }
-  Ok(())
-}
-
-fn compile_one(
-  file: &std::path::Path,
-  _resolver: &mut Resolver,
-  _atom_out: &mut AtomEmitter,
-  _hami_out: &mut HamiEmitter,
-  _out_dir: &std::path::Path,
-) -> Result<()> {
-  // In the full implementation:
-  // 1. Read file bytes
-  // 2. Scanner::new(src) → token stream
-  // 3. Parser::parse(tokens) → AST
-  // 4. TimeNorm pass on AST
-  // 5. InheritExpander::expand
-  // 6. Resolver::register_document + resolve_all
-  // 7. atom_out.emit / hami_out.emit → write to out_dir
-  //
-  // Scaffold: log only.
-  eprintln!("[compile] {}", file.display());
   Ok(())
 }

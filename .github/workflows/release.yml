@@ -223,25 +223,35 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Download macOS artifacts
+      - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
           path: artifacts
           merge-multiple: true
 
-      - name: Compute SHA256 checksums
+      - name: Compute SHA256 checksums (all 4 platforms)
         id: sha
         run: |
-          ARM64=$(sha256sum \
+          MACOS_ARM64=$(sha256sum \
             "artifacts/aura-${GITHUB_REF_NAME}-macos-arm64.tar.gz" \
             | awk '{print $1}')
-          X86_64=$(sha256sum \
+          MACOS_X86_64=$(sha256sum \
             "artifacts/aura-${GITHUB_REF_NAME}-macos-x86_64.tar.gz" \
             | awk '{print $1}')
-          echo "arm64=${ARM64}"    >> "$GITHUB_OUTPUT"
-          echo "x86_64=${X86_64}" >> "$GITHUB_OUTPUT"
-          echo "[brew] arm64  sha256: ${ARM64}"
-          echo "[brew] x86_64 sha256: ${X86_64}"
+          LINUX_X86_64=$(sha256sum \
+            "artifacts/aura-${GITHUB_REF_NAME}-linux-x86_64.tar.gz" \
+            | awk '{print $1}')
+          LINUX_ARM64=$(sha256sum \
+            "artifacts/aura-${GITHUB_REF_NAME}-linux-arm64.tar.gz" \
+            | awk '{print $1}')
+          echo "macos-arm64=${MACOS_ARM64}"    >> "$GITHUB_OUTPUT"
+          echo "macos-x86_64=${MACOS_X86_64}"  >> "$GITHUB_OUTPUT"
+          echo "linux-x86_64=${LINUX_X86_64}"  >> "$GITHUB_OUTPUT"
+          echo "linux-arm64=${LINUX_ARM64}"     >> "$GITHUB_OUTPUT"
+          echo "[brew] macos-arm64  sha256: ${MACOS_ARM64}"
+          echo "[brew] macos-x86_64 sha256: ${MACOS_X86_64}"
+          echo "[brew] linux-x86_64 sha256: ${LINUX_X86_64}"
+          echo "[brew] linux-arm64  sha256: ${LINUX_ARM64}"
 
       - name: Clone Homebrew tap
         env:
@@ -255,8 +265,10 @@ jobs:
         run: |
           bash dist/package/brew.sh \
             "${GITHUB_REF_NAME}" \
-            "${{ steps.sha.outputs.arm64 }}" \
-            "${{ steps.sha.outputs.x86_64 }}" \
+            "${{ steps.sha.outputs.macos-arm64 }}" \
+            "${{ steps.sha.outputs.macos-x86_64 }}" \
+            "${{ steps.sha.outputs.linux-x86_64 }}" \
+            "${{ steps.sha.outputs.linux-arm64 }}" \
             tap
 
       - name: Commit and push formula

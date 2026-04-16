@@ -11,11 +11,11 @@ Hami engine can load at runtime.
 
 ## Output formats
 
-| File      | Contents                                                                                                                                                                                                   |
-| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `.atom`   | A flat-array augmented interval tree. Stores every timed node (verse, line, scene, chapter, credit window, etc.) ordered by start time. The engine queries this with a stabbing-query algorithm at 60 fps. |
-| `.hami`   | A B-Tree manifest. Stores all non-timed data: credits, vocabulary, rights, platform availability, art references, and the lexical data region the `.atom` file points into.                                |
-| `.atlas`  | A DTW warp path. Maps timestamps from a canonical recording to a variant stream (a dub, a live take, a radio edit).                                                                                        |
+| File     | Contents                                                                                                                                                                                                   |
+| -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `.atom`  | A flat-array augmented interval tree. Stores every timed node (verse, line, scene, chapter, credit window, etc.) ordered by start time. The engine queries this with a stabbing-query algorithm at 60 fps. |
+| `.hami`  | A B-Tree manifest. Stores all non-timed data: credits, vocabulary, rights, platform availability, art references, and the lexical data region the `.atom` file points into.                                |
+| `.atlas` | A DTW warp path. Maps timestamps from a canonical recording to a variant stream (a dub, a live take, a radio edit).                                                                                        |
 
 The three files for a single work are always published together. The engine
 memory-maps all three and holds them in RAM for the duration of a session.
@@ -33,13 +33,13 @@ production.
 
 ## Install
 
-### macOS
+### Homebrew (macOS and Linux)
 
 ```sh
 brew install hamiorg/aura/aura
 ```
 
-This is the preferred installation method on macOS. Updates arrive automatically
+Works on both macOS and Linux (via Linuxbrew). Updates arrive automatically
 with `brew upgrade`.
 
 ### Linux — one-line installer
@@ -48,7 +48,7 @@ with `brew upgrade`.
 curl -fsSL https://hami.aduki.org/install.sh | bash
 ```
 
-Detects your architecture (x86\_64 or arm64) and installs the static binary to
+Detects your architecture (`x86_64` or `arm64`) and installs the static binary to
 `/usr/local/bin/aura`. No system libraries required.
 
 ### Linux — package managers
@@ -72,10 +72,10 @@ Pre-built tarballs for all supported targets are attached to every release:
 
 | Platform | Architecture |
 | -------- | ------------ |
-| Linux    | x86\_64       |
+| Linux    | x86\_64      |
 | Linux    | arm64        |
 | macOS    | arm64        |
-| macOS    | x86\_64       |
+| macOS    | x86\_64      |
 
 ---
 
@@ -92,8 +92,9 @@ collection manifest with a typed hex ID, and scaffolds the `info/`, `meta/`,
 `tracks/`, and `configs/` directories.
 
 Supported kinds include `audio::music`, `audio::podcast`, `audio::audiobook`,
-`video::movie`, `video::series`, `video::documentary`, and others. See
-[compiler/init.md](compiler/init.md) for the full list.
+`video::movie`, `video::series`, `video::documentary`, and others. See the
+[Initialization](https://hamiorg.github.io/aura/project/init.html) docs for
+the full list.
 
 ### Generate an ID
 
@@ -153,10 +154,10 @@ The binary is written to `target/release/aura`.
 
 The workspace has two crates:
 
-| Crate      | Purpose                                                                  |
-| ---------- | ------------------------------------------------------------------------ |
-| `core`     | Shared data types and ID generation. Zero external dependencies.         |
-| `compiler` | The compiler pipeline, CLI, history subsystem, and packaging tooling.    |
+| Crate      | Purpose                                                               |
+| ---------- | --------------------------------------------------------------------- |
+| `core`     | Shared data types and ID generation. Zero external dependencies.      |
+| `compiler` | The compiler pipeline, CLI, history subsystem, and packaging tooling. |
 
 The engine crate is a separate repository and is not included here.
 
@@ -164,17 +165,17 @@ The engine crate is a separate repository and is not included here.
 
 ## Documentation
 
-The `compiler/` directory contains detailed Markdown documentation for every
-part of the language and toolchain:
+Full documentation is at **[hamiorg.github.io/aura](https://hamiorg.github.io/aura/)**.
 
-| File                        | Contents                                      |
-| --------------------------- | --------------------------------------------- |
-| `compiler/flux.md`          | AURA language syntax and sigil reference      |
-| `compiler/keywords.md`      | Full keyword and key vocabulary               |
-| `compiler/conventions.md`   | ID system, reference grammar, folder layouts  |
-| `compiler/compiler.md`      | Compiler architecture and pipeline design     |
-| `compiler/history.md`       | History system design                         |
-| `compiler/structure.md`     | Crate structure and data type definitions     |
+| Section                                                                                   | Contents                                     |
+| ----------------------------------------------------------------------------------------- | -------------------------------------------- |
+| [Syntax and Sigils](https://hamiorg.github.io/aura/language/syntax.html)                  | AURA language syntax and sigil reference     |
+| [Keyword Reference](https://hamiorg.github.io/aura/language/keywords.html)                | Full key vocabulary table                    |
+| [Conventions](https://hamiorg.github.io/aura/language/conventions.html)                   | ID system, reference grammar, folder layouts |
+| [Compiler Architecture](https://hamiorg.github.io/aura/compiler/overview.html)            | Lexer, parser, and emitter pipeline design   |
+| [Crate Structure](https://hamiorg.github.io/aura/compiler/structure.html)                 | Module layout and data type definitions      |
+| [Initialization](https://hamiorg.github.io/aura/project/init.html)                        | `aura init` and `aura add` commands          |
+| [History System](https://hamiorg.github.io/aura/project/history.html)                     | Takes, marks, streams, rewind                |
 
 ---
 

@@ -1,5 +1,9 @@
-aura (0.1.0-1) unstable; urgency=medium
+aura (0.1.0-1) unstable; urgency=low
 
   * Initial release.
+  * Compiler scaffold with lex, parse, emit, ns, hist, cfg modules.
+  * CLI: compile, validate, lint, generate, init, add, take, mark,
+    rewind, ledger, delta, stream, mix, hold, release, sync, dub.
+  * Static musl binary — no libc dependency.
 
  -- Aduki <hello@aduki.org>  Thu, 16 Apr 2026 00:00:00 +0000

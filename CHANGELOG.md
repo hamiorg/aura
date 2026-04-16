@@ -13,6 +13,54 @@ Nothing yet.
 
 ---
 
+## [0.3.0-alpha.1] — 2026-04-17
+
+### Added
+
+- **Full recursive-descent AURA parser** (`parse/parse.rs`). Consumes the
+  `Scanner` token stream and produces a `Document` AST using two-token
+  lookahead and column-based indentation tracking.
+
+- **Lint system** (`lint/`). Seven rules run on every parsed document:
+  W001 `true`/`false` instead of `live`/`dark`, W002 deprecated keys
+  (`thumbnail`, `artwork`), W003 interval-indexed node missing `time`,
+  W004 manifest missing `name`, W005 manifest missing `creator`, W006
+  unknown key (strict mode), E001 required field absent.
+
+- **Compile pipeline fully wired**. `aura compile` now parses all `.aura`
+  files, merges them into a single document, and emits:
+  - `dist/{root-id}.hami` — B-Tree manifest for the entire project
+  - `dist/{root-id}.atom` — interval tree (only if interval nodes exist)
+  Output is named after the root manifest file ID (e.g. `c3yt8vi.hami`),
+  not a hyphenated slug.
+
+- **Per-subfolder `namespace.aura`** on `aura init`. Each content
+  subfolder (`tracks/`, `scenes/`, `acts/`, `variants/`, etc.) gets a
+  `namespace.aura` with an empty `contains::` block. The root
+  `namespace.aura` exports block references each subfolder.
+
+- **History serialization with TOML** (`hist/serial.rs`). Replaces the
+  broken hand-rolled JSON serializer and stub deserializer. Take objects
+  are stored as `.toml` files in `.history/objects/`. Full round-trip
+  read/write using `serde` + `toml`.
+
+### Fixed
+
+- **Scanner: `::` at end-of-word** now terminates key scanning, so
+  `schema::` correctly tokenizes as `Key("schema")` + `ScopeOpen` instead
+  of `Key("schema::")`. Fixes all namespace parsing.
+
+- **Scanner: slash in namespace paths.** `/` is now included in key
+  scanning so `verse/one` tokenizes as a single `Key("verse/one")`.
+
+- **Scanner: digits in bare values.** `is_key_start` now allows digits, so
+  `1.0.0`, `0000-00-00`, and integer timestamps parse as bare values
+  instead of causing "unexpected byte" errors.
+
+- **Scanner: `looks_like_time` precision.** Version strings like `1.0.0`
+  no longer mis-classify as time literals. A time literal must end with
+  `s`, `m`, or `h`, or contain `:` for `HH:MM:SS` format.
+
 ## [0.2.0-alpha.1] — 2026-04-16
 
 ### Fixed
@@ -167,6 +215,7 @@ of the next development cycle.
 
 ---
 
-[Unreleased]: https://github.com/hamiorg/aura/compare/v0.2.0-alpha.1...HEAD
+[Unreleased]: https://github.com/hamiorg/aura/compare/v0.3.0-alpha.1...HEAD
+[0.3.0-alpha.1]: https://github.com/hamiorg/aura/releases/tag/v0.3.0-alpha.1
 [0.2.0-alpha.1]: https://github.com/hamiorg/aura/releases/tag/v0.2.0-alpha.1
 [0.1.0-alpha.1]: https://github.com/hamiorg/aura/releases/tag/v0.1.0-alpha.1

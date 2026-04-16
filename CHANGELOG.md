@@ -13,6 +13,26 @@ Nothing yet.
 
 ---
 
+## [0.1.0-alpha.1] — 2026-04-16 (re-released)
+
+### Fixed
+
+- **`core::id` — index out of bounds panic in ID generator.** `aura init`
+  and `aura generate` panicked immediately with:
+  `index out of bounds: the len is 36 but the index is 58`.
+  The PRNG used `v >> 58` to index into `CHARSET` (36 entries), which
+  produces values 0–63 on a 64-bit system — out of range for any value
+  above 35. Fixed to `v % CHARSET.len()` so the index is always in 0..35.
+
+- **Homebrew formula missing `on_linux` block.** The initial formula only
+  declared URLs for `on_macos`, causing `brew install hamiorg/aura/aura`
+  on Linux to fail with `formula requires at least a URL`. Added `on_linux`
+  blocks with x86\_64 and arm64 URLs and correct SHA256 checksums.
+
+- **`dist/package/brew.sh` only handled macOS.** Updated to accept all
+  four platform checksums and write both `on_macos` and `on_linux` blocks.
+  Future releases update the formula correctly from CI.
+
 ## [0.1.0-alpha.1] — 2026-04-16
 
 This is the first tagged release. It establishes the project structure,

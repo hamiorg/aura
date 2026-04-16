@@ -1,0 +1,17 @@
+[book]
+title       = "aura"
+authors     = ["Aduki"]
+description = "AURA toolchain — language reference and compiler documentation"
+language    = "en"
+
+[build]
+build-dir = "book"
+
+[output.html]
+# GitHub Pages serves this repo at /aura/ — this setting keeps all
+# internal CSS, JS, and page links correct under that subpath.
+site-url             = "/aura/"
+git-repository-url   = "https://github.com/hamiorg/aura"
+edit-url-template    = "https://github.com/hamiorg/aura/edit/main/{path}"
+default-theme        = "navy"
+preferred-dark-theme = "navy"

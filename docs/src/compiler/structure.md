@@ -68,6 +68,11 @@ aura/                               <- workspace root
         ignore.rs                   <- ignore.aura exclusion list
       error.rs                      <- CompileError, DiagnosticLevel, Span
       directives.rs                 <- schema:: and directives:: block processor
+      logs/
+        mod.rs
+        logger.rs                   <- Centralized AURA Logger (timestamp-free)
+        formatter.rs                <- ANSI color and layout formatting
+        colors.rs                   <- Standard palette definitions
 
   engine/                           <- execution daemon (aura serve / aura query)
     Cargo.toml
@@ -493,7 +498,7 @@ tables have been exhausted.
 
 ---
 
-*Compiler Structure Reference — v0.1*
+*Compiler Structure Reference — v0.3.2-beta.2*
 *Workspace layout: core / compiler / engine*
 *Pipeline: lexer → parser → namespace loader → resolver → time normalizer → emitter*
 *Output formats: .atom (interval tree) · .hami (B-Tree manifest) · .atlas (DTW alignment)*

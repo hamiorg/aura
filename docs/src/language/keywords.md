@@ -459,7 +459,7 @@ Support nodes carry metadata without a renderable text payload.
 | `authored`   | `@history/take-id` — the take when this node was first recorded|
 | `revised`    | `@history/take-id` or mark — the take when last changed        |
 | `annotator`  | Single annotator reference for this file or node               |
-| `annotators` | Multiple annotator references for this file                    |
+| `annotators` | Multiple annotator references for this file (requires plural domain) |
 | `contact`    | Contact address for a person or annotator node                 |
 | `used-at`    | Time point in this work where a sampled element appears        |
 | `trigger`    | Condition expression that fires an event node                  |

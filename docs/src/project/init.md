@@ -252,5 +252,5 @@ aura generate person
 
 ---
 
-*AURA Compiler Reference — v0.1*  
+*AURA Compiler Reference — v0.3.2-beta.2*  
 *`init.md` maps directly to the constraints laid out in `conventions.md` and `flux.md`.*

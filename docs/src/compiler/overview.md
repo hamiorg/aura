@@ -152,6 +152,17 @@ passed to the AURA-to-ATOM compiler pipeline.
 
 ---
 
-*AURA Compiler (`compiler`) — v0.3.1-beta.1*
+## 7. Standardized Logging System
+
+As of v0.3.2-beta.2, the AURA toolchain uses a centralized `Logger` system (in `src/logs/`)
+that enforces a sleek, timestamp-free, high-contrast terminal output.
+
+- **Phase-Based Output**: Every command clearly demarcates its phases (LEX, PARSE, EMIT, etc.) with consistent color coding.
+- **Diagnostic Parity**: Errors and warnings from the linter use the same reporting interface as the compiler, ensuring uniform CLI experiences.
+- **Machine Readable**: Stripping timestamps makes the output easier to parse by CI/CD logs and wrapping scripts while remaining visually premium for human authors.
+
+---
+
+*AURA Compiler (`compiler`) — v0.3.2-beta.2*
 *Zero-copy lexer → parser → emitter pipeline*
 *Outputs: `.atom` interval trees and `.hami` B-Tree indices*

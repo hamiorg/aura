@@ -200,6 +200,6 @@ Reconstructing `tx3ab9n` replays all three deltas in sequence — producing a vi
 
 ---
 
-*AURA History System (history) — v0.1*
+*AURA History System (history) — v0.3.2-beta.2*
 *Append-only, AST-node-based version control for `.aura` source files.*
 *No compiled artifacts. No credentials. No binary assets.*

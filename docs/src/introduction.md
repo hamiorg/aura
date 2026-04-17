@@ -37,5 +37,6 @@ memory-maps all three and holds them in RAM for the duration of a playback sessi
 
 ## Current status
 
-This is a beta release. The pipeline modules are scaffolded and the type system
-is defined. End-to-end compilation is under active development.
+This is the 0.3.2-beta.2 release. The toolchain now features a standardized, 
+high-contrast logging system and strict grammatical enforcement for multi-ID 
+domain references. End-to-end compilation is stable.

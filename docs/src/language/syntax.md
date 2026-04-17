@@ -86,14 +86,13 @@ the list bracket directly after the domain path.
     annotator  -> @annotator/p9xb3mn
     creator    -> @person/p4xt9k2
 
-    ## Multi-ID reference — all IDs within the same domain
-    annotators -> @annotator/[p9xb3mn, p3xr7kn]
-    speakers   -> @person/[cc9xpq, lp2wnr]
-    cast       -> @person/[mt4qbz, vr8kfw, xp3bnr]
+    ## Multi-ID reference — plural domains with bracketed lists
+    annotators -> @annotators/[p9xb3mn, p3xr7kn]
+    speakers   -> @people/[cc9xpq, lp2wnr]
+    cast       -> @people/[mt4qbz, vr8kfw, xp3bnr]
 
-The single form compiles to a scalar :: arc. The bracket form compiles
-directly to a HAMI array of :: arcs. A single ID in brackets
-@domain/[id] is valid and is normalized to a scalar at compile time.
+The single form (@domain/id) compiles to a scalar :: arc. The bracketed plural form
+(@domains/[id1, id2]) compiles directly to a HAMI array of :: arcs.
 
 The Union Pipe | is used when values span different domains or are
 non-reference values (genres, tags, roles, territories).
@@ -456,9 +455,9 @@ This applies to @person/@people, @genre/@genres, @role/@roles, @mood/@moods,
     ## Multiple authors
     authors    -> @people/[p4xt9k2, j8mn2rk]
 
-    ## One annotator
+    ## One annotator — singular domain
     annotator  -> @annotator/p9xb3mn
-    ## Multiple annotators
+    ## Multiple annotators — plural domain
     annotators -> @annotators/[p9xb3mn, p3xr7kn]
 
 The `@author/` and `@authors/` domains are fully interchangeable with

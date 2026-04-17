@@ -166,10 +166,13 @@ pub fn w005(doc: &Document<'_>, file: &Path) -> Vec<LintDiag> {
 // -------------------------------------------------------------------- //
 // W006 — Unknown key (strict mode only)
 //
-// Skipped for blocks with `raw_slug = true` (vocab slug blocks like `$live::`)
-// since they use domain-specific field names.
+// Suppressed for:
+//  • blocks with `raw_slug = true`  (`$live::`, `$dark::`, etc.)
+//  • `contains::` blocks — keys are generated AURA IDs, not vocab keys
+//  • fields marked with `%` (`FieldMarker::Custom`) — intentionally non-standard
 
 pub fn w006(doc: &Document<'_>, file: &Path) -> Vec<LintDiag> {
+  use crate::parse::ast::FieldMarker;
   let valid = valid_keys();
   let mut out = Vec::new();
   visit_fields_with_parent(doc, &mut |f, ns| {
@@ -180,14 +183,22 @@ pub fn w006(doc: &Document<'_>, file: &Path) -> Vec<LintDiag> {
     // Skip W006 for:
     //  • raw_slug blocks (`$live::`, `$dark::`) — domain-specific field names
     //  • Contains blocks — keys are generated AURA IDs, not vocabulary keys
+    //  • fields explicitly marked `%` (Custom) — intentionally non-standard
     if ns.raw_slug || matches!(ns.node_type, NodeType::Contains) {
+      return;
+    }
+    if f.marker == Some(FieldMarker::Custom) {
       return;
     }
     if !valid.contains(f.key) {
       out.push(LintDiag {
         code: "W006",
         level: Level::Warning,
-        msg: format!("key `{}` is not in the standard AURA vocabulary", f.key),
+        msg: format!(
+          "key `{}` is not in the standard AURA vocabulary. \
+           Mark with `%` (`key % -> value`) to suppress this warning.",
+          f.key
+        ),
         file: file.to_path_buf(),
         line: f.span.line,
       });

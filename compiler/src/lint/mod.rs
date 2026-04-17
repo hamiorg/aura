@@ -21,6 +21,7 @@
 //! | W004 | Warning | `manifest::` missing `name`                           |
 //! | W005 | Warning | `manifest::` missing `creator`/`author`               |
 //! | W006 | Warning | Key not in standard vocabulary (strict mode only)     |
+//! |      |         | Suppressed for: `$slug::` blocks, `contains::`, `key %` |
 //! | E001 | Error   | Required field (`!`) absent                           |
 
 pub mod keys;

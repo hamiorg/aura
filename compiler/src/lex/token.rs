@@ -16,6 +16,7 @@
 //! | `\|`   | `Pipe`         | Union of values or cross-domain refs |
 //! | `?`    | `Optional`     | Field may be absent                  |
 //! | `!`    | `Required`     | Field must be present                |
+//! | `%`    | `Custom`       | Custom key — W006 vocabulary check suppressed |
 //! | `~`    | `Tilde`        | Separates start~end in a time range  |
 //! | `+`    | `Plus`         | Separates start+duration             |
 //! | `[`    | `BracketOpen`  | Starts a list or time triple         |
@@ -61,6 +62,10 @@ pub enum Kind<'src> {
   Optional,
   /// `!` — required field marker.
   Required,
+  /// `%` — custom key marker: this field's key is intentionally outside the
+  /// standard AURA vocabulary. W006 key-checking is suppressed for this field.
+  /// Usage: `key % -> value`  (space before `%` is conventional).
+  Custom,
   /// `~` — range separator in `start~end` time syntax.
   Tilde,
   /// `+` — offset separator in `start+duration` time syntax.
@@ -117,6 +122,7 @@ impl<'src> Kind<'src> {
         | Self::Pipe
         | Self::Optional
         | Self::Required
+        | Self::Custom
         | Self::Tilde
         | Self::Plus
         | Self::BracketOpen

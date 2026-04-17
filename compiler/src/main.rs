@@ -15,7 +15,7 @@ use std::path::PathBuf;
   name = "aura",
   about = "AURA toolchain — compile, validate, and manage .aura projects"
 )]
-#[command(version = "0.3.0-alpha.2")]
+#[command(version = "0.3.1-beta.1")]
 struct Cli {
   #[command(subcommand)]
   command: Cmd,

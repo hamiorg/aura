@@ -108,6 +108,10 @@ pub enum FieldMarker {
   Required,
   /// `?` — field may be absent; engine skips gracefully.
   Optional,
+  /// `%` — custom key: intentionally outside the standard AURA vocabulary.
+  /// W006 key-checking is suppressed for this field.
+  /// Usage: `key % -> value`  (space before `%` is conventional).
+  Custom,
 }
 
 // -------------------------------------------------------------------- //

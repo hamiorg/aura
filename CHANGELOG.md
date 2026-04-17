@@ -13,6 +13,56 @@ Nothing yet.
 
 ---
 
+## [0.3.1-beta.1] — 2026-04-17
+
+### Fixed
+
+- **`@domain/[id1, id2]` parse errors.** The parser now correctly handles
+  inline bracket-list references like `producers -> @people/[p9gregk, p8paule]`.
+  Previously the scanner stopped at `[`, leaving it on the stream and causing
+  `expected \`->\`, got Comma` errors in `credits.aura` and `people.aura`.
+  Fix is in `parse.rs` — the `RefAt` handler detects a trailing `/` path and
+  consumes the `[id, id]` list directly, building a `RefBody::List`.
+
+### Added
+
+- **`%` Custom Key marker.** Fields marked `key % -> value` (space before `%`
+  is conventional) suppress W006 vocabulary warnings for that key only.
+  This follows the same pattern as `!` (required) and `?` (optional).
+  - Token: `Kind::Custom` in `lex/token.rs`
+  - Scanner: `%` byte → `Kind::Custom` in `lex/scan.rs`
+  - AST: `FieldMarker::Custom` in `parse/ast.rs`
+  - Parser: detected in `parse_field` in `parse.rs`
+  - Lint: W006 skips `FieldMarker::Custom` fields in `lint/rules.rs`
+  - W006 error message now mentions the `%` escape hatch
+
+- **Plural keys added to standard vocabulary.** AURA now enforces a
+  plural/singular convention: singular key for `@domain/id`, plural for
+  `@domain/[id1, id2]`. All pairs added to `lint/keys.rs`:
+  `producers/producer`, `writers/writer`, `labels/label`,
+  `episodes/episode`, `seasons/season`, `tracks/track`, `scenes/scene`,
+  `acts/act`, `chapters/chapter`, `segments/segment`, `sections/section`,
+  `variants/variant`, `directors/director`, `editors/editor`,
+  `narrators/narrator`, `hosts/host`, `guests/guest`,
+  `performers/performer`, `instruments/instrument`, `samples/sample`,
+  `arts/art`, `motions/motion`, `trailers/trailer`, `studios/studio`.
+
+- **Rust logging module (`compiler::logs`).** Zero-dependency, AURA-native
+  coloured terminal logger for the compiler CLI.
+  - `logs/colors.rs` — ANSI colour constants for all 11 log kinds
+  - `logs/formatter.rs` — message + diagnostic formatters with timestamp
+  - `logs/logger.rs` — `Logger` struct with phase methods
+    (`compile`, `lex`, `parse`, `lint`, `emit`) and diagnostic methods
+    (`warn`, `error`, `info`, `success`, `note`, `debug`)
+  - `logs/mod.rs` — public API and log-kind docs table
+  - All output goes to **stderr** to keep stdout clean
+
+### Changed
+
+- Version bumped from `0.3.0-alpha.2` to `0.3.1-beta.1`.
+
+---
+
 ## [0.3.0-alpha.2] — 2026-04-17
 
 ### Added
@@ -261,7 +311,9 @@ of the next development cycle.
 
 ---
 
-[Unreleased]: https://github.com/hamiorg/aura/compare/v0.3.0-alpha.1...HEAD
+[Unreleased]: https://github.com/hamiorg/aura/compare/v0.3.1-beta.1...HEAD
+[0.3.1-beta.1]: https://github.com/hamiorg/aura/compare/v0.3.0-alpha.2...v0.3.1-beta.1
+[0.3.0-alpha.2]: https://github.com/hamiorg/aura/compare/v0.3.0-alpha.1...v0.3.0-alpha.2
 [0.3.0-alpha.1]: https://github.com/hamiorg/aura/releases/tag/v0.3.0-alpha.1
 [0.2.0-alpha.1]: https://github.com/hamiorg/aura/releases/tag/v0.2.0-alpha.1
 [0.1.0-alpha.1]: https://github.com/hamiorg/aura/releases/tag/v0.1.0-alpha.1

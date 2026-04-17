@@ -203,6 +203,10 @@ impl<'src> Scanner<'src> {
       self.advance();
       return Ok(self.tok(Kind::Required, start));
     }
+    if byte == b'%' {
+      self.advance();
+      return Ok(self.tok(Kind::Custom, start));
+    }
 
     // --- Wildcard ---
     if byte == b'*' {

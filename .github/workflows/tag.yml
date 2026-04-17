@@ -1,0 +1,64 @@
+name: Auto Tag
+
+# Reads the version from compiler/Cargo.toml on every push to main.
+# If no git tag matching `v{version}` already exists, creates and pushes it.
+# This triggers the `release.yml` workflow which builds and publishes the release.
+#
+# Requirements:
+#   - The default GITHUB_TOKEN has `contents: write` (set below).
+#   - No extra secrets needed — tag creation uses the built-in token.
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      # Only run when the version could have changed
+      - 'compiler/Cargo.toml'
+      - 'CHANGELOG.md'
+
+permissions:
+  contents: write
+
+jobs:
+  auto-tag:
+    name: Create release tag if version is new
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout (full history for tag lookup)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read version from Cargo.toml
+        id: version
+        run: |
+          # Extract version field from [package] section of compiler/Cargo.toml
+          VERSION=$(grep -m1 '^version' compiler/Cargo.toml | sed 's/.*= *"\(.*\)"/\1/')
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "tag=v${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "Detected version: ${VERSION} → tag: v${VERSION}"
+
+      - name: Check if tag already exists
+        id: tag_check
+        run: |
+          TAG="${{ steps.version.outputs.tag }}"
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Tag $TAG already exists — skipping."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "Tag $TAG does not exist — will create."
+          fi
+
+      - name: Create and push tag
+        if: steps.tag_check.outputs.exists == 'false'
+        run: |
+          TAG="${{ steps.version.outputs.tag }}"
+          VERSION="${{ steps.version.outputs.version }}"
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "$TAG" -m "aura ${VERSION}"
+          git push origin "$TAG"
+          echo "✓ Pushed tag $TAG — release.yml will now build and publish."

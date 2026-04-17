@@ -30,6 +30,7 @@
 //! compiler::hist::store::HistoryStore
 //! compiler::cfg::load::ConfigLoader
 //! compiler::error::CompileError
+//! compiler::logs::Logger
 //! ```
 
 pub mod cfg;
@@ -40,7 +41,9 @@ pub mod error;
 pub mod hist;
 pub mod lex;
 pub mod lint;
+pub mod logs;
 pub mod ns;
 pub mod parse;
 
 pub use error::{CompileError, Diagnostic, Level, Result, Span};
+

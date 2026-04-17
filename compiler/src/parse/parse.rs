@@ -182,6 +182,10 @@ impl<'src> Parser<'src> {
         self.eat()?;
         Some(FieldMarker::Optional)
       }
+      Kind::Custom => {
+        self.eat()?;
+        Some(FieldMarker::Custom)
+      }
       _ => None,
     };
 
@@ -273,6 +277,49 @@ impl<'src> Parser<'src> {
         // @time/value → time anchor
         if let Some(rest) = path_str.strip_prefix("time/") {
           return Ok(Value::Time(TimeExpr::Anchor(rest)));
+        }
+        // @domain/[id1, id2] — inline bracket list.
+        //
+        // The scanner stops at `[`, so for `@people/[p9gregk, p8paule]` the
+        // RefPath token is `"people/"` (domain with trailing slash, empty body).
+        // When the next token is `[` we parse the ID list here and build the
+        // reference ourselves instead of delegating to `build_ref`.
+        if path_str.ends_with('/') && matches!(self.peek0_kind(), Kind::BracketOpen) {
+          self.eat()?; // consume `[`
+          // Strip the trailing `/` to get the plain domain name.
+          let domain = &path_str[..path_str.len() - 1];
+          let mut ids: Vec<&'src str> = Vec::new();
+          loop {
+            self.skip_ws();
+            if matches!(self.peek0_kind(), Kind::BracketClose | Kind::Eof) {
+              break;
+            }
+            // Each element is a bare ID key (possibly hyphenated, e.g. `main-artist`).
+            let item = self.eat()?;
+            let id: &'src str = match item.kind {
+              Kind::Key(k) => k,
+              Kind::RefPath(p) => p,
+              Kind::Bare(b) => b,
+              _ => "",
+            };
+            if !id.is_empty() {
+              ids.push(id);
+            }
+            self.skip_ws();
+            if matches!(self.peek0_kind(), Kind::Comma) {
+              self.eat()?; // consume `,`
+            } else {
+              break;
+            }
+          }
+          if matches!(self.peek0_kind(), Kind::BracketClose) {
+            self.eat()?; // consume `]`
+          }
+          return Ok(Value::Ref(Reference {
+            domain,
+            body: RefBody::List(ids),
+            span,
+          }));
         }
         Ok(Value::Ref(build_ref(path_str, span)))
       }

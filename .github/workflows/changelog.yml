@@ -1,0 +1,61 @@
+name: Changelog
+
+# Automatically updates CHANGELOG.md when a release tag is pushed.
+# Extracts the section matching the tag version and appends it to the
+# GitHub Release body created by the main release.yml workflow.
+#
+# Runs AFTER the release job so the GitHub Release already exists.
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  update-changelog:
+    name: Attach changelog to release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          # Strip leading 'v' from tag name (v0.3.1-beta.1 → 0.3.1-beta.1)
+          VERSION="${GITHUB_REF_NAME#v}"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "tag=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+
+      - name: Extract changelog section for this version
+        id: extract
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          # Find the section header and extract until the next ---
+          SECTION=$(awk "
+            /^## \[${VERSION}\]/ { found=1; next }
+            found && /^---$/ { exit }
+            found { print }
+          " CHANGELOG.md)
+
+          if [ -z "$SECTION" ]; then
+            echo "No CHANGELOG.md entry found for ${VERSION} — skipping body update."
+            echo "body=" >> "$GITHUB_OUTPUT"
+          else
+            # Write to a temp file to handle multiline safely
+            echo "${SECTION}" > /tmp/changelog_section.md
+            echo "body_file=/tmp/changelog_section.md" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Update GitHub Release body with changelog
+        if: steps.extract.outputs.body_file != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release edit "${{ steps.version.outputs.tag }}" \
+            --notes-file "${{ steps.extract.outputs.body_file }}"

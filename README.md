@@ -51,20 +51,25 @@ curl -fsSL https://hami.aduki.org/install.sh | bash
 Detects your architecture (`x86_64` or `arm64`) and installs the static binary to
 `/usr/local/bin/aura`. No system libraries required.
 
-### Linux — package managers
+### Linux — Package Managers (APT / YUM / DNF)
 
-Download the package for your architecture from the
-[releases page](https://github.com/hamiorg/aura/releases) and install it:
+Recommended for Debian, Ubuntu, Fedora, and RHEL.
 
-**Debian, Ubuntu:**
+**Debian, Ubuntu (APT):**
+
 ```sh
-sudo dpkg -i aura-<version>-linux-x86_64.deb
+curl -1sLf 'https://dl.cloudsmith.io/public/aduki-inc/aura/setup.deb.sh' | sudo bash
+sudo apt install aura
 ```
 
-**Fedora, RHEL, AlmaLinux:**
+**Fedora, RHEL, AlmaLinux (DNF):**
+
 ```sh
-sudo rpm -i aura-<version>-linux-x86_64.rpm
+curl -1sLf 'https://dl.cloudsmith.io/public/aduki-inc/aura/setup.rpm.sh' | sudo bash
+sudo dnf install aura
 ```
+
+See the [Full Installation Guide](https://hamiorg.github.io/aura/install.html) for manual downloads and architecture-specific packages.
 
 ### Direct download
 

@@ -206,6 +206,39 @@ jobs:
           prerelease: ${{ contains(github.ref_name, '-') }}
 
   # ------------------------------------------------------------------ #
+  # Publish to Cloudsmith (APT / RPM / Alpine / etc.)
+  # ------------------------------------------------------------------ #
+  publish-cloudsmith:
+    name: Publish to Cloudsmith
+    needs: [build-linux]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: Install Cloudsmith CLI
+        run: pip install --upgrade cloudsmith-cli
+
+      - name: Push Packages
+        env:
+          CLOUDSMITH_API_KEY: ${{ secrets.CLOUDSMITH_API_KEY }}
+        run: |
+          # Push Debian packages
+          cloudsmith push deb aduki-inc/aura/any-distro/any-version artifacts/aura-*-linux-x86_64.deb --republish
+          cloudsmith push deb aduki-inc/aura/any-distro/any-version artifacts/aura-*-linux-arm64.deb --republish
+
+          # Push RPM packages
+          cloudsmith push rpm aduki-inc/aura/any-distro/any-version artifacts/aura-*-linux-x86_64.rpm --republish
+          cloudsmith push rpm aduki-inc/aura/any-distro/any-version artifacts/aura-*-linux-arm64.rpm --republish
+
+  # ------------------------------------------------------------------ #
   # Update Homebrew tap — runs after the GitHub Release is published.
   #
   # Requires the HOMEBREW_TAP_TOKEN secret: a GitHub PAT with 'repo'

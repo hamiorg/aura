@@ -25,17 +25,37 @@ To install a specific version:
 AURA_VERSION=v0.3.2-beta.2 curl -fsSL https://hami.aduki.org/install.sh | bash
 ```
 
-## Linux — package managers
+## Linux — Package Managers (APT / YUM / DNF)
 
-Download the package for your architecture from the
-[releases page](https://github.com/hamiorg/aura/releases).
+The recommended way to install and stay updated on Linux is via our official
+Cloudsmith repository.
+
+### Debian, Ubuntu (APT)
+
+```sh
+curl -1sLf 'https://dl.cloudsmith.io/public/aduki-inc/aura/setup.deb.sh' | sudo bash
+sudo apt install aura
+```
+
+### Fedora, RHEL, AlmaLinux (DNF/YUM)
+
+```sh
+curl -1sLf 'https://dl.cloudsmith.io/public/aduki-inc/aura/setup.rpm.sh' | sudo bash
+sudo dnf install aura
+```
+
+### Manual installation
+
+If you prefer to install the packages manually without adding a repository:
 
 **Debian, Ubuntu:**
+
 ```sh
 sudo dpkg -i aura-<version>-linux-x86_64.deb
 ```
 
 **Fedora, RHEL, AlmaLinux:**
+
 ```sh
 sudo rpm -i aura-<version>-linux-x86_64.rpm
 ```

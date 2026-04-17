@@ -156,7 +156,7 @@ impl<'src> Scanner<'src> {
     // --- Reference `@` ---
     if byte == b'@' {
       self.pos += 1;
-      return self.scan_ref_path(start);
+      return Ok(self.tok(Kind::RefAt, start));
     }
 
     // --- Quoted string ---
@@ -263,18 +263,6 @@ impl<'src> Scanner<'src> {
     Ok(self.tok(Kind::AnnotationText(text), start))
   }
 
-  fn scan_ref_path(&mut self, at_start: usize) -> Result<Token<'src>> {
-    let path_start = self.pos;
-    while let Some(b) = self.peek() {
-      if b.is_ascii_alphanumeric() || b == b'/' || b == b'-' || b == b'.' || b == b'_' {
-        self.pos += 1;
-      } else {
-        break;
-      }
-    }
-    let path = self.slice(path_start, self.pos);
-    Ok(self.tok(Kind::RefPath(path), at_start))
-  }
 
   fn scan_quoted(&mut self, start: usize) -> Result<Token<'src>> {
     self.pos += 1; // skip opening "

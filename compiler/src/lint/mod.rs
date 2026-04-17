@@ -29,6 +29,7 @@ pub mod rules;
 
 use crate::error::Level;
 use crate::parse::ast::Document;
+use crate::logs::Logger;
 use std::path::Path;
 
 /// A single lint diagnostic.
@@ -53,22 +54,18 @@ impl LintResult {
     self.diags.iter().any(|d| d.level == Level::Error)
   }
 
-  /// Prints all diagnostics to stderr.
+  /// Prints all diagnostics to stderr using the Logger.
   pub fn print(&self) {
+    let log = Logger::new();
     for d in &self.diags {
-      let lvl = match d.level {
-        Level::Error => "error",
-        Level::Warning => "warning",
-        Level::Note => "note",
-      };
-      eprintln!(
-        "{}:{}: {}: [{}] {}",
-        d.file.display(),
-        d.line,
-        lvl,
-        d.code,
-        d.msg,
-      );
+      let file = d.file.to_str().unwrap_or("");
+      let line = d.line;
+      let code = Some(d.code);
+      match d.level {
+        Level::Error => log.error(file, line, code, &d.msg, None),
+        Level::Warning => log.warn(file, line, code, &d.msg, None),
+        Level::Note => log.info(&format!("{}:{}: note: [{}] {}", d.file.display(), d.line, d.code, d.msg)),
+      }
     }
   }
 }

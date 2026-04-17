@@ -5,6 +5,7 @@ use crate::emit::{AtomEmitter, HamiEmitter};
 use crate::error::{CompileError, Result};
 use crate::hist::{DeltaReplayer, HistoryStore};
 use crate::lint::Linter;
+use crate::logs::Logger;
 use crate::ns::NamespaceLoader;
 use crate::parse::ast::Document;
 use crate::parse::parse::Parser;
@@ -35,6 +36,8 @@ pub fn run(opts: &CompileOpts) -> Result<()> {
     .out_dir
     .clone()
     .unwrap_or_else(|| opts.project.join("dist"));
+  let log = Logger::new();
+  log.compile("Building project...");
 
   // Namespace discovery.
   let mut ns_loader = NamespaceLoader::new(&opts.project);
@@ -48,20 +51,20 @@ pub fn run(opts: &CompileOpts) -> Result<()> {
     let store = HistoryStore::open(&opts.project)?;
     let replayer = DeltaReplayer::new(&store);
     let state = replayer.reconstruct(take_id)?;
-    eprintln!(
-      "[compile] reconstructed {} nodes from take {}",
+    log.info(&format!(
+      "reconstructed {} nodes from take {}",
       state.len(),
       take_id
-    );
+    ));
   }
 
   // Collect source files.
   let files = collect_aura_files(&opts.project, &ignore)?;
   if files.is_empty() {
-    eprintln!(
-      "[compile] no .aura files found in {}",
+    log.info(&format!(
+      "no .aura files found in {}",
       opts.project.display()
-    );
+    ));
     return Ok(());
   }
 
@@ -77,9 +80,10 @@ pub fn run(opts: &CompileOpts) -> Result<()> {
   let mut parse_errors = 0usize;
 
   for file in &files {
+    log.parse(&file.display().to_string());
     match parse_file(file) {
       Err(e) => {
-        eprintln!("[error] {}: {}", file.display(), e);
+        log.error(&file.display().to_string(), 0, None, &e.to_string(), None);
         parse_errors += 1;
       }
       Ok(doc) => {
@@ -107,7 +111,13 @@ pub fn run(opts: &CompileOpts) -> Result<()> {
   // Surface resolver warnings.
   if let Some(err) = resolver.into_error() {
     for diag in &err.diagnostics {
-      eprintln!("{}", diag);
+      let file_str = diag.file.as_ref().and_then(|p| p.to_str()).unwrap_or("");
+      let line = diag.span.map(|s| s.line).unwrap_or(0);
+      match diag.level {
+        crate::error::Level::Warning => log.warn(file_str, line, None, &diag.message, diag.hint.as_deref()),
+        crate::error::Level::Error => log.error(file_str, line, None, &diag.message, diag.hint.as_deref()),
+        crate::error::Level::Note => log.note(&diag.message),
+      }
     }
     if err.is_fatal() {
       return Err(err);
@@ -136,7 +146,7 @@ pub fn run(opts: &CompileOpts) -> Result<()> {
     format!("{}.hami", stem)
   };
 
-  println!("[compile] {} file(s) → dist/{}", files.len(), output_line);
+  log.success(&format!("{} file(s) → dist/{}", files.len(), output_line));
   Ok(())
 }
 
@@ -145,15 +155,15 @@ pub fn run(opts: &CompileOpts) -> Result<()> {
 
 /// Validate syntax and references without emitting output.
 pub fn validate(project: &PathBuf, strict: bool) -> Result<()> {
+  let log = Logger::new();
   let ignore = IgnoreList::load(project)?;
   let files = collect_aura_files(project, &ignore)?;
   let linter = Linter::new(strict);
   let mut errors = 0usize;
-
   for file in &files {
     match parse_file(file) {
       Err(e) => {
-        eprintln!("[error] {}: {}", file.display(), e);
+        log.error(&file.display().to_string(), 0, None, &e.to_string(), None);
         errors += 1;
       }
       Ok(doc) => {
@@ -169,7 +179,7 @@ pub fn validate(project: &PathBuf, strict: bool) -> Result<()> {
   if errors > 0 {
     Err(CompileError::msg(format!("{} file(s) have errors", errors)))
   } else {
-    println!("[validate] {} file(s) ok", files.len());
+    log.success(&format!("{} file(s) ok", files.len()));
     Ok(())
   }
 }
@@ -179,6 +189,7 @@ pub fn validate(project: &PathBuf, strict: bool) -> Result<()> {
 
 /// Run all lint rules and print diagnostics.
 pub fn lint(project: &PathBuf, strict: bool) -> Result<()> {
+  let log = Logger::new();
   let ignore = IgnoreList::load(project)?;
   let files = collect_aura_files(project, &ignore)?;
   let linter = Linter::new(strict);
@@ -186,11 +197,10 @@ pub fn lint(project: &PathBuf, strict: bool) -> Result<()> {
   let mut total_diags = 0usize;
   let mut total_errs = 0usize;
   let mut parse_errs = 0usize;
-
   for file in &files {
     match parse_file(file) {
       Err(e) => {
-        eprintln!("[parse error] {}: {}", file.display(), e);
+        log.error(&file.display().to_string(), 0, None, &e.to_string(), None);
         parse_errs += 1;
       }
       Ok(doc) => {
@@ -206,12 +216,12 @@ pub fn lint(project: &PathBuf, strict: bool) -> Result<()> {
     }
   }
 
-  println!(
-    "[lint] {} file(s)  {} diagnostic(s)  {} error(s)",
+  log.info(&format!(
+    "{} file(s)  {} diagnostic(s)  {} error(s)",
     files.len(),
     total_diags,
     total_errs + parse_errs
-  );
+  ));
 
   if total_errs + parse_errs > 0 {
     Err(CompileError::msg("lint found errors"))

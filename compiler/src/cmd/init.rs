@@ -15,6 +15,7 @@
 
 use crate::directives::Kind;
 use crate::error::{CompileError, Result};
+use crate::logs::Logger;
 use aura::id::{IdGen, Prefix};
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -30,6 +31,7 @@ pub struct InitOpts {
 
 /// Scaffolds a new AURA project.
 pub fn init(opts: &InitOpts) -> Result<()> {
+  let log = Logger::new();
   let kind = Kind::from_str(&opts.kind)
     .ok_or_else(|| CompileError::msg(format!("unknown kind `{}`", opts.kind)))?;
 
@@ -187,16 +189,17 @@ pub fn init(opts: &InitOpts) -> Result<()> {
      \x20 ## - path/to/exclude\n",
   )?;
 
-  println!("Created {}", base.display());
-  println!("  Entry point   : name.aura");
-  println!("  Project ID    : {}", root_id);
-  println!("  Annotator ID  : {}", ann_id);
-  println!("  Person ID     : {}", person_id);
+  log.success(&format!("Created {}", base.display()));
+  log.info("  Entry point   : name.aura");
+  log.info(&format!("  Project ID    : {}", root_id));
+  log.info(&format!("  Annotator ID  : {}", ann_id));
+  log.info(&format!("  Person ID     : {}", person_id));
   Ok(())
 }
 
 /// Adds a new content file to an existing project and registers it.
 pub fn add(type_name: &str, label: &str, project: &Path) -> Result<()> {
+  let log = Logger::new();
   let prefix = type_to_prefix(type_name)?;
   let mut gen = IdGen::new();
   let id = gen.generate(prefix);
@@ -229,8 +232,8 @@ pub fn add(type_name: &str, label: &str, project: &Path) -> Result<()> {
   // Register in the subfolder name.aura contains:: block.
   register_in_name(&project.join(folder), &id.to_string(), label)?;
 
-  println!("Created {}", path.display());
-  println!("  ID: {}", id);
+  log.success(&format!("Created {}", path.display()));
+  log.info(&format!("  ID: {}", id));
   Ok(())
 }
 

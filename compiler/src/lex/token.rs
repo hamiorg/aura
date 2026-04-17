@@ -97,8 +97,6 @@ pub enum Kind<'src> {
   Quoted(&'src str),
   /// A time literal, e.g. `22s`, `1m10s`, `00:04:32`.
   Time(&'src str),
-  /// A reference path after `@`, e.g. `person/p4xt9k2`.
-  RefPath(&'src str),
   /// An annotation body after `##`.
   AnnotationText(&'src str),
 }

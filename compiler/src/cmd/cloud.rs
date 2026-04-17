@@ -1,6 +1,7 @@
 //! `aura release`, `aura sync`, `aura dub` — cloud operations.
 
 use crate::error::{CompileError, Result};
+use crate::logs::Logger;
 use std::path::PathBuf;
 
 /// Publishes the current take to the cloud distribution store.
@@ -19,7 +20,7 @@ pub fn release(project: &PathBuf) -> Result<()> {
   // Step 2: upload compiled artifacts to the store.
   // In the full implementation: read configs/stores.aura and upload
   // .atom/.hami/.atlas files to the primary store URI.
-  println!("[release] artifacts published to primary store");
+  Logger::new().success("Artifacts published to primary store");
   Ok(())
 }
 
@@ -30,7 +31,7 @@ pub fn sync(_project: &PathBuf) -> Result<()> {
   // In the full implementation: fetch the latest manifest from the
   // primary store, compare with the local HEAD take, and pull any
   // new delta objects.
-  println!("[sync] synced from primary store");
+  Logger::new().success("Synced from primary store");
   Ok(())
 }
 
@@ -50,10 +51,7 @@ pub fn dub(project: &PathBuf, destination: &PathBuf) -> Result<()> {
   // Copy the project directory recursively.
   copy_dir(project, destination)?;
 
-  println!(
-    "[dub] full-history copy created at {}",
-    destination.display()
-  );
+  Logger::new().success(&format!("Full-history copy created at {}", destination.display()));
   Ok(())
 }
 

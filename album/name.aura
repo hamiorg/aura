@@ -3,7 +3,7 @@
 
 name::
   id        -> cbe90je
-  root      -> https://hami.aduki.org/aura/1.0
+  root %    -> https://hami.aduki.org/aura/1.0
   kind      -> audio::album
   slug      -> adele-25
   lang      -> en-US
@@ -62,7 +62,7 @@ tracks::
       access -> @access/open
 
 exports::
-  info      -> @info/metadata
-  people    -> @info/people
-  tracks    -> @tracks/*
+  info    % -> @info/metadata
+  people  % -> @info/people
+  tracks  % -> @tracks/*
   variants  -> @variants/*

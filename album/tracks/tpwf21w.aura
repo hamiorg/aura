@@ -190,10 +190,10 @@ lyrics::
     text    -> "River Lea, River Lea"
     speaker -> @person/p729sre
   line/43::
-    time    -> 214.15s~214.05s
+    time    -> 214.15s~217.15s
     text    -> "(River Lea, the River Lea, the River Lea)"
     speaker -> @person/p729sre
   line/44::
-    time    -> 214.05s~219.73s
+    time    -> 217.15s~219.73s
     text    -> "River Lea, River Lea"
     speaker -> @person/p729sre

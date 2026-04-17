@@ -1,4 +1,5 @@
 moods::
+  time -> 0s
 
   melancholic::
     name -> "Melancholic"

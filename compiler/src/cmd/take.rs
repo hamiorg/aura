@@ -2,6 +2,7 @@
 
 use crate::error::{CompileError, Result};
 use crate::hist::{DeltaReplayer, HistoryStore};
+use crate::logs::Logger;
 use aura::delta::TakeObject;
 use aura::id::{IdGen, Prefix};
 use std::path::PathBuf;
@@ -32,8 +33,7 @@ pub fn take(project: &PathBuf, message: Option<&str>) -> Result<()> {
 
   store.write_take(&take_obj)?;
   store.set_stream_head(&stream, id.as_str())?;
-
-  println!("Take {} recorded on stream {}", id, stream);
+  Logger::new().success(&format!("Take {} recorded on stream {}", id, stream));
   Ok(())
 }
 
@@ -45,7 +45,7 @@ pub fn mark(project: &PathBuf, name: &str) -> Result<()> {
     .stream_head(&stream)?
     .ok_or_else(|| CompileError::msg("no takes recorded yet — run `aura take` first"))?;
   store.set_mark(name, &head)?;
-  println!("Mark `{}` attached to take {}", name, head);
+  Logger::new().success(&format!("Mark `{}` attached to take {}", name, head));
   Ok(())
 }
 
@@ -64,7 +64,7 @@ pub fn rewind(project: &PathBuf, target: &str) -> Result<()> {
 
   // In the full implementation: write `state` back to the working
   // `.aura` files, overwriting the current draft.
-  println!("Rewound to take {} ({} nodes)", take_id, state.len());
+  Logger::new().success(&format!("Rewound to take {} ({} nodes)", take_id, state.len()));
   Ok(())
 }
 
@@ -75,15 +75,16 @@ pub fn ledger(project: &PathBuf, node_path: Option<&str>) -> Result<()> {
   let replayer = DeltaReplayer::new(&store);
   let chain = replayer.ledger(&stream)?;
 
-  println!("Ledger for stream `{}`:", stream);
+  let log = Logger::new();
+  log.info(&format!("Ledger for stream `{}`:", stream));
   for take in &chain {
     let mark_indicator = "";
     let msg = take.message.as_deref().unwrap_or("(no message)");
-    println!("  {} {} {}", take.id, msg, mark_indicator);
+    log.info(&format!("  {} {} {}", take.id, msg, mark_indicator));
   }
 
   if let Some(_path) = node_path {
-    println!("\nNode path filtering not yet implemented.");
+    log.info("\nNode path filtering not yet implemented.");
   }
 
   Ok(())
@@ -97,15 +98,16 @@ pub fn delta(project: &PathBuf, take_a: &str, take_b: &str) -> Result<()> {
   let replayer = DeltaReplayer::new(&store);
   let deltas = replayer.diff_takes(&id_a, &id_b)?;
 
-  println!("Changes from {} → {}:", id_a, id_b);
+  let log = Logger::new();
+  log.info(&format!("Changes from {} → {}:", id_a, id_b));
   for d in &deltas {
     match d {
-      aura::delta::SourceDelta::Upsert { path, .. } => println!("  ~ {}", path),
-      aura::delta::SourceDelta::Drop { path } => println!("  - {}", path),
+      aura::delta::SourceDelta::Upsert { path, .. } => log.info(&format!("  ~ {}", path)),
+      aura::delta::SourceDelta::Drop { path } => log.info(&format!("  - {}", path)),
     }
   }
   if deltas.is_empty() {
-    println!("  (no changes)");
+    log.info("  (no changes)");
   }
 
   Ok(())

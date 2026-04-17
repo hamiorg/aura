@@ -4,14 +4,14 @@ people::
     name   -> "Adele"
     legal  -> "Adele Laurie Blue Adkins"
     kind   -> artist
-    roles  -> @role/[main-artist, vocalist, composer]
+    roles  -> @roles/[main-artist, vocalist, composer]
 
   p9gregk::
     name   -> "Greg Kurstin"
     kind   -> artist
-    roles  -> @role/[producer, writer, mixer]
+    roles  -> @roles/[producer, writer, mixer]
 
   p8paule::
     name   -> "Paul Epworth"
     kind   -> artist
-    roles  -> @role/[producer, writer]
+    roles  -> @roles/[producer, writer, mixer]

@@ -270,35 +270,40 @@ impl<'src> Parser<'src> {
         let span = span_of(&at);
         let path_tok = self.eat()?;
         let path_str = match path_tok.kind {
-          Kind::RefPath(p) => p,
           Kind::Key(k) => k,
+          Kind::Bare(b) => b,
           _ => "",
         };
         // @time/value → time anchor
         if let Some(rest) = path_str.strip_prefix("time/") {
           return Ok(Value::Time(TimeExpr::Anchor(rest)));
         }
+
         // @domain/[id1, id2] — inline bracket list.
-        //
-        // The scanner stops at `[`, so for `@people/[p9gregk, p8paule]` the
-        // RefPath token is `"people/"` (domain with trailing slash, empty body).
-        // When the next token is `[` we parse the ID list here and build the
-        // reference ourselves instead of delegating to `build_ref`.
         if path_str.ends_with('/') && matches!(self.peek0_kind(), Kind::BracketOpen) {
           self.eat()?; // consume `[`
-          // Strip the trailing `/` to get the plain domain name.
-          let domain = &path_str[..path_str.len() - 1];
+          let domain_raw = &path_str[..path_str.len() - 1];
+
+          // Enforce plural domain for multi-ID list
+          if !is_plural(domain_raw) {
+            let plural = plural_of(domain_raw);
+            if plural != domain_raw {
+              return Err(CompileError::msg(format!(
+                "multi-ID reference must use plural domain `@{}`, got `@{}`",
+                plural, domain_raw
+              )));
+            }
+          }
+
           let mut ids: Vec<&'src str> = Vec::new();
           loop {
             self.skip_ws();
             if matches!(self.peek0_kind(), Kind::BracketClose | Kind::Eof) {
               break;
             }
-            // Each element is a bare ID key (possibly hyphenated, e.g. `main-artist`).
             let item = self.eat()?;
             let id: &'src str = match item.kind {
               Kind::Key(k) => k,
-              Kind::RefPath(p) => p,
               Kind::Bare(b) => b,
               _ => "",
             };
@@ -316,21 +321,26 @@ impl<'src> Parser<'src> {
             self.eat()?; // consume `]`
           }
           return Ok(Value::Ref(Reference {
-            domain,
+            domain: domain_raw,
             body: RefBody::List(ids),
             span,
           }));
         }
-        Ok(Value::Ref(build_ref(path_str, span)))
-      }
 
-      Kind::RefPath(p) => {
-        let tok = self.eat()?;
-        let span = span_of(&tok);
-        if let Some(rest) = p.strip_prefix("time/") {
-          return Ok(Value::Time(TimeExpr::Anchor(rest)));
+        // Singular reference — enforce singular domain
+        let r = build_ref(path_str, span);
+        if let RefBody::Single(id) = r.body {
+          if !id.is_empty() && is_plural(r.domain) {
+            let singular = singular_of(r.domain);
+            if singular != r.domain {
+              return Err(CompileError::msg(format!(
+                "singular reference must use singular domain `@{}`, got `@{}`",
+                singular, r.domain
+              )));
+            }
+          }
         }
-        Ok(Value::Ref(build_ref(p, span)))
+        Ok(Value::Ref(r))
       }
 
       Kind::BracketOpen => {
@@ -515,15 +525,6 @@ fn build_ref<'src>(path_str: &'src str, span: Span) -> Reference<'src> {
     let domain = &path_str[..slash];
     let body_str = &path_str[slash + 1..];
 
-    if body_str.starts_with('[') {
-      let inner = body_str.trim_start_matches('[').trim_end_matches(']');
-      let ids: Vec<&'src str> = inner.split(',').map(str::trim).collect();
-      return Reference {
-        domain,
-        body: RefBody::List(ids),
-        span,
-      };
-    }
     if body_str.contains('/') {
       let parts: Vec<&'src str> = body_str.split('/').collect();
       return Reference {
@@ -559,4 +560,88 @@ fn looks_like_time(s: &str) -> bool {
   }
   let b = s.as_bytes();
   b[0].is_ascii_digit()
+}
+
+fn is_plural(domain: &str) -> bool {
+  matches!(
+    domain,
+    "people"
+      | "authors"
+      | "annotators"
+      | "genres"
+      | "roles"
+      | "moods"
+      | "tracks"
+      | "episodes"
+      | "scenes"
+      | "variants"
+      | "seasons"
+      | "members"
+      | "samples"
+      | "interpolations"
+      | "explainers"
+      | "instructions"
+      | "events"
+      | "arts"
+      | "motions"
+      | "trailers"
+      | "studios"
+      | "labels"
+  )
+}
+
+fn singular_of(domain: &str) -> &str {
+  match domain {
+    "people" => "person",
+    "authors" => "author",
+    "annotators" => "annotator",
+    "genres" => "genre",
+    "roles" => "role",
+    "moods" => "mood",
+    "tracks" => "track",
+    "episodes" => "episode",
+    "scenes" => "scene",
+    "variants" => "variant",
+    "seasons" => "season",
+    "members" => "member",
+    "samples" => "sample",
+    "interpolations" => "interpolation",
+    "explainers" => "explainer",
+    "instructions" => "instruction",
+    "events" => "event",
+    "arts" => "art",
+    "motions" => "motion",
+    "trailers" => "trailer",
+    "studios" => "studio",
+    "labels" => "label",
+    _ => domain,
+  }
+}
+
+fn plural_of(domain: &str) -> &str {
+  match domain {
+    "person" => "people",
+    "author" => "authors",
+    "annotator" => "annotators",
+    "genre" => "genres",
+    "role" => "roles",
+    "mood" => "moods",
+    "track" => "tracks",
+    "episode" => "episodes",
+    "scene" => "scenes",
+    "variant" => "variants",
+    "season" => "seasons",
+    "member" => "members",
+    "sample" => "samples",
+    "interpolation" => "interpolations",
+    "explainer" => "explainers",
+    "instruction" => "instructions",
+    "event" => "events",
+    "art" => "arts",
+    "motion" => "motions",
+    "trailer" => "trailers",
+    "studio" => "studios",
+    "label" => "labels",
+    _ => domain,
+  }
 }

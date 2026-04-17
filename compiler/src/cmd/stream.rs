@@ -2,6 +2,7 @@
 
 use crate::error::{CompileError, Result};
 use crate::hist::HistoryStore;
+use crate::logs::Logger;
 use std::path::PathBuf;
 
 /// Opens a new named development stream branching from the current take.
@@ -16,7 +17,7 @@ pub fn open(project: &PathBuf, name: &str) -> Result<()> {
   store.set_stream_head(name, &head)?;
   store.set_stream(name)?;
 
-  println!("Opened stream `{}` at take {}", name, head);
+  Logger::new().success(&format!("Opened stream `{}` at take {}", name, head));
   Ok(())
 }
 
@@ -29,11 +30,11 @@ pub fn close(project: &PathBuf, name: &str) -> Result<()> {
   let active = store.active_stream()?;
   if active == name {
     store.set_stream("main")?;
-    println!("Switched active stream back to main");
+    Logger::new().info("Switched active stream back to main");
   }
   // In the full implementation: move stream pointer file to an
   // `archived/` folder. Scaffold: just print.
-  println!("Stream `{}` closed", name);
+  Logger::new().info(&format!("Stream `{}` closed", name));
   Ok(())
 }
 
@@ -43,10 +44,11 @@ pub fn list(project: &PathBuf) -> Result<()> {
   let active = store.active_stream()?;
   let streams = store.list_streams()?;
 
-  println!("Streams:");
+  let log = Logger::new();
+  log.info("Streams:");
   for s in &streams {
     let marker = if s == &active { " *" } else { "" };
-    println!("  {}{}", s, marker);
+    log.info(&format!("  {}{}", s, marker));
   }
   Ok(())
 }
@@ -69,7 +71,9 @@ pub fn mix(project: &PathBuf, stream_name: &str) -> Result<()> {
   // 3. Diff the two states from their common ancestor
   // 4. Apply non-conflicting deltas to the working draft
   // 5. Report conflicts for manual resolution
-  println!("Mixing stream `{}` into `{}`", stream_name, active);
-  println!("(mix algorithm not yet implemented — scaffold only)");
+  // 5. Report conflicts for manual resolution
+  let log = Logger::new();
+  log.info(&format!("Mixing stream `{}` into `{}`", stream_name, active));
+  log.note("(mix algorithm not yet implemented — scaffold only)");
   Ok(())
 }

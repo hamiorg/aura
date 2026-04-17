@@ -18,7 +18,7 @@
 //!
 //! # Module access paths
 //!
-//! ```
+//! ```ignore
 //! compiler::parse::ast::Document
 //! compiler::parse::ast::Namespace
 //! compiler::parse::ast::Field

@@ -1,0 +1,175 @@
+schema::
+  root       -> https://hami.aduki.org/aura/1.0
+  kind       -> audio::music
+  lang       -> en-US
+  annotator  -> @annotator/p32hczi
+
+manifest::
+  name      ! -> "All I Ask"
+  creator   ! -> @person/p729sre
+
+lyrics::
+  line/01::
+    time    -> 13.75s~19.76s
+    text    -> "I will leave my heart at the door"
+    speaker -> @person/p729sre
+  line/02::
+    time    -> 19.76s~23.64s
+    text    -> "I won't say a word"
+    speaker -> @person/p729sre
+  line/03::
+    time    -> 23.64s~27.01s
+    text    -> "They've all been said before, you know"
+    speaker -> @person/p729sre
+  line/04::
+    time    -> 27.01s~33.15s
+    text    -> "So why don't we just play pretend"
+    speaker -> @person/p729sre
+  line/05::
+    time    -> 33.15s~37.00s
+    text    -> "Like we're not scared of what is coming next"
+    speaker -> @person/p729sre
+  line/06::
+    time    -> 37.00s~40.41s
+    text    -> "Or scared of having nothing left?"
+    speaker -> @person/p729sre
+  line/07::
+    time    -> 40.45s~43.61s
+    text    -> "Look, don't get me wrong"
+    speaker -> @person/p729sre
+  line/08::
+    time    -> 43.61s~50.89s
+    text    -> "I know there is no tomorrow"
+    speaker -> @person/p729sre
+  line/09::
+    time    -> 50.89s~54.33s
+    text    -> "All I ask is"
+    speaker -> @person/p729sre
+  line/10::
+    time    -> 54.39s~64.29s
+    text    -> "If this is my last night with you"
+    speaker -> @person/p729sre
+  line/11::
+    time    -> 64.29s~70.29s
+    text    -> "Hold me like I'm more than just a friend"
+    speaker -> @person/p729sre
+  line/12::
+    time    -> 70.29s~77.87s
+    text    -> "Give me a memory I can use"
+    speaker -> @person/p729sre
+  line/13::
+    time    -> 77.87s~86.18s
+    text    -> "Take me by the hand while we do what lovers do"
+    speaker -> @person/p729sre
+  line/14::
+    time    -> 86.18s~91.20s
+    text    -> "It matters how this ends"
+    speaker -> @person/p729sre
+  line/15::
+    time    -> 91.20s~96.20s
+    text    -> "'Cause what if I never love again?"
+    speaker -> @person/p729sre
+  line/16::
+    time    -> 108.42s~114.07s
+    text    -> "I don't need your honesty"
+    speaker -> @person/p729sre
+  line/17::
+    time    -> 114.07s~118.05s
+    text    -> "It's already in your eyes"
+    speaker -> @person/p729sre
+  line/18::
+    time    -> 118.05s~121.96s
+    text    -> "And I'm sure my eyes, they speak for me"
+    speaker -> @person/p729sre
+  line/19::
+    time    -> 121.96s~127.48s
+    text    -> "No one knows me like you do"
+    speaker -> @person/p729sre
+  line/20::
+    time    -> 127.48s~131.36s
+    text    -> "And since you're the only one that mattered"
+    speaker -> @person/p729sre
+  line/21::
+    time    -> 131.36s~135.13s
+    text    -> "Tell me, who do I run to?"
+    speaker -> @person/p729sre
+  line/22::
+    time    -> 135.13s~138.32s
+    text    -> "Look, don't get me wrong"
+    speaker -> @person/p729sre
+  line/23::
+    time    -> 138.32s~145.62s
+    text    -> "I know there is no tomorrow"
+    speaker -> @person/p729sre
+  line/24::
+    time    -> 145.62s~149.01s
+    text    -> "All I ask is"
+    speaker -> @person/p729sre
+  line/25::
+    time    -> 149.03s~158.95s
+    text    -> "If this is my last night with you"
+    speaker -> @person/p729sre
+  line/26::
+    time    -> 158.95s~164.97s
+    text    -> "Hold me like I'm more than just a friend"
+    speaker -> @person/p729sre
+  line/27::
+    time    -> 164.97s~172.52s
+    text    -> "Give me a memory I can use"
+    speaker -> @person/p729sre
+  line/28::
+    time    -> 172.52s~180.80s
+    text    -> "Take me by the hand while we do what lovers do"
+    speaker -> @person/p729sre
+  line/29::
+    time    -> 180.80s~185.85s
+    text    -> "It matters how this ends"
+    speaker -> @person/p729sre
+  line/30::
+    time    -> 185.85s~191.34s
+    text    -> "'Cause what if I never love again?"
+    speaker -> @person/p729sre
+  line/31::
+    time    -> 191.79s~198.57s
+    text    -> "Let this be our lesson in love"
+    speaker -> @person/p729sre
+  line/32::
+    time    -> 198.57s~205.10s
+    text    -> "Let this be the way we remember us"
+    speaker -> @person/p729sre
+  line/33::
+    time    -> 205.10s~212.51s
+    text    -> "I don't want to be cruel or vicious"
+    speaker -> @person/p729sre
+  line/34::
+    time    -> 212.51s~216.51s
+    text    -> "And I ain't asking for forgiveness"
+    speaker -> @person/p729sre
+  line/35::
+    time    -> 216.51s~219.90s
+    text    -> "All I ask is"
+    speaker -> @person/p729sre
+  line/36::
+    time    -> 219.93s~229.91s
+    text    -> "If this is my last night with you"
+    speaker -> @person/p729sre
+  line/37::
+    time    -> 229.91s~235.87s
+    text    -> "Hold me like I'm more than just a friend"
+    speaker -> @person/p729sre
+  line/38::
+    time    -> 235.87s~243.54s
+    text    -> "Give me a memory I can use"
+    speaker -> @person/p729sre
+  line/39::
+    time    -> 243.54s~251.79s
+    text    -> "Take me by the hand while we do what lovers do"
+    speaker -> @person/p729sre
+  line/40::
+    time    -> 251.79s~256.76s
+    text    -> "It matters how this ends"
+    speaker -> @person/p729sre
+  line/41::
+    time    -> 256.76s~265.74s
+    text    -> "'Cause what if I never love again?"
+    speaker -> @person/p729sre

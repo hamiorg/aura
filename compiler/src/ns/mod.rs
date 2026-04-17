@@ -4,12 +4,12 @@
 //!
 //! | Module   | Responsibility                                           |
 //! | -------- | -------------------------------------------------------- |
-//! | `load`   | Reads `namespace.aura` files; builds the symbol table    |
+//! | `load`   | Reads `name.aura` files; builds the symbol table         |
 //! | `export` | Resolves the `exports::` block in the root manifest      |
 //!
 //! # Module access paths
 //!
-//! ```
+//! ```ignore
 //! compiler::ns::load::NamespaceLoader
 //! compiler::ns::load::Manifest
 //! compiler::ns::load::Entry

@@ -1,0 +1,5 @@
+stores::
+
+  primary::
+    uri  -> aura://store.hami.aduki.org/catalogs/PLACEHOLDER
+    kind -> aduki

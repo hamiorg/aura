@@ -1,0 +1,5 @@
+annotators::
+
+  p32hczi::
+    name  -> "Local System User"
+    roles -> annotator | editor

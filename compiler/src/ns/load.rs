@@ -1,41 +1,45 @@
-//! Namespace loader — reads `namespace.aura` files and builds the
+//! Namespace loader — reads `name.aura` files and builds the
 //! project symbol table.
 //!
-//! Every AURA project has a `namespace.aura` at its root. Every
+//! Every AURA project has a `name.aura` at its root. Every
 //! sub-folder (`info/`, `meta/`, `tracks/`, etc.) also has one.
 //! Together they form the complete project index.
 //!
-//! # Root `namespace.aura`
+//! # Root `name.aura`
+//!
+//! The compiler entry point. Contains the `name::` block with the
+//! project ID, kind, slug, and lang, followed by an `exports::` block:
 //!
 //! ```aura
-//! schema::
+//! name::
+//!   id        -> c8xab3d
 //!   root      -> https://hami.aduki.org/aura/1.0
-//!   kind      -> audio::music
-//!   namespace -> signal-loss-album
+//!   kind      -> audio::album
+//!   slug      -> signal-loss
 //!   lang      -> en-US
 //!
 //! exports::
 //!   info      -> @info/metadata
 //!   people    -> @info/people
 //!   tracks    -> @tracks/*
-//!   collection -> c8xab3d.aura
 //! ```
 //!
-//! # Sub-folder `namespace.aura`
+//! # Sub-folder `name.aura`
 //!
 //! ```aura
-//! namespace::
-//!   folder    -> tracks
-//!   contains::
-//!     t7xab3c -> "Signal Loss"
-//!     t4mn2rp -> "Fold"
+//! name::
+//!   folder -> tracks
+//!
+//! contains::
+//!   t7xab3c -> "Signal Loss"
+//!   t4mn2rp -> "Fold"
 //! ```
 
 use crate::error::{CompileError, Result};
 use crate::parse::resolve::SymbolTable;
 use std::path::{Path, PathBuf};
 
-/// A single entry in a sub-folder `namespace.aura` — an ID + label.
+/// A single entry in a sub-folder `name.aura` — an ID + label.
 #[derive(Debug, Clone)]
 pub struct Entry {
   /// Generated ID, e.g. `"t7xab3c"`.
@@ -44,7 +48,7 @@ pub struct Entry {
   pub label: Option<String>,
 }
 
-/// The parsed contents of a `namespace.aura` file.
+/// The parsed contents of a `name.aura` file.
 #[derive(Debug, Clone)]
 pub struct Manifest {
   /// The folder this namespace describes (relative to project root).
@@ -57,7 +61,7 @@ pub struct Manifest {
 pub struct NamespaceLoader {
   /// Project root directory.
   root: PathBuf,
-  /// Accumulated symbol table across all `namespace.aura` files.
+  /// Accumulated symbol table across all `name.aura` files.
   pub table: SymbolTable,
   /// All discovered namespace manifests.
   pub manifests: Vec<Manifest>,
@@ -73,10 +77,10 @@ impl NamespaceLoader {
     }
   }
 
-  /// Reads and indexes all `namespace.aura` files starting from the
+  /// Reads and indexes all `name.aura` files starting from the
   /// project root and recursing into standard sub-folders.
   pub fn load(&mut self) -> Result<()> {
-    // Standard sub-folders that may contain `namespace.aura`.
+    // Standard sub-folders that may contain `name.aura`.
     let dirs = [
       "", // project root
       "info",
@@ -94,9 +98,9 @@ impl NamespaceLoader {
 
     for dir in &dirs {
       let path = if dir.is_empty() {
-        self.root.join("namespace.aura")
+        self.root.join("name.aura")
       } else {
-        self.root.join(dir).join("namespace.aura")
+        self.root.join(dir).join("name.aura")
       };
 
       if path.exists() {
@@ -107,12 +111,12 @@ impl NamespaceLoader {
     Ok(())
   }
 
-  /// Loads a single `namespace.aura` and registers its entries.
+  /// Loads a single `name.aura` and registers its entries.
   pub fn load_one(&mut self, path: &Path) -> Result<()> {
     let text = std::fs::read_to_string(path)
       .map_err(|e| CompileError::msg(format!("cannot read `{}`: {}", path.display(), e)))?;
 
-    let manifest = parse_namespace_file(&text, path)?;
+    let manifest = parse_name_file(&text, path)?;
 
     for entry in &manifest.entries {
       let key = format!("{}/{}", manifest.folder, entry.id);
@@ -124,15 +128,31 @@ impl NamespaceLoader {
   }
 }
 
-/// Minimal parser for `namespace.aura` — extracts folder and entry IDs.
+/// Minimal parser for `name.aura` — extracts folder and entry IDs.
 ///
-/// This is a simplified line-by-line parser sufficient for the namespace
-/// manifest format. Full AURA parsing (via the lex/parse pipeline) is
-/// used for content files.
-fn parse_namespace_file(text: &str, path: &Path) -> Result<Manifest> {
+/// Handles two forms:
+///
+/// **Root `name.aura`** (project entry) — extracts the project ID
+/// from the `name::id ->` field and registers it:
+/// ```aura
+/// name::
+///   id -> c8xab3d
+///   slug -> signal-loss
+/// ```
+///
+/// **Sub-folder `name.aura`** (folder index) — extracts `folder` name
+/// and `contains::` entries:
+/// ```aura
+/// name::
+///   folder -> tracks
+/// contains::
+///   t7xab3c -> "Signal Loss"
+/// ```
+fn parse_name_file(text: &str, path: &Path) -> Result<Manifest> {
   let mut folder = String::new();
   let mut entries = Vec::new();
 
+  let mut in_name_block = false;
   let mut in_contains = false;
 
   for line in text.lines() {
@@ -143,32 +163,59 @@ fn parse_namespace_file(text: &str, path: &Path) -> Result<Manifest> {
       continue;
     }
 
-    // `folder -> name`
-    if let Some(rest) = trimmed.strip_prefix("folder") {
-      if let Some(val) = extract_arrow_value(rest) {
-        folder = val.to_string();
-      }
+    // Block openers
+    if trimmed == "name::" {
+      in_name_block = true;
+      in_contains = false;
+      continue;
+    }
+    if trimmed == "contains::" {
+      in_contains = true;
+      in_name_block = false;
+      continue;
+    }
+    // Any other block opener resets context
+    if trimmed.ends_with("::") {
+      in_name_block = false;
       in_contains = false;
       continue;
     }
 
-    // `contains::`
-    if trimmed == "contains::" {
-      in_contains = true;
+    // Inside name:: block: look for `folder ->` or `id ->`
+    if in_name_block {
+      if let Some(rest) = trimmed.strip_prefix("folder") {
+        if let Some(val) = extract_arrow_value(rest) {
+          folder = val.to_string();
+        }
+        continue;
+      }
+      // `id ->` in root name.aura — register as the root project ID
+      if let Some(rest) = trimmed.strip_prefix("id") {
+        if let Some(val) = extract_arrow_value(rest) {
+          // Root name.aura has id at root level — register as root entry
+          entries.push(Entry {
+            id: val.to_string(),
+            label: None,
+          });
+        }
+        continue;
+      }
       continue;
     }
 
-    // Inside contains block: `id -> "Label"` or `- id`
+    // Inside contains:: block: `id -> "Label"` or `- id`
     if in_contains {
       // `id -> "Label"` form
       if let Some(arrow_pos) = trimmed.find("->") {
         let id = trimmed[..arrow_pos].trim().to_string();
-        let label_raw = trimmed[arrow_pos + 2..].trim();
-        let label = label_raw.trim_matches('"').to_string();
-        entries.push(Entry {
-          id,
-          label: Some(label),
-        });
+        if !id.is_empty() && !id.starts_with('#') {
+          let label_raw = trimmed[arrow_pos + 2..].trim();
+          let label = label_raw.trim_matches('"').to_string();
+          entries.push(Entry {
+            id,
+            label: Some(label),
+          });
+        }
       }
       // `- id` list form
       else if let Some(id) = trimmed.strip_prefix("- ") {

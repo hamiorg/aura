@@ -1,0 +1,163 @@
+schema::
+  root       -> https://hami.aduki.org/aura/1.0
+  kind       -> audio::music
+  lang       -> en-US
+  annotator  -> @annotator/p32hczi
+
+manifest::
+  name      ! -> "Remedy"
+  creator   ! -> @person/p729sre
+
+lyrics::
+  line/01::
+    time    -> 9.59s~18.35s
+    text    -> "I remember all of the things that I thought I wanted to be"
+    speaker -> @person/p729sre
+  line/02::
+    time    -> 18.35s~26.33s
+    text    -> "So desperate to find a way out of my world and finally breathe"
+    speaker -> @person/p729sre
+  line/03::
+    time    -> 26.33s~30.89s
+    text    -> "Right before my eyes, I saw"
+    speaker -> @person/p729sre
+  line/04::
+    time    -> 30.89s~34.98s
+    text    -> "My heart, it came to life"
+    speaker -> @person/p729sre
+  line/05::
+    time    -> 34.98s~37.06s
+    text    -> "This ain't easy"
+    speaker -> @person/p729sre
+  line/06::
+    time    -> 37.06s~39.33s
+    text    -> "It's not meant to be"
+    speaker -> @person/p729sre
+  line/07::
+    time    -> 39.33s~43.71s
+    text    -> "Every story has its scars"
+    speaker -> @person/p729sre
+  line/08::
+    time    -> 43.98s~48.44s
+    text    -> "But when the pain cuts you deep"
+    speaker -> @person/p729sre
+  line/09::
+    time    -> 48.44s~53.06s
+    text    -> "And when the night keeps you from sleeping"
+    speaker -> @person/p729sre
+  line/10::
+    time    -> 53.06s~56.65s
+    text    -> "Just look and you will see"
+    speaker -> @person/p729sre
+  line/11::
+    time    -> 56.65s~62.01s
+    text    -> "That I will be your remedy"
+    speaker -> @person/p729sre
+  line/12::
+    time    -> 62.01s~66.05s
+    text    -> "When the world seems so cruel"
+    speaker -> @person/p729sre
+  line/13::
+    time    -> 66.05s~70.77s
+    text    -> "And your heart makes you feel like a fool"
+    speaker -> @person/p729sre
+  line/14::
+    time    -> 70.77s~74.46s
+    text    -> "I promise you will see"
+    speaker -> @person/p729sre
+  line/15::
+    time    -> 74.46s~83.40s
+    text    -> "That I will be, I will be your remedy"
+    speaker -> @person/p729sre
+  line/16::
+    time    -> 89.54s~98.34s
+    text    -> "No river is too wide or too deep for me to swim to you"
+    speaker -> @person/p729sre
+  line/17::
+    time    -> 98.34s~106.39s
+    text    -> "Come whatever, I'll be the shelter that won't let the rain come through"
+    speaker -> @person/p729sre
+  line/18::
+    time    -> 106.39s~110.88s
+    text    -> "Your love, it is my truth"
+    speaker -> @person/p729sre
+  line/19::
+    time    -> 110.88s~115.69s
+    text    -> "And I will always love you"
+    speaker -> @person/p729sre
+  line/20::
+    time    -> 115.69s~118.25s
+    text    -> "Love you, oh"
+    speaker -> @person/p729sre
+  line/21::
+    time    -> 119.79s~124.03s
+    text    -> "When the pain cuts you deep"
+    speaker -> @person/p729sre
+  line/22::
+    time    -> 124.03s~128.65s
+    text    -> "And when the night keeps you from sleeping"
+    speaker -> @person/p729sre
+  line/23::
+    time    -> 128.65s~132.19s
+    text    -> "Just look and you will see"
+    speaker -> @person/p729sre
+  line/24::
+    time    -> 132.19s~137.56s
+    text    -> "That I will be your remedy"
+    speaker -> @person/p729sre
+  line/25::
+    time    -> 137.56s~141.60s
+    text    -> "When the world seems so cruel"
+    speaker -> @person/p729sre
+  line/26::
+    time    -> 141.60s~146.38s
+    text    -> "And your heart makes you feel like a fool"
+    speaker -> @person/p729sre
+  line/27::
+    time    -> 146.38s~149.98s
+    text    -> "I promise you will see"
+    speaker -> @person/p729sre
+  line/28::
+    time    -> 149.98s~159.59s
+    text    -> "That I will be, I will be your remedy, oh-oh"
+    speaker -> @person/p729sre
+  line/29::
+    time    -> 177.23s~181.78s
+    text    -> "When the pain cuts you deep"
+    speaker -> @person/p729sre
+  line/30::
+    time    -> 181.78s~186.45s
+    text    -> "And the night keeps you from sleeping"
+    speaker -> @person/p729sre
+  line/31::
+    time    -> 186.45s~190.20s
+    text    -> "Just look and you will see"
+    speaker -> @person/p729sre
+  line/32::
+    time    -> 190.20s~195.26s
+    text    -> "I will be, I will be"
+    speaker -> @person/p729sre
+  line/33::
+    time    -> 195.26s~199.35s
+    text    -> "When the world seems so cruel"
+    speaker -> @person/p729sre
+  line/34::
+    time    -> 199.35s~204.24s
+    text    -> "And your heart makes you feel like a fool"
+    speaker -> @person/p729sre
+  line/35::
+    time    -> 204.24s~207.65s
+    text    -> "I promise you will see"
+    speaker -> @person/p729sre
+  line/36::
+    time    -> 207.65s~219.64s
+    text    -> "That I will be, I will be, I will be"
+    speaker -> @person/p729sre
+  line/37::
+    time    -> 219.64s~223.31s
+    text    -> "Your remedy"
+    speaker -> @person/p729sre
+  line/38::
+    time    -> 223.83s~228.12s
+    text    -> "Mm-hmm, mm-hmm"
+    speaker -> @person/p729sre

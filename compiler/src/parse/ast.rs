@@ -8,7 +8,7 @@
 //!
 //! ```text
 //! Document
-//!   └── Namespace ("manifest::", "verse/one::", ...)
+//!   └── Namespace ("manifest::", "verse/one::", "$live::", ...)
 //!         ├── Field  (key -> value)
 //!         ├── Field  (key -> reference)
 //!         └── Namespace (nested block)
@@ -16,6 +16,12 @@
 //!
 //! Nodes are identified by slash-identifiers (`verse/one`, `chorus/two`)
 //! which the diff engine uses for node-level history tracking.
+//!
+//! # Vocab slug escaping
+//!
+//! Namespace blocks prefixed with `$` (e.g. `$live::`, `$dark::`) are
+//! raw vocabulary slugs. The `$` is stored in `name` but stripped when
+//! resolving the actual slug. `raw_slug = true` disables W006 checking.
 
 use crate::error::Span;
 use aura::interval::Interval;
@@ -47,9 +53,10 @@ pub struct Document<'src> {
 /// - `manifest::` — collection manifest
 /// - `verse/one::` — first verse (content node)
 /// - `support::` — container for all support nodes
+/// - `$live::` — raw vocab slug block (W006 skipped inside)
 #[derive(Debug, Clone)]
 pub struct Namespace<'src> {
-  /// The name before `::`, e.g. `"manifest"`, `"verse/one"`.
+  /// The name before `::`, e.g. `"manifest"`, `"verse/one"`, `"$live"`.
   pub name: &'src str,
   /// Slash-identifier path for this node in the AST, e.g.
   /// `"verse/one"` or `"support/segments/intro/one"`.
@@ -60,6 +67,9 @@ pub struct Namespace<'src> {
   pub span: Span,
   /// Node type inferred from the name (e.g. `verse`, `chorus`, `scene`).
   pub node_type: NodeType,
+  /// `true` if this block was opened with `$name::` — a raw vocabulary slug.
+  /// W006 key-checking is skipped for all fields within raw-slug blocks.
+  pub raw_slug: bool,
 }
 
 /// A child item inside a namespace block.
@@ -186,6 +196,10 @@ pub enum RefBody<'src> {
 /// This is used by the emitter to assign the correct ATOM `node_class`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum NodeType {
+  // --- Project entry / folder index ---
+  /// `name::` — the project entry identifier block in `name.aura`.
+  Name,
+
   // --- Schema/manifest (non-interval) ---
   Schema,
   Manifest,
@@ -201,6 +215,16 @@ pub enum NodeType {
   Availability,
   Info,
   Meta,
+
+  // --- Collection sub-containers ---
+  /// `tracks::` — container for track member list in a manifest.
+  Tracks,
+  /// `episodes::` — container for episode member list.
+  Episodes,
+  /// `scenes::` — container for scene member list.
+  Scenes,
+  /// `variants::` — container for variant list.
+  Variants,
 
   // --- Content nodes (interval-indexed) ---
   Act,
@@ -265,6 +289,9 @@ pub enum NodeType {
   Rent,
   Download,
 
+  /// Vocab slug — a `$name::` block inside a vocab container.
+  VocabSlug,
+
   /// Unknown — the name didn't match any known type.
   Unknown,
 }
@@ -273,10 +300,16 @@ impl NodeType {
   /// Infers the node type from the first segment of a namespace name.
   ///
   /// E.g. `"verse/one"` → `NodeType::Verse`,
-  ///       `"support"` → `NodeType::Support`.
+  ///       `"support"` → `NodeType::Support`,
+  ///       `"$live"` → `NodeType::VocabSlug`.
   pub fn from_name(name: &str) -> Self {
+    // `$`-prefixed names are always vocab slugs.
+    if name.starts_with('$') {
+      return Self::VocabSlug;
+    }
     let segment = name.split('/').next().unwrap_or(name);
     match segment {
+      "name" => Self::Name,
       "schema" => Self::Schema,
       "manifest" => Self::Manifest,
       "directives" => Self::Directives,
@@ -291,6 +324,10 @@ impl NodeType {
       "availability" => Self::Availability,
       "info" => Self::Info,
       "meta" => Self::Meta,
+      "tracks" => Self::Tracks,
+      "episodes" => Self::Episodes,
+      "scenes" => Self::Scenes,
+      "variants" => Self::Variants,
       "act" => Self::Act,
       "scene" => Self::Scene,
       "shot" => Self::Shot,

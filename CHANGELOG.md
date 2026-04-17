@@ -13,6 +13,52 @@ Nothing yet.
 
 ---
 
+## [0.3.0-alpha.2] — 2026-04-17
+
+### Added
+
+- **`name.aura` as project entry point.** `aura init` now generates `name.aura`
+  instead of the old `namespace.aura` + `{id}.aura` pair. The root `name.aura`
+  contains:
+  - `name::` block with `id`, `root`, `kind`, `slug`, `lang`, `annotator`
+  - `manifest::` block with `name`, `creator`, `version`, `released`, `access`
+  - `tracks::members::` (for album/music kinds)
+  - `exports::` block
+
+- **Sub-folder `name.aura`.** Each content subfolder gets a `name.aura` with
+  `name::folder ->` and `contains::` blocks. `aura add` appends to `contains::`.
+
+- **`ref` key** replaces `aura-ref` in collection member blocks. W002 deprecation
+  warning fires on any file still using `aura-ref`.
+
+- **`$` vocab slug escape sigil.** `$identifier::` is now a valid namespace block
+  opener. The `$` prefix signals a raw vocabulary slug that may match an AURA
+  keyword (e.g. `$live::`, `$dark::` in `meta/moods.aura`). W006 is suppressed
+  inside `$`-prefixed blocks. `Namespace.raw_slug = true`.
+
+- **New `NodeType` variants:** `Name`, `Tracks`, `Episodes`, `Scenes`, `Variants`,
+  `VocabSlug` — covering collection sub-containers and the project entry block.
+
+- **`project_stem()` reads `id` from `name.aura`.** The output filename in `dist/`
+  is derived from `name::id ->` in the root `name.aura`. Falls back to scanning
+  root `.aura` files and then the folder name for backward compatibility.
+
+### Changed
+
+- `ns/load.rs` now discovers `name.aura` files (not `namespace.aura`). The minimal
+  parser handles the new `name::` block format with `id ->` and `folder ->` fields.
+
+- `aura init` output message shows `Entry point: name.aura` and `Project ID: {id}`.
+
+- `aura add` registers new files in `{folder}/name.aura`'s `contains::` block.
+
+### Fixed
+
+- Doctest code-block examples in module doc comments are now marked `ignore`
+  to prevent false doctest failures.
+
+---
+
 ## [0.3.0-alpha.1] — 2026-04-17
 
 ### Added

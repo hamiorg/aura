@@ -1,0 +1,13 @@
+moods::
+
+  melancholic::
+    name -> "Melancholic"
+
+  nostalgic::
+    name -> "Nostalgic"
+
+  reflective::
+    name -> "Reflective"
+
+  heartbroken::
+    name -> "Heartbroken"

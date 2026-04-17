@@ -1,0 +1,11 @@
+studios::
+
+  lb2xlr8::
+    name    -> "XL Recordings"
+    kind    -> independent
+    country -> GB
+
+  lb3col8::
+    name    -> "Columbia Records"
+    kind    -> major
+    country -> US

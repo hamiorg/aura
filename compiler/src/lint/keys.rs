@@ -22,6 +22,9 @@ pub fn valid_keys() -> HashSet<&'static str> {
     "mood-vocabulary",
     "store",
     "variation-default",
+    // name.aura entry block fields
+    "id",
+    "slug",
   ]);
 
   // Manifest / collection
@@ -49,29 +52,78 @@ pub fn valid_keys() -> HashSet<&'static str> {
 
   // People / annotators
   s.extend([
-    "first", "middle", "last", "screen", "legal", "contact", "roles", "country",
+    "first", "middle", "last", "screen", "legal", "contact", "roles", "country", "born", "bio",
+    "city",
   ]);
 
   // Content nodes
-  s.extend(["time", "text", "lyrics", "note", "lang"]);
+  s.extend(["time", "text", "lyrics", "note", "lang", "duration"]);
 
   // Vocabulary
   s.extend([
     "genre", "genres", "role", "roles", "mood", "moods", "slug", "parent", "region",
+    // Mood-specific vocabulary fields
+    "valence", "energy",
+  ]);
+
+  // Music / media metadata
+  s.extend([
+    "bpm",
+    "grid",
+    "key",
+    "isrc",
+    "iswc",
+    "license",
+    "expires",
+    "show",
+    "season",
+    "episode",
+    "synopsis",
+    "tags",
+    "links",
+    "family",
+    "active",
+    "stem",
+    "label",
+    "locale",
+    "script",
+    "territory",
+    "count",
+    "index",
+    "hash",
+    "main",
+    "vocals",
+    "producer",
+    "writer",
+    "mixer",
+    "master",
+    "director",
+    "editor",
+    "narrator",
+    "cast",
+    "host",
+    "guest",
+    "speaker",
+    "speakers",
   ]);
 
   // Media / assets
   s.extend([
-    "url", "ratio", "loop", "duration", "format", "codec", "rating",
+    "url", "ratio", "loop", "format", "codec", "rating", "motion", "trailer", "studio", "logo",
+    "website",
   ]);
 
   // Industry entities
-  s.extend(["logo", "website", "founded"]);
+  s.extend(["founded"]);
 
   // Availability / distribution
   s.extend([
-    "platform", "price", "watch", "buy", "rent", "download", "blocked", "holder", "scope",
+    "platform", "price", "currency", "window", "drm", "quality", "watch", "buy", "rent",
+    "download", "blocked", "holder", "scope",
   ]);
+
+  // LLM / toolchain configs
+  s.extend(["provider", "model", "endpoint", "auth", "env"]);
 
   // History
   s.extend([
@@ -96,6 +148,21 @@ pub fn valid_keys() -> HashSet<&'static str> {
     "via",
     "max",
     "performer",
+    // ref: cross-boundary reference within a collection member block
+    "ref",
+    // persons-ref: people index reference
+    "persons-ref",
+  ]);
+
+  // Approved hyphenated keys
+  s.extend([
+    "pre-chorus",
+    "post-chorus",
+    "lead-vocal",
+    "co-writer",
+    "voice-over",
+    "rights-holder",
+    "fill-policy",
   ]);
 
   s

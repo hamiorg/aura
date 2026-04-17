@@ -26,7 +26,7 @@
 //!
 //! # Module access paths
 //!
-//! ```
+//! ```ignore
 //! compiler::hist::store::HistoryStore
 //! compiler::hist::delta::DeltaEngine
 //! compiler::hist::replay::DeltaReplayer

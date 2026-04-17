@@ -215,6 +215,15 @@ impl<'src> Scanner<'src> {
       return self.scan_key_or_bare(start);
     }
 
+    // --- Vocab slug escape `$identifier` ---
+    // `$` prefixes a namespace block name that is a raw vocabulary slug,
+    // allowing slugs like `$live`, `$dark` that would otherwise clash with
+    // AURA boolean keywords. The `$` is included in the Key token value.
+    if byte == b'$' {
+      self.pos += 1;
+      return self.scan_dollar_key(start);
+    }
+
     // Unknown byte — emit a hard error.
     Err(CompileError::msg(format!(
       "unexpected byte `{:?}` (0x{:02X}) at line {}",
@@ -323,6 +332,32 @@ impl<'src> Scanner<'src> {
       Kind::Key(s)
     };
     Ok(self.tok(kind, start))
+  }
+
+  /// Scans a `$identifier` vocab slug escape key.
+  ///
+  /// The `$` has already been consumed. Reads the following identifier
+  /// (letters, digits, hyphens, underscores) and emits a `Key("$name")`
+  /// token. The `$` prefix signals to the parser that this is a raw
+  /// vocabulary slug and not an AURA structural keyword.
+  fn scan_dollar_key(&mut self, dollar_start: usize) -> Result<Token<'src>> {
+    let ident_start = self.pos;
+    while let Some(b) = self.peek() {
+      if b.is_ascii_alphanumeric() || b == b'-' || b == b'_' {
+        self.pos += 1;
+      } else {
+        break;
+      }
+    }
+    if self.pos == ident_start {
+      return Err(CompileError::msg(format!(
+        "expected identifier after `$` at line {}",
+        self.line
+      )));
+    }
+    // Emit a Key that spans from `$` to end of identifier.
+    let s = self.slice(dollar_start, self.pos);
+    Ok(self.tok(Kind::Key(s), dollar_start))
   }
 }
 

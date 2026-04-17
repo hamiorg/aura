@@ -1,0 +1,275 @@
+schema::
+  root       -> https://hami.aduki.org/aura/1.0
+  kind       -> audio::music
+  lang       -> en-US
+  annotator  -> @annotator/p32hczi
+
+manifest::
+  name      ! -> "I Miss You"
+  creator   ! -> @person/p729sre
+
+lyrics::
+  line/01::
+    time    -> 48.71s~53.01s
+    text    -> "I want every single piece of you"
+    speaker -> @person/p729sre
+  line/02::
+    time    -> 53.01s~58.01s
+    text    -> "I want your heaven and your oceans too"
+    speaker -> @person/p729sre
+  line/03::
+    time    -> 58.01s~61.49s
+    text    -> "Treat me soft but touch me cruel"
+    speaker -> @person/p729sre
+  line/04::
+    time    -> 61.49s~66.60s
+    text    -> "I wanna teach you things you never knew, baby"
+    speaker -> @person/p729sre
+  line/05::
+    time    -> 66.60s~70.15s
+    text    -> "Bring the floor up to my knees"
+    speaker -> @person/p729sre
+  line/06::
+    time    -> 70.15s~74.70s
+    text    -> "Let me fall into your gravity"
+    speaker -> @person/p729sre
+  line/07::
+    time    -> 74.70s~79.00s
+    text    -> "Then kiss me back to life to see"
+    speaker -> @person/p729sre
+  line/08::
+    time    -> 79.00s~81.91s
+    text    -> "Your body standing over me"
+    speaker -> @person/p729sre
+  line/09::
+    time    -> 81.92s~85.91s
+    text    -> "Baby, don't let the lights go down"
+    speaker -> @person/p729sre
+  line/10::
+    time    -> 85.91s~90.21s
+    text    -> "Baby, don't let the lights go down"
+    speaker -> @person/p729sre
+  line/11::
+    time    -> 90.21s~92.55s
+    text    -> "Baby, don't let the lights go down"
+    speaker -> @person/p729sre
+  line/12::
+    time    -> 92.55s~94.68s
+    text    -> "Lights go down, lights go down"
+    speaker -> @person/p729sre
+  line/13::
+    time    -> 94.68s~97.40s
+    text    -> "Lights go down, lights go down"
+    speaker -> @person/p729sre
+  line/14::
+    time    -> 97.40s~100.23s
+    text    -> "Down, down, down"
+    speaker -> @person/p729sre
+  line/15::
+    time    -> 100.24s~104.30s
+    text    -> "I miss you when the lights go out"
+    speaker -> @person/p729sre
+  line/16::
+    time    -> 104.30s~109.10s
+    text    -> "It illuminates all of my doubts"
+    speaker -> @person/p729sre
+  line/17::
+    time    -> 109.10s~113.24s
+    text    -> "Pull me in, hold me tight"
+    speaker -> @person/p729sre
+  line/18::
+    time    -> 113.24s~117.23s
+    text    -> "Don't let go, baby, give me light"
+    speaker -> @person/p729sre
+  line/19::
+    time    -> 117.23s~121.26s
+    text    -> "I miss you when the lights go out"
+    speaker -> @person/p729sre
+  line/20::
+    time    -> 121.26s~126.02s
+    text    -> "It illuminates all of my doubts"
+    speaker -> @person/p729sre
+  line/21::
+    time    -> 126.02s~130.26s
+    text    -> "Pull me in, hold me tight"
+    speaker -> @person/p729sre
+  line/22::
+    time    -> 130.26s~134.22s
+    text    -> "Don't let go, baby, give me light"
+    speaker -> @person/p729sre
+  line/23::
+    time    -> 151.20s~155.44s
+    text    -> "I love the way your body moves"
+    speaker -> @person/p729sre
+  line/24::
+    time    -> 155.44s~160.02s
+    text    -> "Towards me from across the room"
+    speaker -> @person/p729sre
+  line/25::
+    time    -> 160.02s~164.21s
+    text    -> "Brushing past my every groove"
+    speaker -> @person/p729sre
+  line/26::
+    time    -> 164.21s~168.53s
+    text    -> "No one has me like you do, baby"
+    speaker -> @person/p729sre
+  line/27::
+    time    -> 168.53s~172.19s
+    text    -> "Bring your heart, I'll bring my soul"
+    speaker -> @person/p729sre
+  line/28::
+    time    -> 172.19s~176.24s
+    text    -> "But be delicate with my ego"
+    speaker -> @person/p729sre
+  line/29::
+    time    -> 176.24s~180.93s
+    text    -> "I want to step into your great unknown"
+    speaker -> @person/p729sre
+  line/30::
+    time    -> 180.93s~183.84s
+    text    -> "With you and me setting the tone"
+    speaker -> @person/p729sre
+  line/31::
+    time    -> 183.85s~187.86s
+    text    -> "Baby, don't let the lights go down"
+    speaker -> @person/p729sre
+  line/32::
+    time    -> 187.86s~192.07s
+    text    -> "Baby, don't let the lights go down"
+    speaker -> @person/p729sre
+  line/33::
+    time    -> 192.07s~194.57s
+    text    -> "Baby, don't let the lights go down"
+    speaker -> @person/p729sre
+  line/34::
+    time    -> 194.57s~196.62s
+    text    -> "Lights go down, lights go down"
+    speaker -> @person/p729sre
+  line/35::
+    time    -> 196.62s~199.29s
+    text    -> "Lights go down, lights go down"
+    speaker -> @person/p729sre
+  line/36::
+    time    -> 199.29s~202.12s
+    text    -> "Down, down, down"
+    speaker -> @person/p729sre
+  line/37::
+    time    -> 202.17s~206.26s
+    text    -> "I miss you when the lights go out"
+    speaker -> @person/p729sre
+  line/38::
+    time    -> 206.26s~211.01s
+    text    -> "It illuminates all of my doubts"
+    speaker -> @person/p729sre
+  line/39::
+    time    -> 211.01s~215.18s
+    text    -> "Pull me in, hold me tight"
+    speaker -> @person/p729sre
+  line/40::
+    time    -> 215.18s~219.17s
+    text    -> "Don't let go, baby, give me light"
+    speaker -> @person/p729sre
+  line/41::
+    time    -> 219.17s~223.23s
+    text    -> "I miss you when the lights go out"
+    speaker -> @person/p729sre
+  line/42::
+    time    -> 223.23s~227.96s
+    text    -> "It illuminates all of my doubts"
+    speaker -> @person/p729sre
+  line/43::
+    time    -> 227.96s~232.18s
+    text    -> "Pull me in, hold me tight"
+    speaker -> @person/p729sre
+  line/44::
+    time    -> 232.18s~236.14s
+    text    -> "Don't let go, baby, give me light"
+    speaker -> @person/p729sre
+  line/45::
+    time    -> 237.74s~246.24s
+    text    -> "We play so dirty in the dark"
+    speaker -> @person/p729sre
+  line/46::
+    time    -> 246.24s~254.23s
+    text    -> "'Cause we are living worlds apart"
+    speaker -> @person/p729sre
+  line/47::
+    time    -> 254.23s~260.58s
+    text    -> "It only makes it harder, baby"
+    speaker -> @person/p729sre
+  line/48::
+    time    -> 260.58s~263.99s
+    text    -> "It only makes it harder, baby"
+    speaker -> @person/p729sre
+  line/49::
+    time    -> 263.99s~266.11s
+    text    -> "Harder, baby"
+    speaker -> @person/p729sre
+  line/50::
+    time    -> 266.11s~269.31s
+    text    -> "Harder, baby"
+    speaker -> @person/p729sre
+  line/51::
+    time    -> 270.12s~274.20s
+    text    -> "I miss you when the lights go out"
+    speaker -> @person/p729sre
+  line/52::
+    time    -> 274.20s~278.93s
+    text    -> "It illuminates all of my doubts"
+    speaker -> @person/p729sre
+  line/53::
+    time    -> 278.93s~283.13s
+    text    -> "Pull me in, hold me tight"
+    speaker -> @person/p729sre
+  line/54::
+    time    -> 283.13s~287.16s
+    text    -> "Don't let go, baby, give me light"
+    speaker -> @person/p729sre
+  line/55::
+    time    -> 287.16s~291.11s
+    text    -> "I miss you when the lights go out"
+    speaker -> @person/p729sre
+  line/56::
+    time    -> 291.11s~295.89s
+    text    -> "It illuminates all of my doubts"
+    speaker -> @person/p729sre
+  line/57::
+    time    -> 295.89s~300.13s
+    text    -> "Pull me in, hold me tight"
+    speaker -> @person/p729sre
+  line/58::
+    time    -> 300.13s~304.08s
+    text    -> "Don't let go, baby, give me light"
+    speaker -> @person/p729sre
+  line/59::
+    time    -> 303.56s~308.39s
+    text    -> "I miss you"
+    speaker -> @person/p729sre
+  line/60::
+    time    -> 308.39s~312.06s
+    text    -> "I miss you"
+    speaker -> @person/p729sre
+  line/61::
+    time    -> 312.06s~316.84s
+    text    -> "I miss you"
+    speaker -> @person/p729sre
+  line/62::
+    time    -> 316.84s~320.66s
+    text    -> "I miss you"
+    speaker -> @person/p729sre
+  line/63::
+    time    -> 320.66s~325.33s
+    text    -> "I miss you"
+    speaker -> @person/p729sre
+  line/64::
+    time    -> 325.33s~329.06s
+    text    -> "I miss you"
+    speaker -> @person/p729sre
+  line/65::
+    time    -> 329.06s~333.84s
+    text    -> "I miss you"
+    speaker -> @person/p729sre
+  line/66::
+    time    -> 333.84s~336.84s
+    text    -> "I miss you"
+    speaker -> @person/p729sre

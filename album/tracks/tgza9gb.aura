@@ -1,0 +1,247 @@
+schema::
+  root       -> https://hami.aduki.org/aura/1.0
+  kind       -> audio::music
+  lang       -> en-US
+  annotator  -> @annotator/p32hczi
+
+manifest::
+  name      ! -> "Sweetest Devotion"
+  creator   ! -> @person/p729sre
+
+lyrics::
+  line/01::
+    time    -> 27.29s~29.76s
+    text    -> "With your lovin', there ain't nothin'"
+    speaker -> @person/p729sre
+  line/02::
+    time    -> 29.76s~31.94s
+    text    -> "That I can't adore"
+    speaker -> @person/p729sre
+  line/03::
+    time    -> 31.94s~34.15s
+    text    -> "The way I'm runnin' with you, honey"
+    speaker -> @person/p729sre
+  line/04::
+    time    -> 34.15s~36.56s
+    text    -> "Means we can break every law"
+    speaker -> @person/p729sre
+  line/05::
+    time    -> 36.56s~38.81s
+    text    -> "I find it funny that you're the only"
+    speaker -> @person/p729sre
+  line/06::
+    time    -> 38.81s~41.07s
+    text    -> "One I never looked for"
+    speaker -> @person/p729sre
+  line/07::
+    time    -> 41.07s~43.62s
+    text    -> "There is somethin' in your lovin'"
+    speaker -> @person/p729sre
+  line/08::
+    time    -> 43.62s~45.69s
+    text    -> "That tears down my walls"
+    speaker -> @person/p729sre
+  line/09::
+    time    -> 45.70s~47.26s
+    text    -> "I wasn't ready then (Ready then)"
+    speaker -> @person/p729sre
+  line/10::
+    time    -> 47.26s~48.45s
+    text    -> "I'm ready now (Ready now)"
+    speaker -> @person/p729sre
+  line/11::
+    time    -> 48.45s~50.47s
+    text    -> "I'm heading straight for you"
+    speaker -> @person/p729sre
+  line/12::
+    time    -> 50.47s~51.89s
+    text    -> "You will only be (Only be)"
+    speaker -> @person/p729sre
+  line/13::
+    time    -> 51.89s~52.98s
+    text    -> "Eternally (Eternally)"
+    speaker -> @person/p729sre
+  line/14::
+    time    -> 52.98s~55.08s
+    text    -> "The one that I belong to"
+    speaker -> @person/p729sre
+  line/15::
+    time    -> 55.09s~60.03s
+    text    -> "The sweetest devotion"
+    speaker -> @person/p729sre
+  line/16::
+    time    -> 60.03s~64.67s
+    text    -> "Hit me like an explosion"
+    speaker -> @person/p729sre
+  line/17::
+    time    -> 64.67s~68.94s
+    text    -> "All of my life I've been frozen"
+    speaker -> @person/p729sre
+  line/18::
+    time    -> 68.94s~77.56s
+    text    -> "The sweetest devotion I know"
+    speaker -> @person/p729sre
+  line/19::
+    time    -> 77.66s~82.66s
+    text    -> "Woo-ooh"
+    speaker -> @person/p729sre
+  line/20::
+    time    -> 82.66s~87.24s
+    text    -> "Woo-ooh"
+    speaker -> @person/p729sre
+  line/21::
+    time    -> 87.24s~91.81s
+    text    -> "Woo-ooh"
+    speaker -> @person/p729sre
+  line/22::
+    time    -> 91.81s~93.40s
+    text    -> "Woo-ooh"
+    speaker -> @person/p729sre
+  line/23::
+    time    -> 96.52s~99.09s
+    text    -> "I'll forever be whatever"
+    speaker -> @person/p729sre
+  line/24::
+    time    -> 99.09s~101.18s
+    text    -> "You want me to be"
+    speaker -> @person/p729sre
+  line/25::
+    time    -> 101.18s~103.63s
+    text    -> "I'd go under and all over"
+    speaker -> @person/p729sre
+  line/26::
+    time    -> 103.63s~105.82s
+    text    -> "For your clarity"
+    speaker -> @person/p729sre
+  line/27::
+    time    -> 105.82s~108.60s
+    text    -> "When you wonder if I'm gonna"
+    speaker -> @person/p729sre
+  line/28::
+    time    -> 108.60s~110.45s
+    text    -> "Lose my way home"
+    speaker -> @person/p729sre
+  line/29::
+    time    -> 110.45s~112.56s
+    text    -> "Just remember that come whatever"
+    speaker -> @person/p729sre
+  line/30::
+    time    -> 112.56s~114.85s
+    text    -> "I'll be yours all along"
+    speaker -> @person/p729sre
+  line/31::
+    time    -> 114.86s~116.62s
+    text    -> "I wasn't ready then (Ready then)"
+    speaker -> @person/p729sre
+  line/32::
+    time    -> 116.62s~117.68s
+    text    -> "I'm ready now (Ready now)"
+    speaker -> @person/p729sre
+  line/33::
+    time    -> 117.68s~119.58s
+    text    -> "I'm heading straight for you"
+    speaker -> @person/p729sre
+  line/34::
+    time    -> 119.58s~121.05s
+    text    -> "You will only be (Only be)"
+    speaker -> @person/p729sre
+  line/35::
+    time    -> 121.05s~122.27s
+    text    -> "Eternally (Eternally)"
+    speaker -> @person/p729sre
+  line/36::
+    time    -> 122.27s~124.23s
+    text    -> "The one that I belong to"
+    speaker -> @person/p729sre
+  line/37::
+    time    -> 124.24s~129.17s
+    text    -> "The sweetest devotion"
+    speaker -> @person/p729sre
+  line/38::
+    time    -> 129.17s~133.81s
+    text    -> "Hit me like an explosion"
+    speaker -> @person/p729sre
+  line/39::
+    time    -> 133.81s~138.24s
+    text    -> "All of my life I've been frozen"
+    speaker -> @person/p729sre
+  line/40::
+    time    -> 138.24s~146.34s
+    text    -> "The sweetest devotion I know"
+    speaker -> @person/p729sre
+  line/41::
+    time    -> 146.88s~151.87s
+    text    -> "Woo-ooh"
+    speaker -> @person/p729sre
+  line/42::
+    time    -> 151.87s~153.44s
+    text    -> "Woo-ooh"
+    speaker -> @person/p729sre
+  line/43::
+    time    -> 156.52s~159.13s
+    text    -> "I've been looking for you, baby"
+    speaker -> @person/p729sre
+  line/44::
+    time    -> 159.13s~165.68s
+    text    -> "In every face that I've ever known (Woo-ooh, woo-ooh)"
+    speaker -> @person/p729sre
+  line/45::
+    time    -> 165.68s~169.26s
+    text    -> "And there is something about the way you love me"
+    speaker -> @person/p729sre
+  line/46::
+    time    -> 169.26s~174.51s
+    text    -> "That finally feels like home"
+    speaker -> @person/p729sre
+  line/47::
+    time    -> 174.51s~179.47s
+    text    -> "You're my light, you're my darkness"
+    speaker -> @person/p729sre
+  line/48::
+    time    -> 179.47s~184.17s
+    text    -> "You're the right kind of madness"
+    speaker -> @person/p729sre
+  line/49::
+    time    -> 184.17s~188.74s
+    text    -> "You're my hope, you're my despair"
+    speaker -> @person/p729sre
+  line/50::
+    time    -> 188.74s~193.56s
+    text    -> "You're my scope of everything everywhere"
+    speaker -> @person/p729sre
+  line/51::
+    time    -> 193.57s~198.41s
+    text    -> "The sweetest devotion"
+    speaker -> @person/p729sre
+  line/52::
+    time    -> 198.41s~202.98s
+    text    -> "Hit me like an explosion"
+    speaker -> @person/p729sre
+  line/53::
+    time    -> 202.98s~207.46s
+    text    -> "All of my life, I've been frozen"
+    speaker -> @person/p729sre
+  line/54::
+    time    -> 207.46s~219.95s
+    text    -> "The sweetest devotion I know (Woo-ooh)"
+    speaker -> @person/p729sre
+  line/55::
+    time    -> 221.38s~225.97s
+    text    -> "(The sweetest, it's the sweetest)"
+    speaker -> @person/p729sre
+  line/56::
+    time    -> 225.97s~230.41s
+    text    -> "(The sweetest, it's the sweetest)"
+    speaker -> @person/p729sre
+  line/57::
+    time    -> 230.41s~235.08s
+    text    -> "(The sweetest, it's the sweetest)"
+    speaker -> @person/p729sre
+  line/58::
+    time    -> 235.08s~238.88s
+    text    -> "(The sweetest, it's the sweetest)"
+    speaker -> @person/p729sre
+  line/59::
+    time    -> 238.88s~241.53s
+    text    -> "Devotion"
+    speaker -> @person/p729sre

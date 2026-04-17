@@ -1,0 +1,19 @@
+roles::
+
+  producer::
+    name -> "Producer"
+
+  mixer::
+    name -> "Mixing Engineer"
+
+  writer::
+    name -> "Writer"
+
+  arranger::
+    name -> "Arranger"
+
+  vocalist::
+    name -> "Vocalist"
+
+  main-artist::
+    name -> "Main Artist"

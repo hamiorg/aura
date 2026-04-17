@@ -1,0 +1,10 @@
+schema::
+  root    -> https://hami.aduki.org/aura/1.0
+  kind    -> metadata
+  lang    -> en-US
+
+manifest::
+  name      ! -> "25"
+  creator   ! -> @person/p729sre
+  version     -> 1.0.0
+  released    -> 2015-11-20

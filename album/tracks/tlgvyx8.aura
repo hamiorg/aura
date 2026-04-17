@@ -1,0 +1,199 @@
+schema::
+  root       -> https://hami.aduki.org/aura/1.0
+  kind       -> audio::music
+  lang       -> en-US
+  annotator  -> @annotator/p32hczi
+
+manifest::
+  name      ! -> "Hello"
+  creator   ! -> @person/p729sre
+
+lyrics::
+  line/01::
+    time    -> 6.08s~11.74s
+    text    -> "Hello, it's me"
+    speaker -> @person/p729sre
+  line/02::
+    time    -> 11.74s~17.82s
+    text    -> "I was wondering if after all these years you'd like to meet"
+    speaker -> @person/p729sre
+  line/03::
+    time    -> 17.82s~23.47s
+    text    -> "To go over everything"
+    speaker -> @person/p729sre
+  line/04::
+    time    -> 23.47s~30.48s
+    text    -> "They say that time's supposed to heal ya, but I ain't done much healing"
+    speaker -> @person/p729sre
+  line/05::
+    time    -> 30.48s~35.98s
+    text    -> "Hello, can you hear me?"
+    speaker -> @person/p729sre
+  line/06::
+    time    -> 35.98s~41.91s
+    text    -> "I'm in California dreaming about who we used to be"
+    speaker -> @person/p729sre
+  line/07::
+    time    -> 41.91s~48.24s
+    text    -> "When we were younger and free"
+    speaker -> @person/p729sre
+  line/08::
+    time    -> 48.24s~53.97s
+    text    -> "I've forgotten how it felt before the world fell at our feet"
+    speaker -> @person/p729sre
+  line/09::
+    time    -> 53.97s~60.49s
+    text    -> "There's such a difference between us"
+    speaker -> @person/p729sre
+  line/10::
+    time    -> 60.49s~66.14s
+    text    -> "And a million miles"
+    speaker -> @person/p729sre
+  line/11::
+    time    -> 67.03s~72.82s
+    text    -> "Hello from the other side"
+    speaker -> @person/p729sre
+  line/12::
+    time    -> 72.82s~78.26s
+    text    -> "I must have called a thousand times"
+    speaker -> @person/p729sre
+  line/13::
+    time    -> 78.26s~84.06s
+    text    -> "To tell you I'm sorry for everything that I've done"
+    speaker -> @person/p729sre
+  line/14::
+    time    -> 84.06s~91.43s
+    text    -> "But when I call, you never seem to be home"
+    speaker -> @person/p729sre
+  line/15::
+    time    -> 91.43s~97.15s
+    text    -> "Hello from the outside"
+    speaker -> @person/p729sre
+  line/16::
+    time    -> 97.15s~102.55s
+    text    -> "At least I can say that I've tried"
+    speaker -> @person/p729sre
+  line/17::
+    time    -> 102.55s~108.37s
+    text    -> "To tell you I'm sorry for breaking your heart"
+    speaker -> @person/p729sre
+  line/18::
+    time    -> 108.37s~117.20s
+    text    -> "But it don't matter, it clearly doesn't tear you apart anymore"
+    speaker -> @person/p729sre
+  line/19::
+    time    -> 121.62s~127.12s
+    text    -> "Hello, how are you?"
+    speaker -> @person/p729sre
+  line/20::
+    time    -> 127.12s~133.62s
+    text    -> "It's so typical of me to talk about myself, I'm sorry"
+    speaker -> @person/p729sre
+  line/21::
+    time    -> 133.62s~139.33s
+    text    -> "I hope that you're well"
+    speaker -> @person/p729sre
+  line/22::
+    time    -> 139.33s~145.49s
+    text    -> "Did you ever make it out of that town where nothing ever happened?"
+    speaker -> @person/p729sre
+  line/23::
+    time    -> 145.49s~151.98s
+    text    -> "It's no secret that the both of us"
+    speaker -> @person/p729sre
+  line/24::
+    time    -> 151.98s~157.11s
+    text    -> "Are running out of time"
+    speaker -> @person/p729sre
+  line/25::
+    time    -> 157.85s~164.06s
+    text    -> "So hello from the other side"
+    speaker -> @person/p729sre
+  line/26::
+    time    -> 164.06s~169.44s
+    text    -> "I must have called a thousand times"
+    speaker -> @person/p729sre
+  line/27::
+    time    -> 169.44s~175.24s
+    text    -> "To tell you I'm sorry for everything that I've done"
+    speaker -> @person/p729sre
+  line/28::
+    time    -> 175.24s~182.59s
+    text    -> "But when I call, you never seem to be home"
+    speaker -> @person/p729sre
+  line/29::
+    time    -> 182.59s~188.34s
+    text    -> "Hello from the outside"
+    speaker -> @person/p729sre
+  line/30::
+    time    -> 188.34s~193.80s
+    text    -> "At least I can say that I've tried"
+    speaker -> @person/p729sre
+  line/31::
+    time    -> 193.80s~199.51s
+    text    -> "To tell you I'm sorry for breaking your heart"
+    speaker -> @person/p729sre
+  line/32::
+    time    -> 199.51s~209.87s
+    text    -> "But it don't matter, it clearly doesn't tear you apart anymore"
+    speaker -> @person/p729sre
+  line/33::
+    time    -> 209.56s~212.48s
+    text    -> "Ooh"
+    speaker -> @person/p729sre
+  line/34::
+    time    -> 212.48s~215.64s
+    text    -> "Anymore"
+    speaker -> @person/p729sre
+  line/35::
+    time    -> 215.64s~218.54s
+    text    -> "Ooh"
+    speaker -> @person/p729sre
+  line/36::
+    time    -> 218.54s~221.72s
+    text    -> "Anymore"
+    speaker -> @person/p729sre
+  line/37::
+    time    -> 221.72s~224.57s
+    text    -> "Ooh"
+    speaker -> @person/p729sre
+  line/38::
+    time    -> 224.57s~227.62s
+    text    -> "Anymore"
+    speaker -> @person/p729sre
+  line/39::
+    time    -> 227.62s~231.06s
+    text    -> "Anymore"
+    speaker -> @person/p729sre
+  line/40::
+    time    -> 231.14s~236.89s
+    text    -> "Hello from the other side"
+    speaker -> @person/p729sre
+  line/41::
+    time    -> 236.89s~242.42s
+    text    -> "I must have called a thousand times"
+    speaker -> @person/p729sre
+  line/42::
+    time    -> 242.42s~248.17s
+    text    -> "To tell you I'm sorry for everything that I've done"
+    speaker -> @person/p729sre
+  line/43::
+    time    -> 248.17s~255.46s
+    text    -> "But when I call, you never seem to be home"
+    speaker -> @person/p729sre
+  line/44::
+    time    -> 255.46s~261.19s
+    text    -> "Hello from the outside"
+    speaker -> @person/p729sre
+  line/45::
+    time    -> 261.19s~266.65s
+    text    -> "At least I can say that I've tried"
+    speaker -> @person/p729sre
+  line/46::
+    time    -> 266.65s~272.45s
+    text    -> "To tell you I'm sorry for breaking your heart"
+    speaker -> @person/p729sre
+  line/47::
+    time    -> 272.45s~282.58s
+    text    -> "But it don't matter, it clearly doesn't tear you apart anymore"
+    speaker -> @person/p729sre

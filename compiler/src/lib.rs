@@ -23,7 +23,7 @@
 //!
 //! # Module access paths
 //!
-//! ```
+//! ```ignore
 //! compiler::lex::scan::Scanner
 //! compiler::parse::ast::Document
 //! compiler::emit::atom::AtomEmitter

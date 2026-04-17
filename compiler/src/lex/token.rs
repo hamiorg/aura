@@ -23,6 +23,7 @@
 //! | `,`    | `Comma`        | Separates list elements              |
 //! | `>>`   | `Inherits`     | Extends a template or base schema    |
 //! | `*`    | `Wildcard`     | Match all in a namespace query       |
+//! | `$`    | (Key prefix)   | Vocab slug escape — raw vocabulary identifier |
 
 /// A lexer token with a source slice and position.
 ///

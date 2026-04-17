@@ -1,0 +1,159 @@
+schema::
+  root       -> https://hami.aduki.org/aura/1.0
+  kind       -> audio::music
+  lang       -> en-US
+  annotator  -> @annotator/p32hczi
+
+manifest::
+  name      ! -> "Million Years Ago"
+  creator   ! -> @person/p729sre
+
+lyrics::
+  line/01::
+    time    -> 2.98s~8.06s
+    text    -> "I only wanted to have fun"
+    speaker -> @person/p729sre
+  line/02::
+    time    -> 8.06s~12.41s
+    text    -> "Learning to fly, learning to run"
+    speaker -> @person/p729sre
+  line/03::
+    time    -> 12.41s~21.10s
+    text    -> "I let my heart decide the way when I was young"
+    speaker -> @person/p729sre
+  line/04::
+    time    -> 21.10s~25.88s
+    text    -> "Deep down I must have always known"
+    speaker -> @person/p729sre
+  line/05::
+    time    -> 25.88s~30.40s
+    text    -> "That this would be inevitable"
+    speaker -> @person/p729sre
+  line/06::
+    time    -> 30.40s~38.49s
+    text    -> "To earn my stripes, I'd have to pay and bare my soul"
+    speaker -> @person/p729sre
+  line/07::
+    time    -> 52.76s~58.05s
+    text    -> "I know I'm not the only one"
+    speaker -> @person/p729sre
+  line/08::
+    time    -> 58.05s~62.15s
+    text    -> "Who regrets the things they've done"
+    speaker -> @person/p729sre
+  line/09::
+    time    -> 62.15s~66.32s
+    text    -> "Sometimes I just feel it's only me"
+    speaker -> @person/p729sre
+  line/10::
+    time    -> 66.32s~71.19s
+    text    -> "Who can't stand the reflection that they see"
+    speaker -> @person/p729sre
+  line/11::
+    time    -> 71.19s~75.75s
+    text    -> "I wish I could live a little more"
+    speaker -> @person/p729sre
+  line/12::
+    time    -> 75.75s~80.23s
+    text    -> "Look up to the sky, not just the floor"
+    speaker -> @person/p729sre
+  line/13::
+    time    -> 80.23s~84.88s
+    text    -> "I feel like my life is flashing by"
+    speaker -> @person/p729sre
+  line/14::
+    time    -> 84.88s~89.32s
+    text    -> "And all I can do is watch and cry"
+    speaker -> @person/p729sre
+  line/15::
+    time    -> 89.32s~93.79s
+    text    -> "I miss the air, I miss my friends"
+    speaker -> @person/p729sre
+  line/16::
+    time    -> 93.79s~98.59s
+    text    -> "I miss my mother, I miss it when"
+    speaker -> @person/p729sre
+  line/17::
+    time    -> 98.59s~102.84s
+    text    -> "Life was a party to be thrown"
+    speaker -> @person/p729sre
+  line/18::
+    time    -> 102.84s~108.19s
+    text    -> "But that was a million years ago"
+    speaker -> @person/p729sre
+  line/19::
+    time    -> 111.25s~116.68s
+    text    -> "When I walk around all of the streets"
+    speaker -> @person/p729sre
+  line/20::
+    time    -> 116.68s~121.34s
+    text    -> "Where I grew up and found my feet"
+    speaker -> @person/p729sre
+  line/21::
+    time    -> 121.34s~129.75s
+    text    -> "They can't look me in the eye, it's like they're scared of me"
+    speaker -> @person/p729sre
+  line/22::
+    time    -> 129.75s~135.03s
+    text    -> "I try to think of things to say"
+    speaker -> @person/p729sre
+  line/23::
+    time    -> 135.03s~139.15s
+    text    -> "Like a joke or a memory"
+    speaker -> @person/p729sre
+  line/24::
+    time    -> 139.15s~147.04s
+    text    -> "But they don't recognize me now in the light of day"
+    speaker -> @person/p729sre
+  line/25::
+    time    -> 161.35s~166.81s
+    text    -> "I know I'm not the only one"
+    speaker -> @person/p729sre
+  line/26::
+    time    -> 166.81s~170.69s
+    text    -> "Who regrets the things they've done"
+    speaker -> @person/p729sre
+  line/27::
+    time    -> 170.69s~174.76s
+    text    -> "Sometimes I just feel it's only me"
+    speaker -> @person/p729sre
+  line/28::
+    time    -> 174.76s~179.83s
+    text    -> "Who never became who they thought they'd be"
+    speaker -> @person/p729sre
+  line/29::
+    time    -> 179.83s~184.33s
+    text    -> "I wish I could live a little more"
+    speaker -> @person/p729sre
+  line/30::
+    time    -> 184.33s~188.82s
+    text    -> "Look up to the sky, not just the floor"
+    speaker -> @person/p729sre
+  line/31::
+    time    -> 188.82s~193.37s
+    text    -> "I feel like my life is flashing by"
+    speaker -> @person/p729sre
+  line/32::
+    time    -> 193.37s~197.97s
+    text    -> "And all I can do is watch and cry"
+    speaker -> @person/p729sre
+  line/33::
+    time    -> 197.97s~202.59s
+    text    -> "I miss the air, I miss my friends"
+    speaker -> @person/p729sre
+  line/34::
+    time    -> 202.59s~207.31s
+    text    -> "I miss my mother, I miss it when"
+    speaker -> @person/p729sre
+  line/35::
+    time    -> 207.31s~211.58s
+    text    -> "Life was a party to be thrown"
+    speaker -> @person/p729sre
+  line/36::
+    time    -> 211.58s~217.13s
+    text    -> "But that was a million years ago"
+    speaker -> @person/p729sre
+  line/37::
+    time    -> 217.13s~222.00s
+    text    -> "A million years ago"
+    speaker -> @person/p729sre

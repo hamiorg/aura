@@ -1,0 +1,13 @@
+genres::
+
+  pop::
+    name   -> "Pop"
+    note   -> "Mainstream popular music."
+
+  soul::
+    name   -> "Soul"
+    note   -> "Soulful expressions."
+
+  blue-eyed-soul::
+    name   -> "Blue-Eyed Soul"
+    parent -> @genre/soul

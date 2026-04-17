@@ -108,6 +108,7 @@ impl<'src> Parser<'src> {
     self.eat_expect(|k| matches!(k, Kind::ScopeOpen), "`::`")?;
 
     let node_type = NodeType::from_name(name);
+    let raw_slug = name.starts_with('$');
     let mut children: Vec<Child<'src>> = Vec::new();
 
     loop {
@@ -157,6 +158,7 @@ impl<'src> Parser<'src> {
       children,
       span,
       node_type,
+      raw_slug,
     })
   }
 

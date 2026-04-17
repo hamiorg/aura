@@ -1,0 +1,17 @@
+people::
+
+  p729sre::
+    name   -> "Adele"
+    legal  -> "Adele Laurie Blue Adkins"
+    kind   -> artist
+    roles  -> @role/[main-artist, vocalist, composer]
+
+  p9gregk::
+    name   -> "Greg Kurstin"
+    kind   -> artist
+    roles  -> @role/[producer, writer, mixer]
+
+  p8paule::
+    name   -> "Paul Epworth"
+    kind   -> artist
+    roles  -> @role/[producer, writer]

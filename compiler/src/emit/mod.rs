@@ -10,7 +10,7 @@
 //!
 //! # Module access paths
 //!
-//! ```
+//! ```ignore
 //! compiler::emit::hami::HamiEmitter
 //! compiler::emit::atom::AtomEmitter
 //! compiler::emit::atlas::AtlasEmitter

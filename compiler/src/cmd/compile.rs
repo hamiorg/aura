@@ -237,30 +237,47 @@ fn parse_file(file: &Path) -> Result<Document<'static>> {
     .map_err(|e| CompileError::msg(format!("parse error in {}: {}", file.display(), e)))
 }
 
-/// Derive the project output stem from the root manifest ID.
+/// Derive the project output stem from the root `name.aura` entry.
 ///
-/// Scans the project root (not subdirectories) for a `.aura` file whose
-/// stem looks like an AURA ID — any name other than `namespace.aura`.
-/// The root manifest is the file `aura init` writes, e.g. `c3yt8vi.aura`.
-///
-/// Falls back to the project folder name if no such file is found.
+/// Reads the `name::id ->` field from the root `name.aura` file.
+/// Falls back to scanning the project root for any ID-named `.aura` file
+/// (for backward compatibility with pre-v0.2 projects that still use
+/// `namespace.aura` + a separate `{id}.aura` manifest).
+/// Final fallback: the project folder name.
 fn project_stem(project: &Path) -> String {
+  // Try to read the id from the new name.aura entry point.
+  let name_file = project.join("name.aura");
+  if name_file.exists() {
+    if let Ok(text) = fs::read_to_string(&name_file) {
+      for line in text.lines() {
+        let trimmed = line.trim();
+        if let Some(rest) = trimmed.strip_prefix("id") {
+          if let Some(arrow) = rest.trim_start().strip_prefix("->") {
+            let id = arrow.trim().trim_matches('"');
+            if !id.is_empty() {
+              return id.to_string();
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Backward compat: scan root for a non-name .aura file with an ID stem.
   if let Ok(entries) = fs::read_dir(project) {
     let mut candidates: Vec<String> = entries
       .flatten()
       .filter_map(|e| {
         let path = e.path();
-        // Only files (not directories) at the project root.
         if !path.is_file() {
           return None;
         }
-        // Only .aura files.
         if path.extension()?.to_str()? != "aura" {
           return None;
         }
         let stem = path.file_stem()?.to_str()?.to_string();
-        // Exclude namespace.aura — that is an index file, not a manifest.
-        if stem == "namespace" {
+        // Exclude known non-manifest files.
+        if stem == "name" || stem == "namespace" {
           return None;
         }
         Some(stem)
@@ -271,6 +288,7 @@ fn project_stem(project: &Path) -> String {
       return id;
     }
   }
+
   // Fallback: project folder name.
   project
     .file_name()

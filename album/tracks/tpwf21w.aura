@@ -1,0 +1,187 @@
+schema::
+  root       -> https://hami.aduki.org/aura/1.0
+  kind       -> audio::music
+  lang       -> en-US
+  annotator  -> @annotator/p32hczi
+
+manifest::
+  name      ! -> "River Lea"
+  creator   ! -> @person/p729sre
+
+lyrics::
+  line/01::
+    time    -> 11.75s~17.12s
+    text    -> "Everybody tells me it's 'bout time that I moved on"
+    speaker -> @person/p729sre
+  line/02::
+    time    -> 17.12s~23.06s
+    text    -> "That I need to learn to lighten up and learn how to be young"
+    speaker -> @person/p729sre
+  line/03::
+    time    -> 23.06s~28.73s
+    text    -> "But my heart is a valley, it's so shallow and manmade"
+    speaker -> @person/p729sre
+  line/04::
+    time    -> 28.73s~34.83s
+    text    -> "I'm scared to death if I let you in that you'll see I'm just a fake"
+    speaker -> @person/p729sre
+  line/05::
+    time    -> 34.83s~40.31s
+    text    -> "Sometimes I feel lonely in the arms of your touch"
+    speaker -> @person/p729sre
+  line/06::
+    time    -> 40.31s~46.05s
+    text    -> "But I know that's just me 'cause nothing ever is enough"
+    speaker -> @person/p729sre
+  line/07::
+    time    -> 46.05s~51.61s
+    text    -> "When I was a child I grew up by the River Lea"
+    speaker -> @person/p729sre
+  line/08::
+    time    -> 51.61s~56.92s
+    text    -> "And there was something in the water, now that something's in me"
+    speaker -> @person/p729sre
+  line/09::
+    time    -> 57.03s~60.11s
+    text    -> "Oh, I can't go back"
+    speaker -> @person/p729sre
+  line/10::
+    time    -> 60.11s~62.87s
+    text    -> "But the reeds are growing out of my fingertips"
+    speaker -> @person/p729sre
+  line/11::
+    time    -> 62.87s~68.50s
+    text    -> "I can't go back to the river"
+    speaker -> @person/p729sre
+  line/12::
+    time    -> 68.51s~71.73s
+    text    -> "But it's in my roots, in my veins"
+    speaker -> @person/p729sre
+  line/13::
+    time    -> 71.73s~74.59s
+    text    -> "In my blood and I stain"
+    speaker -> @person/p729sre
+  line/14::
+    time    -> 74.59s~79.93s
+    text    -> "Every heart that I use to heal the pain"
+    speaker -> @person/p729sre
+  line/15::
+    time    -> 79.93s~83.27s
+    text    -> "Oh, it's in my roots, in my veins"
+    speaker -> @person/p729sre
+  line/16::
+    time    -> 83.27s~86.22s
+    text    -> "In my blood and I stain"
+    speaker -> @person/p729sre
+  line/17::
+    time    -> 86.22s~90.85s
+    text    -> "Every heart that I use to heal the pain"
+    speaker -> @person/p729sre
+  line/18::
+    time    -> 91.16s~96.95s
+    text    -> "So I blame it on the River Lea, the River Lea, the River Lea"
+    speaker -> @person/p729sre
+  line/19::
+    time    -> 96.95s~103.71s
+    text    -> "Yeah, I blame it on the River Lea, the River Lea, the River Lea"
+    speaker -> @person/p729sre
+  line/20::
+    time    -> 104.15s~109.75s
+    text    -> "I should probably tell you now before it's way too late"
+    speaker -> @person/p729sre
+  line/21::
+    time    -> 109.75s~115.52s
+    text    -> "That I never meant to hurt you or to lie straight to your face"
+    speaker -> @person/p729sre
+  line/22::
+    time    -> 115.52s~121.03s
+    text    -> "Consider this my apology, I know it's years in advance"
+    speaker -> @person/p729sre
+  line/23::
+    time    -> 121.03s~126.34s
+    text    -> "But I would rather say it now in case I never get the chance"
+    speaker -> @person/p729sre
+  line/24::
+    time    -> 126.35s~129.65s
+    text    -> "No, I can't go back"
+    speaker -> @person/p729sre
+  line/25::
+    time    -> 129.65s~132.33s
+    text    -> "But the reeds are growing out of my fingertips"
+    speaker -> @person/p729sre
+  line/26::
+    time    -> 132.33s~137.78s
+    text    -> "I can't go back to the river"
+    speaker -> @person/p729sre
+  line/27::
+    time    -> 137.89s~141.14s
+    text    -> "But it's in my roots, in my veins"
+    speaker -> @person/p729sre
+  line/28::
+    time    -> 141.14s~144.05s
+    text    -> "In my blood and I stain"
+    speaker -> @person/p729sre
+  line/29::
+    time    -> 144.05s~149.32s
+    text    -> "Every heart that I use to heal the pain"
+    speaker -> @person/p729sre
+  line/30::
+    time    -> 149.32s~152.74s
+    text    -> "Oh, it's in my roots, in my veins"
+    speaker -> @person/p729sre
+  line/31::
+    time    -> 152.74s~155.67s
+    text    -> "In my blood and I stain"
+    speaker -> @person/p729sre
+  line/32::
+    time    -> 155.67s~160.30s
+    text    -> "Every heart that I use to heal the pain"
+    speaker -> @person/p729sre
+  line/33::
+    time    -> 160.57s~166.32s
+    text    -> "So I blame it on the River Lea, the River Lea, the River Lea"
+    speaker -> @person/p729sre
+  line/34::
+    time    -> 166.32s~172.18s
+    text    -> "Yeah, I blame it on the River Lea, the River Lea, the River Lea"
+    speaker -> @person/p729sre
+  line/35::
+    time    -> 172.18s~177.92s
+    text    -> "So I blame it on the River Lea, the River Lea, the River Lea"
+    speaker -> @person/p729sre
+  line/36::
+    time    -> 177.92s~185.30s
+    text    -> "Yeah, I blame it on the River Lea, the River Lea, the River Lea"
+    speaker -> @person/p729sre
+  line/37::
+    time    -> 185.31s~190.98s
+    text    -> "River Lea, River Lea"
+    speaker -> @person/p729sre
+  line/38::
+    time    -> 190.98s~196.83s
+    text    -> "River Lea, River Lea"
+    speaker -> @person/p729sre
+  line/39::
+    time    -> 196.83s~202.64s
+    text    -> "River Lea, River Lea"
+    speaker -> @person/p729sre
+  line/40::
+    time    -> 202.64s~207.87s
+    text    -> "River Lea, River Lea"
+    speaker -> @person/p729sre
+  line/41::
+    time    -> 208.06s~208.40s
+    text    -> "(River Lea, the River Lea, the River Lea)"
+    speaker -> @person/p729sre
+  line/42::
+    time    -> 208.40s~214.15s
+    text    -> "River Lea, River Lea"
+    speaker -> @person/p729sre
+  line/43::
+    time    -> 214.15s~214.05s
+    text    -> "(River Lea, the River Lea, the River Lea)"
+    speaker -> @person/p729sre
+  line/44::
+    time    -> 214.05s~219.73s
+    text    -> "River Lea, River Lea"
+    speaker -> @person/p729sre

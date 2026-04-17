@@ -1,0 +1,243 @@
+schema::
+  root       -> https://hami.aduki.org/aura/1.0
+  kind       -> audio::music
+  lang       -> en-US
+  annotator  -> @annotator/p32hczi
+
+manifest::
+  name      ! -> "When We Were Young"
+  creator   ! -> @person/p729sre
+
+lyrics::
+  line/01::
+    time    -> 17.13s~21.78s
+    text    -> "Everybody loves the things you do"
+    speaker -> @person/p729sre
+  line/02::
+    time    -> 21.78s~30.68s
+    text    -> "From the way you talk, to the way you move"
+    speaker -> @person/p729sre
+  line/03::
+    time    -> 30.68s~35.44s
+    text    -> "Everybody here is watching you"
+    speaker -> @person/p729sre
+  line/04::
+    time    -> 35.44s~44.06s
+    text    -> "'Cause you feel like home, you're like a dream come true"
+    speaker -> @person/p729sre
+  line/05::
+    time    -> 44.06s~49.21s
+    text    -> "But if by chance you're here alone"
+    speaker -> @person/p729sre
+  line/06::
+    time    -> 49.21s~57.54s
+    text    -> "Can I have a moment before I go?"
+    speaker -> @person/p729sre
+  line/07::
+    time    -> 57.54s~62.88s
+    text    -> "'Cause I've been by myself all night long"
+    speaker -> @person/p729sre
+  line/08::
+    time    -> 62.88s~69.14s
+    text    -> "Hoping you're someone I used to know"
+    speaker -> @person/p729sre
+  line/09::
+    time    -> 69.44s~72.68s
+    text    -> "You look like a movie"
+    speaker -> @person/p729sre
+  line/10::
+    time    -> 72.68s~76.06s
+    text    -> "You sound like a song"
+    speaker -> @person/p729sre
+  line/11::
+    time    -> 76.06s~79.68s
+    text    -> "My God, this reminds me"
+    speaker -> @person/p729sre
+  line/12::
+    time    -> 79.68s~82.58s
+    text    -> "Of when we were young"
+    speaker -> @person/p729sre
+  line/13::
+    time    -> 83.18s~86.78s
+    text    -> "Let me photograph you in this light"
+    speaker -> @person/p729sre
+  line/14::
+    time    -> 86.78s~91.25s
+    text    -> "In case it is the last time that we might"
+    speaker -> @person/p729sre
+  line/15::
+    time    -> 91.25s~96.27s
+    text    -> "Be exactly like we were before we realised"
+    speaker -> @person/p729sre
+  line/16::
+    time    -> 96.27s~102.05s
+    text    -> "We were sad of getting old, it made us restless"
+    speaker -> @person/p729sre
+  line/17::
+    time    -> 102.05s~105.40s
+    text    -> "It was just like a movie"
+    speaker -> @person/p729sre
+  line/18::
+    time    -> 105.40s~108.63s
+    text    -> "It was just like a song"
+    speaker -> @person/p729sre
+  line/19::
+    time    -> 110.94s~115.92s
+    text    -> "I was so scared to face my fears"
+    speaker -> @person/p729sre
+  line/20::
+    time    -> 115.92s~124.48s
+    text    -> "Nobody told me that you'd be here"
+    speaker -> @person/p729sre
+  line/21::
+    time    -> 124.48s~129.51s
+    text    -> "And I swear you'd moved overseas"
+    speaker -> @person/p729sre
+  line/22::
+    time    -> 129.51s~135.68s
+    text    -> "That's what you said when you left me"
+    speaker -> @person/p729sre
+  line/23::
+    time    -> 135.75s~139.16s
+    text    -> "You still look like a movie"
+    speaker -> @person/p729sre
+  line/24::
+    time    -> 139.16s~142.55s
+    text    -> "You still sound like a song"
+    speaker -> @person/p729sre
+  line/25::
+    time    -> 142.55s~146.28s
+    text    -> "My God, this reminds me"
+    speaker -> @person/p729sre
+  line/26::
+    time    -> 146.28s~149.95s
+    text    -> "Of when we were young"
+    speaker -> @person/p729sre
+  line/27::
+    time    -> 149.96s~153.49s
+    text    -> "Let me photograph you in this light"
+    speaker -> @person/p729sre
+  line/28::
+    time    -> 153.49s~157.93s
+    text    -> "In case it is the last time that we might"
+    speaker -> @person/p729sre
+  line/29::
+    time    -> 157.93s~162.90s
+    text    -> "Be exactly like we were before we realised"
+    speaker -> @person/p729sre
+  line/30::
+    time    -> 162.90s~168.88s
+    text    -> "We were sad of getting old, it made us restless"
+    speaker -> @person/p729sre
+  line/31::
+    time    -> 168.88s~172.25s
+    text    -> "It was just like a movie"
+    speaker -> @person/p729sre
+  line/32::
+    time    -> 172.25s~175.46s
+    text    -> "It was just like a song"
+    speaker -> @person/p729sre
+  line/33::
+    time    -> 176.24s~179.52s
+    text    -> "When we were young"
+    speaker -> @person/p729sre
+  line/34::
+    time    -> 179.52s~182.97s
+    text    -> "When we were young"
+    speaker -> @person/p729sre
+  line/35::
+    time    -> 182.97s~186.27s
+    text    -> "When we were young"
+    speaker -> @person/p729sre
+  line/36::
+    time    -> 186.27s~189.85s
+    text    -> "When we were young"
+    speaker -> @person/p729sre
+  line/37::
+    time    -> 189.97s~196.69s
+    text    -> "It's hard to admit that everything just takes me back"
+    speaker -> @person/p729sre
+  line/38::
+    time    -> 196.69s~200.00s
+    text    -> "To when you were there"
+    speaker -> @person/p729sre
+  line/39::
+    time    -> 200.00s~203.55s
+    text    -> "To when you were there"
+    speaker -> @person/p729sre
+  line/40::
+    time    -> 203.55s~210.28s
+    text    -> "And a part of me keeps holding on just in case it hasn't gone"
+    speaker -> @person/p729sre
+  line/41::
+    time    -> 210.28s~213.93s
+    text    -> "'Cause I still care"
+    speaker -> @person/p729sre
+  line/42::
+    time    -> 213.93s~216.24s
+    text    -> "Do you still care?"
+    speaker -> @person/p729sre
+  line/43::
+    time    -> 216.31s~219.57s
+    text    -> "It was just like a movie"
+    speaker -> @person/p729sre
+  line/44::
+    time    -> 219.57s~223.11s
+    text    -> "It was just like a song"
+    speaker -> @person/p729sre
+  line/45::
+    time    -> 223.11s~226.68s
+    text    -> "My God, this reminds me"
+    speaker -> @person/p729sre
+  line/46::
+    time    -> 226.68s~234.60s
+    text    -> "Of when we were young"
+    speaker -> @person/p729sre
+  line/47::
+    time    -> 230.21s~233.30s
+    text    -> "When we were young"
+    speaker -> @person/p729sre
+  line/48::
+    time    -> 233.30s~236.66s
+    text    -> "When we were young"
+    speaker -> @person/p729sre
+  line/49::
+    time    -> 236.66s~239.93s
+    text    -> "When we were young"
+    speaker -> @person/p729sre
+  line/50::
+    time    -> 239.93s~242.61s
+    text    -> "When we were young"
+    speaker -> @person/p729sre
+  line/51::
+    time    -> 243.44s~246.86s
+    text    -> "Let me photograph you in this light"
+    speaker -> @person/p729sre
+  line/52::
+    time    -> 246.86s~251.25s
+    text    -> "In case it is the last time that we might"
+    speaker -> @person/p729sre
+  line/53::
+    time    -> 251.25s~256.28s
+    text    -> "Be exactly like we were before we realised"
+    speaker -> @person/p729sre
+  line/54::
+    time    -> 256.28s~262.30s
+    text    -> "We were sad of getting old, it made us restless"
+    speaker -> @person/p729sre
+  line/55::
+    time    -> 262.30s~268.49s
+    text    -> "Oh, I'm so mad I'm getting old, it makes me reckless"
+    speaker -> @person/p729sre
+  line/56::
+    time    -> 268.91s~272.25s
+    text    -> "It was just like a movie"
+    speaker -> @person/p729sre
+  line/57::
+    time    -> 272.25s~275.89s
+    text    -> "It was just like a song"
+    speaker -> @person/p729sre
+  line/58::
+    time    -> 275.89s~279.37s
+    text    -> "When we were young"
+    speaker -> @person/p729sre

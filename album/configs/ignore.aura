@@ -1,0 +1,4 @@
+ignore::
+
+  ## Extra paths to exclude from .history/ tracking:
+  ## - path/to/exclude

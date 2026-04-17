@@ -11,7 +11,7 @@
 //!
 //! # Module access paths
 //!
-//! ```
+//! ```ignore
 //! compiler::cfg::load::ConfigLoader
 //! compiler::cfg::load::Config
 //! compiler::cfg::load::LlmProvider

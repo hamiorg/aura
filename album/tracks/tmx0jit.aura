@@ -1,0 +1,247 @@
+schema::
+  root       -> https://hami.aduki.org/aura/1.0
+  kind       -> audio::music
+  lang       -> en-US
+  annotator  -> @annotator/p32hczi
+
+manifest::
+  name      ! -> "Send My Love (To Your New Lover)"
+  creator   ! -> @person/p729sre
+
+lyrics::
+  line/01::
+    time    -> 0.14s~1.34s
+    text    -> "Just the guitar? Okay, cool"
+    speaker -> @person/p729sre
+  line/02::
+    time    -> 13.54s~16.49s
+    text    -> "This was all you, none of it me"
+    speaker -> @person/p729sre
+  line/03::
+    time    -> 16.49s~22.14s
+    text    -> "You put your hands on, on my body and told me"
+    speaker -> @person/p729sre
+  line/04::
+    time    -> 22.14s~25.46s
+    text    -> "Mmm, you told me you were ready"
+    speaker -> @person/p729sre
+  line/05::
+    time    -> 25.46s~28.02s
+    text    -> "For the big one, for the big jump"
+    speaker -> @person/p729sre
+  line/06::
+    time    -> 28.02s~33.83s
+    text    -> "I'd be your last love, everlasting you and me"
+    speaker -> @person/p729sre
+  line/07::
+    time    -> 33.83s~37.15s
+    text    -> "Mmm, that was what you told me"
+    speaker -> @person/p729sre
+  line/08::
+    time    -> 37.16s~40.18s
+    text    -> "I'm giving you up"
+    speaker -> @person/p729sre
+  line/09::
+    time    -> 40.18s~43.76s
+    text    -> "I've forgiven it all"
+    speaker -> @person/p729sre
+  line/10::
+    time    -> 43.76s~48.38s
+    text    -> "You set me free"
+    speaker -> @person/p729sre
+  line/11::
+    time    -> 48.39s~52.07s
+    text    -> "Send my love to your new lover"
+    speaker -> @person/p729sre
+  line/12::
+    time    -> 52.07s~54.24s
+    text    -> "Treat her better"
+    speaker -> @person/p729sre
+  line/13::
+    time    -> 54.24s~57.48s
+    text    -> "We've gotta let go of all of our ghosts"
+    speaker -> @person/p729sre
+  line/14::
+    time    -> 57.48s~60.13s
+    text    -> "We both know we ain't kids no more"
+    speaker -> @person/p729sre
+  line/15::
+    time    -> 60.13s~63.83s
+    text    -> "Send my love to your new lover"
+    speaker -> @person/p729sre
+  line/16::
+    time    -> 63.83s~65.97s
+    text    -> "Treat her better"
+    speaker -> @person/p729sre
+  line/17::
+    time    -> 65.97s~69.24s
+    text    -> "We've gotta let go of all of our ghosts"
+    speaker -> @person/p729sre
+  line/18::
+    time    -> 69.24s~74.10s
+    text    -> "We both know we ain't kids no more"
+    speaker -> @person/p729sre
+  line/19::
+    time    -> 78.08s~80.94s
+    text    -> "I was too strong, you were trembling"
+    speaker -> @person/p729sre
+  line/20::
+    time    -> 80.94s~86.56s
+    text    -> "You couldn't handle the hot heat rising"
+    speaker -> @person/p729sre
+  line/21::
+    time    -> 86.56s~89.81s
+    text    -> "Mmm, baby, I'm still rising"
+    speaker -> @person/p729sre
+  line/22::
+    time    -> 89.81s~92.57s
+    text    -> "I was running, you were walking"
+    speaker -> @person/p729sre
+  line/23::
+    time    -> 92.57s~98.24s
+    text    -> "You couldn't keep up, you were falling down"
+    speaker -> @person/p729sre
+  line/24::
+    time    -> 98.24s~101.53s
+    text    -> "Mmm, there's only one way down"
+    speaker -> @person/p729sre
+  line/25::
+    time    -> 101.54s~104.55s
+    text    -> "I'm giving you up"
+    speaker -> @person/p729sre
+  line/26::
+    time    -> 104.55s~108.16s
+    text    -> "I've forgiven it all"
+    speaker -> @person/p729sre
+  line/27::
+    time    -> 108.16s~113.15s
+    text    -> "You set me free, oh"
+    speaker -> @person/p729sre
+  line/28::
+    time    -> 112.87s~116.51s
+    text    -> "Send my love to your new lover"
+    speaker -> @person/p729sre
+  line/29::
+    time    -> 116.51s~118.58s
+    text    -> "Treat her better"
+    speaker -> @person/p729sre
+  line/30::
+    time    -> 118.58s~121.90s
+    text    -> "We've gotta let go of all of our ghosts"
+    speaker -> @person/p729sre
+  line/31::
+    time    -> 121.90s~124.53s
+    text    -> "We both know we ain't kids no more"
+    speaker -> @person/p729sre
+  line/32::
+    time    -> 124.53s~128.24s
+    text    -> "Send my love to your new lover"
+    speaker -> @person/p729sre
+  line/33::
+    time    -> 128.24s~130.29s
+    text    -> "Treat her better"
+    speaker -> @person/p729sre
+  line/34::
+    time    -> 130.29s~133.59s
+    text    -> "We've gotta let go of all of our ghosts"
+    speaker -> @person/p729sre
+  line/35::
+    time    -> 133.59s~136.66s
+    text    -> "We both know we ain't kids no more"
+    speaker -> @person/p729sre
+  line/36::
+    time    -> 136.67s~139.58s
+    text    -> "If you're ready, if you're ready"
+    speaker -> @person/p729sre
+  line/37::
+    time    -> 139.58s~142.53s
+    text    -> "If you're ready, I am ready"
+    speaker -> @person/p729sre
+  line/38::
+    time    -> 142.53s~145.31s
+    text    -> "If you're ready, if you're ready"
+    speaker -> @person/p729sre
+  line/39::
+    time    -> 145.31s~151.46s
+    text    -> "We both know we ain't kids no more"
+    speaker -> @person/p729sre
+  line/40::
+    time    -> 151.46s~157.04s
+    text    -> "No, we ain't kids no more"
+    speaker -> @person/p729sre
+  line/41::
+    time    -> 159.99s~163.13s
+    text    -> "I'm giving you up"
+    speaker -> @person/p729sre
+  line/42::
+    time    -> 163.13s~166.67s
+    text    -> "I've forgiven it all"
+    speaker -> @person/p729sre
+  line/43::
+    time    -> 166.67s~169.45s
+    text    -> "You set me free"
+    speaker -> @person/p729sre
+  line/44::
+    time    -> 171.30s~175.02s
+    text    -> "Send my love to your new lover"
+    speaker -> @person/p729sre
+  line/45::
+    time    -> 175.02s~177.14s
+    text    -> "Treat her better"
+    speaker -> @person/p729sre
+  line/46::
+    time    -> 177.14s~180.46s
+    text    -> "We've gotta let go of all of our ghosts"
+    speaker -> @person/p729sre
+  line/47::
+    time    -> 180.46s~183.07s
+    text    -> "We both know we ain't kids no more"
+    speaker -> @person/p729sre
+  line/48::
+    time    -> 183.07s~186.71s
+    text    -> "Send my love to your new lover"
+    speaker -> @person/p729sre
+  line/49::
+    time    -> 186.71s~188.82s
+    text    -> "Treat her better"
+    speaker -> @person/p729sre
+  line/50::
+    time    -> 188.82s~192.13s
+    text    -> "We've gotta let go of all of our ghosts"
+    speaker -> @person/p729sre
+  line/51::
+    time    -> 192.13s~194.89s
+    text    -> "We both know we ain't kids no more"
+    speaker -> @person/p729sre
+  line/52::
+    time    -> 194.90s~198.14s
+    text    -> "If you're ready, if you're ready"
+    speaker -> @person/p729sre
+  line/53::
+    time    -> 198.14s~200.55s
+    text    -> "If you're ready, I am ready"
+    speaker -> @person/p729sre
+  line/54::
+    time    -> 200.55s~203.80s
+    text    -> "We've gotta let go of all of our ghosts"
+    speaker -> @person/p729sre
+  line/55::
+    time    -> 203.80s~206.38s
+    text    -> "We both know we ain't kids no more"
+    speaker -> @person/p729sre
+  line/56::
+    time    -> 206.46s~209.83s
+    text    -> "If you're ready, if you're ready"
+    speaker -> @person/p729sre
+  line/57::
+    time    -> 209.83s~212.22s
+    text    -> "If you're ready, I am ready"
+    speaker -> @person/p729sre
+  line/58::
+    time    -> 212.22s~215.55s
+    text    -> "We've gotta let go of all of our ghosts"
+    speaker -> @person/p729sre
+  line/59::
+    time    -> 215.55s~220.33s
+    text    -> "We both know we ain't kids no more"
+    speaker -> @person/p729sre

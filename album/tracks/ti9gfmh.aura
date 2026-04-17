@@ -1,0 +1,175 @@
+schema::
+  root       -> https://hami.aduki.org/aura/1.0
+  kind       -> audio::music
+  lang       -> en-US
+  annotator  -> @annotator/p32hczi
+
+manifest::
+  name      ! -> "Love In The Dark"
+  creator   ! -> @person/p729sre
+
+lyrics::
+  line/01::
+    time    -> 19.56s~28.06s
+    text    -> "Take your eyes off of me so I can leave"
+    speaker -> @person/p729sre
+  line/02::
+    time    -> 28.06s~36.98s
+    text    -> "I'm far too ashamed to do it with you watching me"
+    speaker -> @person/p729sre
+  line/03::
+    time    -> 36.98s~45.59s
+    text    -> "This is never ending, we have been here before"
+    speaker -> @person/p729sre
+  line/04::
+    time    -> 45.59s~53.53s
+    text    -> "But I can't stay this time 'cause I don't love you anymore"
+    speaker -> @person/p729sre
+  line/05::
+    time    -> 53.54s~57.83s
+    text    -> "Please stay where you are"
+    speaker -> @person/p729sre
+  line/06::
+    time    -> 57.83s~62.18s
+    text    -> "Don't come any closer"
+    speaker -> @person/p729sre
+  line/07::
+    time    -> 62.18s~66.49s
+    text    -> "Don't try to change my mind"
+    speaker -> @person/p729sre
+  line/08::
+    time    -> 66.49s~70.74s
+    text    -> "I'm being cruel to be kind"
+    speaker -> @person/p729sre
+  line/09::
+    time    -> 71.12s~79.31s
+    text    -> "I can't love you in the dark"
+    speaker -> @person/p729sre
+  line/10::
+    time    -> 79.31s~88.60s
+    text    -> "It feels like we're oceans apart"
+    speaker -> @person/p729sre
+  line/11::
+    time    -> 88.60s~92.75s
+    text    -> "There is so much space between us"
+    speaker -> @person/p729sre
+  line/12::
+    time    -> 92.75s~96.95s
+    text    -> "Baby, we're already defeated"
+    speaker -> @person/p729sre
+  line/13::
+    time    -> 96.95s~101.75s
+    text    -> "Ay, yeah, yeah, yeah, yeah, yeah, yeah, yeah"
+    speaker -> @person/p729sre
+  line/14::
+    time    -> 101.75s~104.52s
+    text    -> "Everything changed me"
+    speaker -> @person/p729sre
+  line/15::
+    time    -> 106.92s~115.35s
+    text    -> "You have given me something that I can't live without"
+    speaker -> @person/p729sre
+  line/16::
+    time    -> 115.35s~124.07s
+    text    -> "You mustn't underestimate that when you are in doubt"
+    speaker -> @person/p729sre
+  line/17::
+    time    -> 124.07s~132.78s
+    text    -> "But I don't want to carry on like everything is fine"
+    speaker -> @person/p729sre
+  line/18::
+    time    -> 132.78s~140.73s
+    text    -> "The longer we ignore it all, the more that we will fight"
+    speaker -> @person/p729sre
+  line/19::
+    time    -> 140.73s~145.22s
+    text    -> "Please don't fall apart"
+    speaker -> @person/p729sre
+  line/20::
+    time    -> 145.22s~149.41s
+    text    -> "I can't face your breaking heart"
+    speaker -> @person/p729sre
+  line/21::
+    time    -> 149.41s~153.97s
+    text    -> "I'm trying to be brave"
+    speaker -> @person/p729sre
+  line/22::
+    time    -> 153.97s~157.96s
+    text    -> "Stop asking me to stay"
+    speaker -> @person/p729sre
+  line/23::
+    time    -> 158.22s~166.58s
+    text    -> "I can't love you in the dark"
+    speaker -> @person/p729sre
+  line/24::
+    time    -> 166.58s~175.92s
+    text    -> "It feels like we're oceans apart"
+    speaker -> @person/p729sre
+  line/25::
+    time    -> 175.92s~179.99s
+    text    -> "There is so much space between us"
+    speaker -> @person/p729sre
+  line/26::
+    time    -> 179.99s~184.21s
+    text    -> "Baby, we're already defeated"
+    speaker -> @person/p729sre
+  line/27::
+    time    -> 184.21s~188.92s
+    text    -> "Ay, yeah, yeah, yeah, yeah, yeah, yeah, yeah"
+    speaker -> @person/p729sre
+  line/28::
+    time    -> 188.92s~192.31s
+    text    -> "Everything changed me"
+    speaker -> @person/p729sre
+  line/29::
+    time    -> 193.28s~195.61s
+    text    -> "We're not the only ones"
+    speaker -> @person/p729sre
+  line/30::
+    time    -> 195.61s~197.80s
+    text    -> "I don't regret a thing"
+    speaker -> @person/p729sre
+  line/31::
+    time    -> 197.80s~200.00s
+    text    -> "Every word I've said"
+    speaker -> @person/p729sre
+  line/32::
+    time    -> 200.00s~202.16s
+    text    -> "You know I'll always mean"
+    speaker -> @person/p729sre
+  line/33::
+    time    -> 202.16s~206.60s
+    text    -> "It is the world to me that you are in my life"
+    speaker -> @person/p729sre
+  line/34::
+    time    -> 206.60s~213.80s
+    text    -> "But I want to live and not just survive"
+    speaker -> @person/p729sre
+  line/35::
+    time    -> 231.99s~240.83s
+    text    -> "That's why I can't love you in the dark"
+    speaker -> @person/p729sre
+  line/36::
+    time    -> 240.83s~250.06s
+    text    -> "It feels like we're oceans apart"
+    speaker -> @person/p729sre
+  line/37::
+    time    -> 250.06s~254.18s
+    text    -> "There is so much space between us"
+    speaker -> @person/p729sre
+  line/38::
+    time    -> 254.18s~259.21s
+    text    -> "Baby, we're already defeated"
+    speaker -> @person/p729sre
+  line/39::
+    time    -> 259.21s~263.20s
+    text    -> "'Cause ay, yeah, yeah, yeah, yeah, yeah"
+    speaker -> @person/p729sre
+  line/40::
+    time    -> 263.20s~268.10s
+    text    -> "Everything changed me"
+    speaker -> @person/p729sre
+  line/41::
+    time    -> 268.10s~275.24s
+    text    -> "And I, I, I, I, I don't think you can save me"
+    speaker -> @person/p729sre

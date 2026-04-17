@@ -1,0 +1,207 @@
+schema::
+  root       -> https://hami.aduki.org/aura/1.0
+  kind       -> audio::music
+  lang       -> en-US
+  annotator  -> @annotator/p32hczi
+
+manifest::
+  name      ! -> "Water Under the Bridge"
+  creator   ! -> @person/p729sre
+
+lyrics::
+  line/01::
+    time    -> 9.81s~14.60s
+    text    -> "If you're not the one for me"
+    speaker -> @person/p729sre
+  line/02::
+    time    -> 14.60s~20.08s
+    text    -> "Then how come I can bring you to your knees?"
+    speaker -> @person/p729sre
+  line/03::
+    time    -> 20.08s~24.38s
+    text    -> "If you're not the one for me"
+    speaker -> @person/p729sre
+  line/04::
+    time    -> 24.38s~30.00s
+    text    -> "Why do I hate the idea of being free?"
+    speaker -> @person/p729sre
+  line/05::
+    time    -> 30.00s~34.05s
+    text    -> "And if I'm not the one for you"
+    speaker -> @person/p729sre
+  line/06::
+    time    -> 34.05s~39.55s
+    text    -> "You've got to stop holding me the way you do"
+    speaker -> @person/p729sre
+  line/07::
+    time    -> 39.55s~44.62s
+    text    -> "Oh honey, if I'm not the one for you"
+    speaker -> @person/p729sre
+  line/08::
+    time    -> 44.62s~49.66s
+    text    -> "Why have we been through what we have been through?"
+    speaker -> @person/p729sre
+  line/09::
+    time    -> 49.72s~54.74s
+    text    -> "It's so cold out here"
+    speaker -> @person/p729sre
+  line/10::
+    time    -> 54.74s~59.08s
+    text    -> "In your wilderness"
+    speaker -> @person/p729sre
+  line/11::
+    time    -> 59.08s~65.44s
+    text    -> "I want you to be my keeper"
+    speaker -> @person/p729sre
+  line/12::
+    time    -> 65.44s~69.63s
+    text    -> "But not if you are so reckless"
+    speaker -> @person/p729sre
+  line/13::
+    time    -> 70.17s~73.43s
+    text    -> "If you're gonna let me down, let me down gently"
+    speaker -> @person/p729sre
+  line/14::
+    time    -> 73.43s~75.93s
+    text    -> "Don't pretend that you don't want me"
+    speaker -> @person/p729sre
+  line/15::
+    time    -> 75.93s~80.21s
+    text    -> "Our love ain't water under the bridge"
+    speaker -> @person/p729sre
+  line/16::
+    time    -> 80.21s~83.49s
+    text    -> "If you're gonna let me down, let me down gently"
+    speaker -> @person/p729sre
+  line/17::
+    time    -> 83.49s~86.00s
+    text    -> "Don't pretend that you don't want me"
+    speaker -> @person/p729sre
+  line/18::
+    time    -> 86.00s~90.43s
+    text    -> "Our love ain't water under the bridge"
+    speaker -> @person/p729sre
+  line/19::
+    time    -> 90.43s~95.47s
+    text    -> "Whoa-oh-oh, oh-oh-whoa, oh-oh"
+    speaker -> @person/p729sre
+  line/20::
+    time    -> 95.47s~100.14s
+    text    -> "Say that our love ain't water under the bridge"
+    speaker -> @person/p729sre
+  line/21::
+    time    -> 100.94s~105.21s
+    text    -> "What are you waiting for?"
+    speaker -> @person/p729sre
+  line/22::
+    time    -> 105.21s~111.00s
+    text    -> "You never seem to make it through the door"
+    speaker -> @person/p729sre
+  line/23::
+    time    -> 111.00s~115.37s
+    text    -> "And who are you hiding from?"
+    speaker -> @person/p729sre
+  line/24::
+    time    -> 115.37s~121.23s
+    text    -> "It ain't no life to live, like you're on the run"
+    speaker -> @person/p729sre
+  line/25::
+    time    -> 121.23s~125.47s
+    text    -> "Have I ever asked for much?"
+    speaker -> @person/p729sre
+  line/26::
+    time    -> 125.47s~130.93s
+    text    -> "The only thing that I want is your love"
+    speaker -> @person/p729sre
+  line/27::
+    time    -> 130.95s~134.03s
+    text    -> "If you're gonna let me down, let me down gently"
+    speaker -> @person/p729sre
+  line/28::
+    time    -> 134.03s~136.53s
+    text    -> "Don't pretend that you don't want me"
+    speaker -> @person/p729sre
+  line/29::
+    time    -> 136.53s~140.86s
+    text    -> "Our love ain't water under the bridge"
+    speaker -> @person/p729sre
+  line/30::
+    time    -> 140.86s~144.14s
+    text    -> "If you're gonna let me down, let me down gently"
+    speaker -> @person/p729sre
+  line/31::
+    time    -> 144.14s~146.64s
+    text    -> "Don't pretend that you don't want me"
+    speaker -> @person/p729sre
+  line/32::
+    time    -> 146.64s~151.01s
+    text    -> "Our love ain't water under the bridge"
+    speaker -> @person/p729sre
+  line/33::
+    time    -> 151.01s~155.97s
+    text    -> "Whoa-oh-oh, oh-oh-whoa, oh-oh"
+    speaker -> @person/p729sre
+  line/34::
+    time    -> 155.97s~160.79s
+    text    -> "Say that our love ain't water under the bridge"
+    speaker -> @person/p729sre
+  line/35::
+    time    -> 160.85s~165.92s
+    text    -> "It's so cold"
+    speaker -> @person/p729sre
+  line/36::
+    time    -> 165.92s~170.96s
+    text    -> "In your wilderness"
+    speaker -> @person/p729sre
+  line/37::
+    time    -> 170.96s~176.73s
+    text    -> "I want you to be my keeper"
+    speaker -> @person/p729sre
+  line/38::
+    time    -> 176.73s~180.98s
+    text    -> "But not if you are so reckless"
+    speaker -> @person/p729sre
+  line/39::
+    time    -> 182.51s~185.79s
+    text    -> "If you're gonna let me down, let me down gently"
+    speaker -> @person/p729sre
+  line/40::
+    time    -> 185.79s~188.35s
+    text    -> "Don't pretend that you don't want me"
+    speaker -> @person/p729sre
+  line/41::
+    time    -> 188.35s~192.54s
+    text    -> "Our love ain't water under the bridge"
+    speaker -> @person/p729sre
+  line/42::
+    time    -> 192.54s~195.92s
+    text    -> "If you're gonna let me down, let me down gently"
+    speaker -> @person/p729sre
+  line/43::
+    time    -> 195.92s~198.46s
+    text    -> "Don't pretend that you don't want me"
+    speaker -> @person/p729sre
+  line/44::
+    time    -> 198.46s~202.22s
+    text    -> "Our love ain't water under the bridge"
+    speaker -> @person/p729sre
+  line/45::
+    time    -> 202.93s~207.88s
+    text    -> "Whoa-oh-oh, oh-oh-whoa, oh-oh"
+    speaker -> @person/p729sre
+  line/46::
+    time    -> 207.88s~212.96s
+    text    -> "Say that our love ain't water under the bridge"
+    speaker -> @person/p729sre
+  line/47::
+    time    -> 212.96s~217.95s
+    text    -> "Whoa-oh-oh, oh-oh-whoa, oh-oh"
+    speaker -> @person/p729sre
+  line/48::
+    time    -> 217.95s~227.97s
+    text    -> "Say that our love ain't water under the bridge"
+    speaker -> @person/p729sre
+  line/49::
+    time    -> 227.97s~232.80s
+    text    -> "Say that our love ain't water under the bridge"
+    speaker -> @person/p729sre

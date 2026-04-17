@@ -1,6 +1,0 @@
-namespace::
-  folder -> variants
-
-contains::
-  ## Add entries here after running:  aura add variant "Name"
-  ## Example:  v3qr7st -> "Example Variant"

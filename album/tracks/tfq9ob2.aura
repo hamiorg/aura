@@ -7,6 +7,18 @@ schema::
 manifest::
   name      ! -> "Remedy"
   creator   ! -> @person/p729sre
+  version     -> 1.0.0
+  released    -> 2015-11-20
+  access    -> @access/open
+  explicit  -> dark
+  cleared   -> live
+  index     -> 5
+  duration  -> 4m54s
+  isrc      -> GBUM71504082
+  bpm       -> 79
+  key       -> G
+  genre     -> @genre/pop | @genre/soul
+  mood      -> @mood/melancholic | @mood/reflective
 
 lyrics::
   line/01::

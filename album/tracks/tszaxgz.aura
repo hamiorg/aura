@@ -7,6 +7,18 @@ schema::
 manifest::
   name      ! -> "When We Were Young"
   creator   ! -> @person/p729sre
+  version     -> 1.0.0
+  released    -> 2015-11-20
+  access    -> @access/open
+  explicit  -> dark
+  cleared   -> live
+  index     -> 4
+  duration  -> 4m30s
+  isrc      -> GBUM71504081
+  bpm       -> 79
+  key       -> Bb
+  genre     -> @genre/pop | @genre/soul
+  mood      -> @mood/nostalgic | @mood/melancholic
 
 lyrics::
   line/01::

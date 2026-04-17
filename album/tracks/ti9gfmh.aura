@@ -7,6 +7,18 @@ schema::
 manifest::
   name      ! -> "Love In The Dark"
   creator   ! -> @person/p729sre
+  version     -> 1.0.0
+  released    -> 2015-11-20
+  access    -> @access/open
+  explicit  -> dark
+  cleared   -> live
+  index     -> 8
+  duration  -> 4m44s
+  isrc      -> GBUM71504085
+  bpm       -> 68
+  key       -> Ab
+  genre     -> @genre/pop | @genre/soul
+  mood      -> @mood/heartbroken | @mood/melancholic
 
 lyrics::
   line/01::

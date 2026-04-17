@@ -7,6 +7,18 @@ schema::
 manifest::
   name      ! -> "All I Ask"
   creator   ! -> @person/p729sre
+  version     -> 1.0.0
+  released    -> 2015-11-20
+  access    -> @access/open
+  explicit  -> dark
+  cleared   -> live
+  index     -> 10
+  duration  -> 4m38s
+  isrc      -> GBUM71504087
+  bpm       -> 76
+  key       -> Gb
+  genre     -> @genre/pop | @genre/soul
+  mood      -> @mood/heartbroken | @mood/melancholic
 
 lyrics::
   line/01::

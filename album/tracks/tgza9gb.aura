@@ -7,6 +7,18 @@ schema::
 manifest::
   name      ! -> "Sweetest Devotion"
   creator   ! -> @person/p729sre
+  version     -> 1.0.0
+  released    -> 2015-11-20
+  access    -> @access/open
+  explicit  -> dark
+  cleared   -> live
+  index     -> 11
+  duration  -> 4m52s
+  isrc      -> GBUM71504088
+  bpm       -> 139
+  key       -> Db
+  genre     -> @genre/pop | @genre/soul
+  mood      -> @mood/reflective | @mood/nostalgic
 
 lyrics::
   line/01::

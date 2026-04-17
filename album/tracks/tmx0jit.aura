@@ -7,6 +7,18 @@ schema::
 manifest::
   name      ! -> "Send My Love (To Your New Lover)"
   creator   ! -> @person/p729sre
+  version     -> 1.0.0
+  released    -> 2015-11-20
+  access    -> @access/open
+  explicit  -> dark
+  cleared   -> live
+  index     -> 2
+  duration  -> 3m43s
+  isrc      -> GBUM71504079
+  bpm       -> 82
+  key       -> A
+  genre     -> @genre/pop | @genre/soul
+  mood      -> @mood/reflective | @mood/heartbroken
 
 lyrics::
   line/01::

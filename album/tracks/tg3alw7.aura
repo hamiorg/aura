@@ -7,6 +7,18 @@ schema::
 manifest::
   name      ! -> "Water Under the Bridge"
   creator   ! -> @person/p729sre
+  version     -> 1.0.0
+  released    -> 2015-11-20
+  access    -> @access/open
+  explicit  -> dark
+  cleared   -> live
+  index     -> 6
+  duration  -> 3m55s
+  isrc      -> GBUM71504083
+  bpm       -> 131
+  key       -> F
+  genre     -> @genre/pop | @genre/soul
+  mood      -> @mood/heartbroken | @mood/melancholic
 
 lyrics::
   line/01::

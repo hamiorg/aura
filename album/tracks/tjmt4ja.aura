@@ -7,6 +7,18 @@ schema::
 manifest::
   name      ! -> "I Miss You"
   creator   ! -> @person/p729sre
+  version     -> 1.0.0
+  released    -> 2015-11-20
+  access    -> @access/open
+  explicit  -> dark
+  cleared   -> live
+  index     -> 3
+  duration  -> 5m48s
+  isrc      -> GBUM71504080
+  bpm       -> 69
+  key       -> Dbm
+  genre     -> @genre/pop | @genre/soul
+  mood      -> @mood/melancholic | @mood/heartbroken
 
 lyrics::
   line/01::

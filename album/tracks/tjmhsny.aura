@@ -7,6 +7,18 @@ schema::
 manifest::
   name      ! -> "Million Years Ago"
   creator   ! -> @person/p729sre
+  version     -> 1.0.0
+  released    -> 2015-11-20
+  access    -> @access/open
+  explicit  -> dark
+  cleared   -> live
+  index     -> 9
+  duration  -> 3m50s
+  isrc      -> GBUM71504086
+  bpm       -> 76
+  key       -> Eb
+  genre     -> @genre/pop | @genre/soul
+  mood      -> @mood/nostalgic | @mood/reflective
 
 lyrics::
   line/01::

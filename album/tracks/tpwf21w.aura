@@ -7,6 +7,18 @@ schema::
 manifest::
   name      ! -> "River Lea"
   creator   ! -> @person/p729sre
+  version     -> 1.0.0
+  released    -> 2015-11-20
+  access    -> @access/open
+  explicit  -> dark
+  cleared   -> live
+  index     -> 7
+  duration  -> 4m1s
+  isrc      -> GBUM71504084
+  bpm       -> 79
+  key       -> C
+  genre     -> @genre/pop | @genre/soul
+  mood      -> @mood/nostalgic | @mood/melancholic
 
 lyrics::
   line/01::

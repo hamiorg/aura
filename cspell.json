@@ -1,0 +1,38 @@
+{
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/packages/cspell-types/cspell.schema.json",
+  "version": "0.2",
+  "language": "en",
+
+  "ignorePaths": [
+    "target/**",
+    "dist/**",
+    "*.lock",
+    "Cargo.lock"
+  ],
+
+  "overrides": [
+    {
+      "filename": "**/*.aura",
+      "ignoreRegExpList": [
+        "\\b[a-z][a-z0-9]{6}\\b"
+      ],
+      "words": [
+        "aura", "hami", "atom", "atlas", "aduki",
+        "isrc", "iswc", "bpm", "drm", "uri",
+        "slugify", "slug", "slugs",
+        "annotator", "annotators",
+        "valence", "melancholic", "nostalgic", "heartbroken",
+        "Fm", "Dbm", "Bb", "Eb", "Gb", "Ab", "Db",
+        "musl", "prerelease", "toolchain"
+      ]
+    },
+    {
+      "filename": "**/*.rs",
+      "words": [
+        "aura", "hami", "atom", "atlas", "aduki",
+        "isrc", "iswc", "slugify", "annotator",
+        "musl", "toolchain", "prerelease"
+      ]
+    }
+  ]
+}

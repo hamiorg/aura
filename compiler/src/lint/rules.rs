@@ -177,8 +177,10 @@ pub fn w006(doc: &Document<'_>, file: &Path) -> Vec<LintDiag> {
     if f.key == ">>" || f.key.is_empty() {
       return;
     }
-    // Skip W006 inside raw-slug vocab blocks (`$live::`, `$dark::`)
-    if ns.raw_slug {
+    // Skip W006 for:
+    //  • raw_slug blocks (`$live::`, `$dark::`) — domain-specific field names
+    //  • Contains blocks — keys are generated AURA IDs, not vocabulary keys
+    if ns.raw_slug || matches!(ns.node_type, NodeType::Contains) {
       return;
     }
     if !valid.contains(f.key) {

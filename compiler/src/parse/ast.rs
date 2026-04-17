@@ -225,6 +225,9 @@ pub enum NodeType {
   Scenes,
   /// `variants::` — container for variant list.
   Variants,
+  /// `contains::` — folder entry index in `name.aura` sub-folder files.
+  /// Keys inside are generated AURA IDs, not vocabulary keys; W006 is suppressed.
+  Contains,
 
   // --- Content nodes (interval-indexed) ---
   Act,
@@ -328,6 +331,7 @@ impl NodeType {
       "episodes" => Self::Episodes,
       "scenes" => Self::Scenes,
       "variants" => Self::Variants,
+      "contains" => Self::Contains,
       "act" => Self::Act,
       "scene" => Self::Scene,
       "shot" => Self::Shot,

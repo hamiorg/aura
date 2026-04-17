@@ -25,6 +25,7 @@ pub fn valid_keys() -> HashSet<&'static str> {
     // name.aura entry block fields
     "id",
     "slug",
+    "folder",
   ]);
 
   // Manifest / collection

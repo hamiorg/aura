@@ -23,9 +23,6 @@ target
 *.swp
 *.swo
 
-# Temporary project output
-album/dist
-album/dist/
 
 # Cloudsmith cache (temporary)
 .cloudsmith
@@ -33,9 +30,14 @@ album/dist/
 # Note: Cargo.lock is intentionally committed.
 # For a binary crate (the aura CLI) it locks the exact dependency
 # versions used to produce each reproducible release build.
-album/dist/*
 
 # Aura output artifacts (never commit)
 *.hami
 *.atom
 *.atlas
+
+# Temporary project output
+/dist
+dist
+album/dist
+album/dist/

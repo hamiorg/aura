@@ -80,16 +80,18 @@ pub fn run(opts: &CompileOpts) -> Result<()> {
   let mut parse_errors = 0usize;
 
   for file in &files {
-    log.parse(&file.display().to_string());
+    let rel_path = file.strip_prefix(&opts.project).unwrap_or(file);
+    let rel_str = rel_path.display().to_string();
+
+    log.parse(&rel_str);
     match parse_file(file) {
       Err(e) => {
-        log.error(&file.display().to_string(), 0, None, &e.to_string(), None);
+        log.error(&rel_str, 0, None, &e.to_string(), None);
         parse_errors += 1;
       }
       Ok(doc) => {
-        // Lint each file as it is parsed.
         let lint = Linter::new(opts.strict).lint(&doc, file);
-        lint.print();
+        lint.print(Some(&opts.project));
         if lint.has_errors() {
           parse_errors += 1;
           continue;
@@ -111,7 +113,11 @@ pub fn run(opts: &CompileOpts) -> Result<()> {
   // Surface resolver warnings.
   if let Some(err) = resolver.into_error() {
     for diag in &err.diagnostics {
-      let file_str = diag.file.as_ref().and_then(|p| p.to_str()).unwrap_or("");
+      let rel_file = diag.file.as_ref()
+        .and_then(|p| p.strip_prefix(&opts.project).ok())
+        .or(diag.file.as_deref());
+      
+      let file_str = rel_file.and_then(|p| p.to_str()).unwrap_or("");
       let line = diag.span.map(|s| s.line).unwrap_or(0);
       match diag.level {
         crate::error::Level::Warning => log.warn(file_str, line, None, &diag.message, diag.hint.as_deref()),
@@ -161,14 +167,17 @@ pub fn validate(project: &PathBuf, strict: bool) -> Result<()> {
   let linter = Linter::new(strict);
   let mut errors = 0usize;
   for file in &files {
+    let rel_path = file.strip_prefix(project).unwrap_or(file);
+    let rel_str = rel_path.display().to_string();
+
     match parse_file(file) {
       Err(e) => {
-        log.error(&file.display().to_string(), 0, None, &e.to_string(), None);
+        log.error(&rel_str, 0, None, &e.to_string(), None);
         errors += 1;
       }
       Ok(doc) => {
         let result = linter.lint(&doc, file);
-        result.print();
+        result.print(Some(project));
         if result.has_errors() {
           errors += 1;
         }
@@ -198,9 +207,12 @@ pub fn lint(project: &PathBuf, strict: bool) -> Result<()> {
   let mut total_errs = 0usize;
   let mut parse_errs = 0usize;
   for file in &files {
+    let rel_path = file.strip_prefix(project).unwrap_or(file);
+    let rel_str = rel_path.display().to_string();
+
     match parse_file(file) {
       Err(e) => {
-        log.error(&file.display().to_string(), 0, None, &e.to_string(), None);
+        log.error(&rel_str, 0, None, &e.to_string(), None);
         parse_errs += 1;
       }
       Ok(doc) => {
@@ -211,7 +223,7 @@ pub fn lint(project: &PathBuf, strict: bool) -> Result<()> {
           .filter(|d| d.level == crate::error::Level::Error)
           .count();
         total_diags += result.diags.len();
-        result.print();
+        result.print(Some(project));
       }
     }
   }

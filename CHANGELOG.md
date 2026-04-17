@@ -13,6 +13,30 @@ Nothing yet.
 
 ---
 
+## [0.3.3-beta.1] — 2026-04-17
+
+### Added
+
+- **AURA Sigils in terminal logs.** The toolchain now uses language-native sigils 
+  to denote phases and actions:
+  - `::` for top-level phases (e.g. `:: COMPILE`, `:: SUCCESS`)
+  - `->` for processing paths (e.g. `PARSE    -> album/name.aura`)
+  - `!!` for emphasis in success summary and diagnostic markers
+
+- **Relative path reporting.** All compiler, validator, and linter commands now 
+  strip the absolute project root from file paths in the output, providing a 
+  cleaner, more context-aware experience.
+
+- **High-contrast log formatting.** Improved alignment and color-coded labels 
+  for better scannability in dense terminal output.
+
+### Fixed
+
+- **Syntax Error in `compile.rs`.** Resolved a mismatched delimiter bug in the 
+  `validate` and `lint` command match arms that caused compilation failures.
+
+---
+
 ## [0.3.1-beta.1] — 2026-04-17
 
 ### Fixed

@@ -1,6 +1,6 @@
 [package]
 name        = "compiler"
-version     = "0.3.2-beta.2"
+version     = "0.3.3-beta.1"
 edition     = "2021"
 description = "AURA toolchain CLI — compile .aura source to .atom/.hami/.atlas"
 license     = "MIT"

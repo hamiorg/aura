@@ -2,3 +2,12 @@ name::
   folder -> info
 
 ## Info folder index for album project.
+
+exports::
+  people        % -> @info/people
+  annotators    % -> @info/annotators
+  metadata      % -> @info/metadata
+  arts          % -> @info/arts
+  credits       % -> @info/credits
+  people        % -> @info/people
+  studios       % -> @info/studios

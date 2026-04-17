@@ -62,7 +62,11 @@ tracks::
       access -> @access/open
 
 exports::
-  info    % -> @info/metadata
-  people  % -> @info/people
-  tracks  % -> @tracks/*
-  variants  -> @variants/*
+  info           % -> @info/metadata
+  people         % -> @info/people
+  annotators     % -> @info/annotators
+  genres         % -> @meta/genres
+  roles          % -> @meta/roles
+  moods          % -> @meta/moods
+  tracks         % -> @tracks/*
+  variants       % -> @variants/*

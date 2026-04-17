@@ -71,6 +71,7 @@ distinct, keyboard-accessible, and semantically memorable.
 | [, ]        | List Bracket   | Time triple [start, end, duration] or multi-ID list     |
 | >>          | Inherits From  | Extend a template or base schema                        |
 | *           | Wildcard       | Match all in a namespace query                          |
+| %           | Custom Mark    | Explicitly bypass strict key linting for non-standard keys |
 
 This is the complete sigil vocabulary.
 
@@ -182,6 +183,24 @@ Both compile identically to a HAMI GS-delimited list.
 
     ## Optional with no default
     artwork ?
+
+---
+
+### The Custom Mark (%)
+
+The AURA compiler enforces a strict dictionary of standard keys to catch typos and
+enforce ecosystem consistency (the W006 Unknown Key lint). When a project requires
+a domain-specific or non-standard key that is not in the global dictionary, it must
+be explicitly marked with the `%` sigil.
+
+    ## This will trigger a W006 error if 'engine-version' is not a standard key
+    engine-version -> "4.2"
+
+    ## This bypasses the lint and compiles successfully
+    engine-version % -> "4.2"
+
+The `%` mark signals intent: "I know this key is custom, let it through." The mark is
+separated by spaces (`key % -> value`) and is stripped before compiling to ATOM/HAMI.
 
 ---
 

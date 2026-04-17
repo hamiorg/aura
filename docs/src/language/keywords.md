@@ -25,6 +25,7 @@ Every sigil in AURA has exactly one meaning. No context-dependent overloading.
 | `>>`   | Inherits From  | Extend a template or base schema                           |
 | `*`    | Wildcard       | Match all nodes in a namespace query                       |
 | `::`   | Leap Operator  | Cross-boundary reference when combined with a file ID      |
+| `%`    | Custom Mark    | Suppresses unknown key linting for domain-specific fields  |
 
 ---
 

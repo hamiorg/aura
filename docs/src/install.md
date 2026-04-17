@@ -22,7 +22,7 @@ static binary from the latest GitHub release, and installs it to
 To install a specific version:
 
 ```sh
-AURA_VERSION=v0.1.0-alpha.1 curl -fsSL https://hami.aduki.org/install.sh | bash
+AURA_VERSION=v0.3.1-beta.1 curl -fsSL https://hami.aduki.org/install.sh | bash
 ```
 
 ## Linux — package managers

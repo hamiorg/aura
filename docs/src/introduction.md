@@ -37,5 +37,5 @@ memory-maps all three and holds them in RAM for the duration of a playback sessi
 
 ## Current status
 
-This is an alpha release. The pipeline modules are scaffolded and the type system
+This is a beta release. The pipeline modules are scaffolded and the type system
 is defined. End-to-end compilation is under active development.

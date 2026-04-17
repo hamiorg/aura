@@ -152,6 +152,6 @@ passed to the AURA-to-ATOM compiler pipeline.
 
 ---
 
-*AURA Compiler (`compiler`) — v0.1*
+*AURA Compiler (`compiler`) — v0.3.1-beta.1*
 *Zero-copy lexer → parser → emitter pipeline*
 *Outputs: `.atom` interval trees and `.hami` B-Tree indices*

@@ -25,18 +25,22 @@ lyrics::
     time    -> 13.75s~19.76s
     text    -> "I will leave my heart at the door"
     speaker -> @person/p729sre
+    moods    -> @moods/[melancholic, nostalgic, reflective]
   line/02::
     time    -> 19.76s~23.64s
     text    -> "I won't say a word"
     speaker -> @person/p729sre
+    moods    -> @moods/[melancholic, nostalgic, reflective]
   line/03::
     time    -> 23.64s~27.01s
     text    -> "They've all been said before, you know"
     speaker -> @person/p729sre
+    mood    -> @mood/heartbroken | @mood/melancholic
   line/04::
     time    -> 27.01s~33.15s
     text    -> "So why don't we just play pretend"
     speaker -> @person/p729sre
+    mood    -> @mood/heartbroken | @mood/melancholic
   line/05::
     time    -> 33.15s~37.00s
     text    -> "Like we're not scared of what is coming next"

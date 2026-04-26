@@ -25,58 +25,72 @@ lyrics::
     time    -> 9.59s~18.35s
     text    -> "I remember all of the things that I thought I wanted to be"
     speaker -> @person/p729sre
+    annotator -> @annotator/p32hczi
   line/02::
     time    -> 18.35s~26.33s
     text    -> "So desperate to find a way out of my world and finally breathe"
     speaker -> @person/p729sre
+    annotator -> @annotator/p32hczi
   line/03::
     time    -> 26.33s~30.89s
     text    -> "Right before my eyes, I saw"
     speaker -> @person/p729sre
+    annotator -> @annotator/p32hczi
   line/04::
     time    -> 30.89s~34.98s
     text    -> "My heart, it came to life"
     speaker -> @person/p729sre
+    annotator -> @annotator/p32hczi
   line/05::
     time    -> 34.98s~37.06s
     text    -> "This ain't easy"
     speaker -> @person/p729sre
+    annotator -> @annotator/p32hczi
   line/06::
     time    -> 37.06s~39.33s
     text    -> "It's not meant to be"
     speaker -> @person/p729sre
+    annotator -> @annotator/p32hczi
   line/07::
     time    -> 39.33s~43.71s
     text    -> "Every story has its scars"
     speaker -> @person/p729sre
+    annotator -> @annotator/p32hczi
   line/08::
     time    -> 43.98s~48.44s
     text    -> "But when the pain cuts you deep"
     speaker -> @person/p729sre
+    annotator -> @annotator/p32hczi
   line/09::
     time    -> 48.44s~53.06s
     text    -> "And when the night keeps you from sleeping"
     speaker -> @person/p729sre
+    annotator -> @annotator/p32hczi
   line/10::
     time    -> 53.06s~56.65s
     text    -> "Just look and you will see"
     speaker -> @person/p729sre
+    annotator -> @annotator/p32hczi
   line/11::
     time    -> 56.65s~62.01s
     text    -> "That I will be your remedy"
     speaker -> @person/p729sre
+    annotator -> @annotator/p32hczi
   line/12::
     time    -> 62.01s~66.05s
     text    -> "When the world seems so cruel"
     speaker -> @person/p729sre
+    annotator -> @annotator/p32hczi
   line/13::
     time    -> 66.05s~70.77s
     text    -> "And your heart makes you feel like a fool"
     speaker -> @person/p729sre
+    annotator -> @annotator/p32hczi
   line/14::
     time    -> 70.77s~74.46s
     text    -> "I promise you will see"
     speaker -> @person/p729sre
+    annotator -> @annotator/p32hczi
   line/15::
     time    -> 74.46s~83.40s
     text    -> "That I will be, I will be your remedy"

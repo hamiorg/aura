@@ -1,5 +1,5 @@
 annotators::
 
   p32hczi::
-    name  -> "Local System User"
-    roles -> annotator | editor
+    name  -> "Fredrick Femar"
+    roles -> annotator | editor | translator

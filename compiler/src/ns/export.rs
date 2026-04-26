@@ -1,6 +1,6 @@
 //! `exports::` block resolver.
 //!
-//! The root `namespace.aura` contains an `exports::` block that re-exports
+//! The root `name.aura` contains an `exports::` block that re-exports
 //! sub-namespaces for the compiler to discover:
 //!
 //! ```aura
@@ -38,7 +38,7 @@ pub enum ExportPath {
   Info { folder: String, file: String },
 }
 
-/// Resolves the `exports::` block in a root `namespace.aura`.
+/// Resolves the `exports::` block in a root `name.aura`.
 pub struct ExportResolver {
   /// Project root directory.
   root: PathBuf,
@@ -49,7 +49,7 @@ impl ExportResolver {
     Self { root: root.into() }
   }
 
-  /// Parses and resolves all exports from the given `namespace.aura` text.
+  /// Parses and resolves all exports from the given `name.aura` text.
   pub fn resolve(&self, text: &str) -> Result<Vec<Export>> {
     let mut exports = Vec::new();
     let mut in_exports = false;

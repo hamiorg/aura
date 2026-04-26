@@ -50,21 +50,21 @@ Creates a hierarchical collection for multiple tracks.
 
 ```text
 album/                           <- Project root folder
-  namespace.aura                 <- Project entry point
+  name.aura                      <- Project entry point (index file)
   c8xab3d.aura                   <- Collection manifest
   info/
-    namespace.aura
+    name.aura                    <- info/ index file
     metadata.aura                <- Initialized with the album name
     people.aura                  <- Empty people registry
     annotators.aura              <- Initialized with the current user
     credits.aura                 <- Empty global credits
     arts.aura                    <- Ready for artwork URLs
   meta/
-    namespace.aura               <- Empty local vocabulary registry
+    name.aura                    <- Empty local vocabulary registry
   tracks/
-    namespace.aura               <- Export block for tracks
+    name.aura                    <- Export block for tracks
   variants/
-    namespace.aura
+    name.aura
   artwork/                       <- Default local asset folders
   motion/
   trailers/
@@ -82,10 +82,10 @@ A much flatter structure when releasing a single track.
 
 ```text
 track/
-  namespace.aura
+  name.aura                      <- Project entry point (index file)
   t7xab3c.aura                   <- Track manifest (serves as root document)
   info/
-    namespace.aura
+    name.aura
     metadata.aura
     people.aura
     annotators.aura
@@ -104,15 +104,15 @@ Bootstraps a podcast series with a season-oriented layout.
 
 ```text
 podcast/
-  namespace.aura
+  name.aura                      <- Project entry point (index file)
   pc5xk4m.aura                   <- Series manifest
   info/
-    namespace.aura
+    name.aura
     metadata.aura
     people.aura
     annotators.aura
   seasons/
-    namespace.aura               <- Add seasons here using `aura add season`
+    name.aura                    <- Add seasons here using `aura add season`
   artwork/
   configs/
 ```
@@ -123,16 +123,16 @@ Creates a companion video project, prioritizing scenes and shots.
 
 ```text
 music-video/
-  namespace.aura
+  name.aura                      <- Project entry point (index file)
   mv6xp3l.aura                   <- Video manifest
   info/
-    namespace.aura
+    name.aura
     metadata.aura
     people.aura
     annotators.aura
     credits.aura
   scenes/
-    namespace.aura               <- Initialized empty, ready for scenes
+    name.aura                    <- Initialized empty, ready for scenes
   shots/
   artwork/
   configs/
@@ -144,19 +144,19 @@ Bootstraps a long-form video output with acts and scenes.
 
 ```text
 film/
-  namespace.aura
+  name.aura                      <- Project entry point (index file)
   f6np2qr.aura                   <- Film manifest
   info/
-    namespace.aura
+    name.aura
     metadata.aura
     people.aura
     annotators.aura
     credits.aura
     rights.aura
   acts/
-    namespace.aura
+    name.aura
   scenes/
-    namespace.aura
+    name.aura
   configs/
 ```
 
@@ -166,15 +166,15 @@ Bootstraps a short or long-form address, lecture, or panel.
 
 ```text
 speech/
-  namespace.aura
+  name.aura                      <- Project entry point (index file)
   sp2xr7n.aura                   <- Speech manifest
   info/
-    namespace.aura
+    name.aura
     metadata.aura
     people.aura
     annotators.aura
   segments/
-    namespace.aura               <- Standard division unit for speeches
+    name.aura                    <- Standard division unit for speeches
   artwork/
   configs/
 ```
@@ -183,9 +183,11 @@ speech/
 
 ## Default File Contents (Example: `audio::album`)
 
-### `namespace.aura`
+### `name.aura` — The Index File
 
-The compiler entry point automatically routes to the generated collection manifest.
+Every folder in an AURA project contains exactly one `name.aura` file. This is the **index file** for that folder. The compiler looks for `name.aura` first when entering any folder to resolve that folder's namespace. Content files keep their ID-based names (e.g., `c8xab3d.aura`, `t7xab3c.aura`).
+
+The root `name.aura` is the compiler entry point and automatically routes to the generated collection manifest.
 
 ```aura
 schema::
@@ -253,4 +255,4 @@ aura generate person
 ---
 
 *AURA Compiler Reference — v0.3.2-beta.2*  
-*`init.md` maps directly to the constraints laid out in `conventions.md` and `flux.md`.*
+*`init.md` maps directly to the constraints laid out in `conventions.md` and `syntax.md`.*

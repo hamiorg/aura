@@ -72,8 +72,31 @@ distinct, keyboard-accessible, and semantically memorable.
 | >>          | Inherits From  | Extend a template or base schema                        |
 | *           | Wildcard       | Match all in a namespace query                          |
 | %           | Custom Mark    | Explicitly bypass strict key linting for non-standard keys |
+| $           | Vocab Escape   | Prefix a namespace block name that is a raw vocabulary slug (e.g. `$live::`) — prevents collision with AURA keywords; W006 key-checking is disabled inside the block |
 
-This is the complete sigil vocabulary.
+This is the complete sigil vocabulary. `::` doubles as a leap operator when following a file ID (see Keyword Reference).
+
+---
+
+### Syntactic Equivalencies for Nested Delimiters
+
+A fundamental invariant of the AURA lexer is the absolute prohibition of character escaping.
+The lexer never allocates heap memory; it yields `&'a str` slices tied directly to the source
+buffer's lifetime. To maintain this without creating friction for authors who need nested
+quotations or specialized punctuation, AURA formalizes three equivalency strategies:
+
+1. **Delimiter Repetition / Alternate Brackets.** Authors can use adjacent identical delimiters
+   to indicate nesting, or utilize specialized Unicode paired brackets. Because the lexer
+   evaluates all bytes purely as content, using distinct UTF-8 quote variants (e.g. directional
+   smart quotes `“”` instead of `"`) circumvents parser collisions while preserving zero-copy.
+
+2. **Pre-Compiler Sanitization (`aura sanitize`) — Planned.** A mandatory pre-processing step
+   that intercepts the source file and normalizes forbidden characters (like `\"`) into valid
+   Unicode equivalents before the primary lexer encounters them. See [`roadmap.md`](../roadmap.md).
+
+3. **IDE Translation Layer — Planned.** Extensions configured via `configs/llm.aura` can
+   intercept keystrokes and automatically substitute forbidden delimiters with valid AURA sigils
+   before the file is saved to disk.
 
 ---
 
@@ -303,7 +326,14 @@ Instead, AURA uses two media-native boolean literals:
 | `dark`  | false / off | Stage: "going dark" = inactive, disabled, absent    |
 
 These are the only two boolean literals in AURA. Every boolean field accepts
-exactly one of them.
+exactly one of them. `true` and `false` are accepted as synonyms for toolchain
+interoperability, but `live` and `dark` are the canonical forms.
+
+> **Roadmap — Extensible Booleans (`metaboolean.aura`):** A future version will allow
+> project-level `metaboolean.aura` files to declare additional boolean literals that map to
+> `1` or `0`. This enables domain-native synonyms (e.g. `cleared -> live`, `blocked -> dark`)
+> without hard-coding every possible domain vocabulary in the compiler. See
+> [`roadmap.md`](../roadmap.md) for details.
 
 ---
 
@@ -415,6 +445,14 @@ Access nodes compile to ATOM AccessNode objects (node class 0x13). The engine
 evaluates the access bitmask at query time before returning any node payload.
 Gated and embargoed statuses are re-evaluated on every request — they are
 never baked into the compiled artifact.
+
+> **Roadmap — ReBAC Extensible Access (`metaaccess.aura`):** A future version will replace
+> the fixed six-tier `AccessLevel` enum with a Directed Acyclic Graph (DAG) declared in
+> `metaaccess.aura`. The compiler will run a topological sort on that DAG and emit integer
+> weights directly into the `.atom` binary. The engine will then run a branchless integer
+> comparison (`user_weight >= node.access_weight`) at query time. Custom access tiers (e.g.
+> `@access/premium-only`, `@access/press-only`) will be first-class without a compiler change.
+> See [`roadmap.md`](../roadmap.md).
 
 ---
 
@@ -2726,8 +2764,8 @@ override or extend any field. Inheritance compiles to an ATOM inheritance arc.
 | @buy/id in manifest              | HAMI :: relational arc to BuyNode                     |
 | @rent/id in manifest             | HAMI :: relational arc to RentNode                    |
 | @download/id in manifest         | HAMI :: relational arc to DownloadNode                |
-| namespace:: (namespace.aura)     | HAMI namespace descriptor node                        |
-| exports:: (namespace.aura)       | HAMI exports index for a project namespace            |
+| namespace:: (name.aura)          | HAMI namespace descriptor node                        |
+| exports:: (name.aura)            | HAMI exports index for a project namespace            |
 | 0s~30s (range)                   | Allen interval triple [0, 30, 30]                     |
 | 22s+48s (start+duration)         | Allen interval triple [22, 70, 48]                    |
 | [22s, 70s, 48s] (explicit)       | Allen interval triple [22, 70, 48]                    |
@@ -2749,11 +2787,11 @@ override or extend any field. Inheritance compiles to an ATOM inheritance arc.
 ## Part XVI — File Naming and Organization
 
     ## Track and episode source files — named by generated ID
-    namespace.aura                     <- project entry point
-    tracks/namespace.aura              <- folder namespace manifest
+    name.aura                          <- project entry point (index file)
+    tracks/name.aura                   <- tracks/ index file
     tracks/t7xab3c.aura
     tracks/t4mn2rp.aura
-    episodes/namespace.aura
+    episodes/name.aura                 <- episodes/ index file
     episodes/ep7xb3n.aura
 
     ## Collection manifests — named by generated ID
@@ -2762,7 +2800,7 @@ override or extend any field. Inheritance compiles to an ATOM inheritance arc.
     seasons/s1xp4fm.aura       <- season within a series
 
     ## Info folder — shared project metadata (descriptive names only here)
-    info/namespace.aura
+    info/name.aura                     <- info/ index file
     info/people.aura
     info/annotators.aura
     info/metadata.aura
@@ -2774,7 +2812,7 @@ override or extend any field. Inheritance compiles to an ATOM inheritance arc.
     info/availability.aura     <- watch/buy/rent/download entries
 
     ## Meta folder — vocabulary (descriptive names only here)
-    meta/namespace.aura
+    meta/name.aura                     <- meta/ index file
     meta/genres.aura
     meta/roles.aura
     meta/moods.aura
@@ -2834,5 +2872,5 @@ override or extend any field. Inheritance compiles to an ATOM inheritance arc.
 *Incorporates: support node layer, [start, end, duration] time triples,*
 *collection and variation authoring, cloud source data store directives,*
 *@art / @motion / @trailer, @studio / @label, @watch / @buy / @rent / @download,*
-*person kind+role, project namespace.aura convention, configs/ folder.*
+*person kind+role, name.aura index file convention, configs/ folder.*
 *Write it like prose. Compile it like a machine.*

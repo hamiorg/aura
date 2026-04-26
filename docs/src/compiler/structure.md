@@ -29,8 +29,7 @@ aura/                               <- workspace root
       person.rs                     <- PersonNode, AnnotatorNode structs
       asset.rs                      <- ArtNode, MotionNode, TrailerNode structs
       entity.rs                     <- StudioNode, LabelNode structs
-      availability.rs               <- WatchNode, BuyNode, RentNode, DownloadNode structs
-      access.rs                     <- AccessLevel enum (open, locked, gated, embargoed, etc.)
+      access.rs                     <- AccessLevel — ordered governance levels (open … locked)
       history.rs                    <- HistoryNode, delta chain types
 
   compiler/                         <- AURA source → binary emitter (aura compile)
@@ -38,33 +37,35 @@ aura/                               <- workspace root
     src/
       main.rs                       <- CLI entry point
       lib.rs
-      lexer/
+      lex/
         mod.rs
         token.rs                    <- Token enum: Sigil, Key, Value, Indent, Newline
-        scanner.rs                  <- zero-copy byte scanner; yields &'a str slices
-      parser/
+        scan.rs                     <- zero-copy byte scanner; yields &'a str slices
+      parse/
         mod.rs
         ast.rs                      <- ASTNode tree: Namespace, Field, Reference, Literal
-        resolver.rs                 <- two-phase @domain/id reference resolution
+        parse.rs                    <- token stream → typed AST builder
+        resolve.rs                  <- two-phase @domain/id reference resolution
         time.rs                     <- time expression normalizer → [low, high, duration]
         inherit.rs                  <- >> (inherits) arc expander
-      emitter/
+      emit/
         mod.rs
         hami.rs                     <- HAMI B-Tree emitter (manifests, people, vocab)
         atom.rs                     <- ATOM flat-array interval tree emitter
         atlas.rs                    <- ATLAS DTW alignment file emitter
-      namespace/
+      ns/
         mod.rs
-        loader.rs                   <- namespace.aura reader; builds project symbol table
+        load.rs                     <- name.aura reader; builds project symbol table
         export.rs                   <- exports:: block resolver
-      history/
+      hist/
         mod.rs
         store.rs                    <- .history/ object store reader/writer
         delta.rs                    <- SourceDelta diff engine (AST node-level diffs)
         replay.rs                   <- delta chain replayer → virtual source reconstruction
-      config/
+        serial.rs                   <- take object serialization/deserialization
+      cfg/
         mod.rs
-        loader.rs                   <- configs/ folder reader (never compiled)
+        load.rs                     <- configs/ folder reader (never compiled)
         ignore.rs                   <- ignore.aura exclusion list
       error.rs                      <- CompileError, DiagnosticLevel, Span
       directives.rs                 <- schema:: and directives:: block processor
@@ -299,7 +300,7 @@ pub struct DownloadNode {
         │
         ▼
   ┌─────────────┐
-  │  Namespace  │  Reads namespace.aura at project root.
+  │  Namespace  │  Reads name.aura at project root and each subfolder.
   │   Loader    │  Builds project symbol table for reference resolution.
   └─────────────┘
         │
@@ -481,10 +482,10 @@ When the compiler encounters an `@domain/id` reference it resolves it in this or
    (info/people.aura, info/arts.aura, info/studios.aura, etc.)
 
 3. Project-local tracks/, episodes/, scenes/ registry
-   (from namespace.aura files in each sub-folder)
+   (from name.aura files in each sub-folder)
 
 4. Project-level catalog registry
-   (the root namespace.aura exports:: block)
+   (the root name.aura exports:: block)
 
 5. Global cloud registry
    (via @aduki.org/domain/id lookup — requires network)

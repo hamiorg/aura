@@ -32,6 +32,7 @@
 //! nodes — the SIMD loop processes 8-node blocks, covering `low`, `high`,
 //! and `duration` of two adjacent nodes per cycle.
 
+use crate::cfg::AccessWeights;
 use crate::error::{CompileError, Result};
 use crate::parse::ast::{Child, Document, Namespace, NodeType, Value};
 use aura::interval::Interval;
@@ -85,6 +86,9 @@ pub struct AtomEmitter {
   nodes: Vec<AtomNode>,
   /// String pool accumulating text data.
   pool: Pool,
+  /// ReBAC access weight table — packed into upper 16 bits of `node_class`.
+  /// `None` uses only the built-in six-tier fallback.
+  access: AccessWeights,
 }
 
 impl AtomEmitter {
@@ -92,6 +96,19 @@ impl AtomEmitter {
     Self {
       nodes: Vec::with_capacity(256),
       pool: Pool::new(),
+      access: AccessWeights::builtin(),
+    }
+  }
+
+  /// Constructs an emitter pre-loaded with project-specific access weights.
+  ///
+  /// Weights are derived from `meta/metaaccess.aura` (or the built-in
+  /// six-tier fallback) via [`crate::cfg::metaaccess::load`].
+  pub fn with_access_weights(weights: AccessWeights) -> Self {
+    Self {
+      nodes: Vec::with_capacity(256),
+      pool: Pool::new(),
+      access: weights,
     }
   }
 
@@ -155,7 +172,14 @@ impl AtomEmitter {
     // Extract the `time` field from this namespace's children.
     let interval = extract_interval(ns)?;
     let data_ptr = self.pool.intern(&ns.path);
-    let node_class = node_type_to_class(ns.node_type);
+    let class_byte = node_type_to_class(ns.node_type);
+
+    // Resolve access weight from any `access -> @access/<tier>` field.
+    // Pack weight into the upper 16 bits of node_class:
+    //   bits 31-16: access_weight (u16, 0 = unrestricted)
+    //   bits 15-0:  class_byte
+    let access_weight = extract_access_weight(ns, &self.access);
+    let node_class = AccessWeights::pack(class_byte, access_weight);
 
     let node = AtomNode::new(interval.low, interval.high, data_ptr, node_class);
     self.nodes.push(node);
@@ -206,6 +230,28 @@ impl Default for AtomEmitter {
 
 // -------------------------------------------------------------------- //
 // Helpers
+
+/// Scans a namespace's children for `access -> @access/<tier>` and resolves
+/// the tier name to a u16 weight using the project's `AccessWeights` table.
+///
+/// Returns `0` if no access field is present (unrestricted by default).
+fn extract_access_weight(ns: &Namespace<'_>, weights: &AccessWeights) -> u16 {
+  use crate::parse::ast::{RefBody, Value};
+  for child in &ns.children {
+    if let Child::Field(f) = child {
+      if f.key == "access" {
+        if let Value::Ref(r) = &f.value {
+          if r.domain == "access" {
+            if let RefBody::Single(tier) = &r.body {
+              return weights.resolve(tier);
+            }
+          }
+        }
+      }
+    }
+  }
+  0
+}
 
 /// Extracts the `time` field from a namespace's children and normalizes it.
 fn extract_interval(ns: &Namespace<'_>) -> Result<Interval> {

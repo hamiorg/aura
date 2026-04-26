@@ -24,3 +24,10 @@
 
 - [Architecture](compiler/overview.md)
 - [Crate Structure](compiler/structure.md)
+- [Polyglot Topology](compiler/topology.md)
+
+---
+
+# Future Plans
+
+- [Roadmap](roadmap.md)

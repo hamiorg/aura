@@ -22,11 +22,32 @@ accidentally call engine code and vice versa.
 
 ---
 
-## 2. The Zero-Copy Lexer
+## 2. Pre-Compiler Sanitization & The Zero-Copy Lexer
 
-The lexer scans the raw UTF-8 buffer and emits a stream of tokens. It strictly adheres to the
-rule that **character escaping is prohibited**. It never allocates heap memory (`String`); it
-only yields string slices (`&'a str`) tied to the source buffer's lifetime.
+### Pre-Compiler Sanitization (`aura sanitize`) — Planned
+
+> **Roadmap feature.** Not yet implemented in v0.3.2-beta.2.
+
+Before the lexer scans the raw UTF-8 buffer, a mandatory pre-processing step intercepts the
+human-authored file and permanently normalizes forbidden characters (e.g., standard escaped
+quotes `\"`) into valid Unicode equivalents. This keeps the primary lexer operating under
+mathematically pure conditions without forcing authors to memorize structural constraints.
+
+### Constrained Generative Synthesis (LLM IDE Translation) — Planned
+
+> **Roadmap feature.** Not yet implemented in v0.3.2-beta.2.
+
+Using the `configs/llm.aura` integration, IDE extensions can act as a real-time normalization
+layer. When an author types complex sequences involving edge-case punctuation, a background LLM
+process translates human intent into valid AURA syntax before the file is saved to disk —
+isolating the pure lexer loop from human linguistic chaos entirely.
+
+### The Lexer Hot Path
+
+Once the source is clean, the lexer scans the raw UTF-8 buffer and emits a stream of tokens.
+It strictly adheres to the rule that **character escaping is prohibited**. It never allocates
+heap memory (`String`); it only yields string slices (`&'a str`) tied to the source buffer's
+lifetime.
 
 The lexer's hot path is a single-branch condition:
 
@@ -96,10 +117,16 @@ pass over the Lexical Data Region without backpatching.
 ### `.atom` Emitter
 
 1. Flattens the hierarchical AST into a contiguous array of interval structs.
-2. Each struct has six 32-bit floats: `[low, high, duration, max, data_ptr, node_class]`.
+2. Each struct has six 32-bit fields: `[low, high, duration, max, data_ptr, node_class]`.
 3. Structs are ordered by interval `low` value for BST layout.
 4. The `max` field is calculated in a second pass over the array (augmented interval tree
    property).
+
+> **Roadmap — ReBAC Access Weights:** A future version will run a topological sort on the
+> `metaaccess.aura` Directed Acyclic Graph (DAG) and emit integer weights into the
+> `node_class` / access fields rather than using the fixed `AccessLevel` enum. The engine
+> will then perform a branchless integer comparison at query time instead of string-based
+> enum resolution. See [`roadmap.md`](../roadmap.md) for details.
 
 The flat-array layout is optimized for AVX-2 SIMD: one 256-bit register loads 8 × 32-bit
 floats, covering the `low`, `high`, and `duration` fields of two adjacent nodes in a single

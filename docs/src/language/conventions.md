@@ -952,10 +952,11 @@ on. Their global record is maintained at:
 
 - Every project folder is named in lowercase with no spaces and no special characters other
   than hyphens. It is the human-readable name of the project, not a generated ID.
-- Every project folder must have a `namespace.aura` at its root. This is the project entry
-  point — the equivalent of `main.rs` or `mod.rs` in Rust.
+- Every project folder must have a `name.aura` at its root. This is the **index file** and
+  project entry point — the compiler looks for this file first in every folder.
 - Every sub-folder (`info/`, `meta/`, `tracks/`, `episodes/`, `scenes/`, etc.) has its own
-  `namespace.aura` file listing the files it contains.
+  `name.aura` index file listing the files it contains.
+- Content files keep their ID-based names (e.g., `t7xab3c.aura`, `c8xab3d.aura`).
 - Every content file is named by its generated object ID plus `.aura`.
 - The info folder uses descriptive file names (people, annotators, metadata, credits, rights,
   labels, studios, arts, availability) because these are structural roles.
@@ -972,16 +973,17 @@ on. Their global record is maintained at:
 
 ---
 
-### The namespace.aura File
+### The `name.aura` Index File
 
-Every project and every project sub-folder has a `namespace.aura`.
+Every project and every project sub-folder has a `name.aura`. This uniform convention means
+the compiler always knows exactly one file to look for when entering any folder.
 
-#### Root namespace.aura
+#### Root `name.aura`
 
 This is the project entry point. It declares the project's namespace identity, kind, and
 language, and re-exports its sub-namespaces. The compiler reads this file first.
 
-    ## FILE: namespace.aura
+    ## FILE: name.aura
 
     schema::
       root       -> https://hami.aduki.org/aura/1.0
@@ -995,11 +997,11 @@ language, and re-exports its sub-namespaces. The compiler reads this file first.
       tracks     -> @tracks/*
       collection -> c8xab3d.aura
 
-#### Sub-folder namespace.aura
+#### Sub-folder `name.aura`
 
-Every sub-folder's `namespace.aura` lists its contained files.
+Every sub-folder's `name.aura` lists its contained files.
 
-    ## FILE: info/namespace.aura
+    ## FILE: info/name.aura
 
     namespace::
       folder    -> info
@@ -1013,7 +1015,7 @@ Every sub-folder's `namespace.aura` lists its contained files.
         - labels.aura
         - availability.aura
 
-    ## FILE: tracks/namespace.aura
+    ## FILE: tracks/name.aura
 
     namespace::
       folder    -> tracks
@@ -1045,9 +1047,9 @@ variable names. Actual secrets come from `.env` at project root or process envir
 ### Album
 
     album/                          <- project directory
-      namespace.aura                <- project entry point
+      name.aura                     <- project entry point (index file)
       info/
-        namespace.aura              <- folder namespace manifest
+        name.aura                   <- info/ index file
         people.aura
         annotators.aura
         metadata.aura
@@ -1058,18 +1060,18 @@ variable names. Actual secrets come from `.env` at project root or process envir
         arts.aura                   <- cover art, motion covers, trailers
         availability.aura           <- watch/buy/rent/download entries
       meta/
-        namespace.aura
+        name.aura                   <- meta/ index file
         genres.aura                 <- optional: local genre vocab
         roles.aura                  <- optional: local role vocab
       tracks/
-        namespace.aura
+        name.aura                   <- tracks/ index file
         t7xab3c.aura
         t4mn2rp.aura
         t9op5lw.aura
         t2kr8xn.aura
         t6bx4qm.aura
       variants/
-        namespace.aura
+        name.aura                   <- variants/ index file
         v3qr7st.aura                <- acoustic variant of t7xab3c
         v5nm9xb.aura                <- radio edit of t4mn2rp
         v8xp2kl.aura                <- dubbed track

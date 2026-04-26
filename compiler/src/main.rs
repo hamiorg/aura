@@ -15,7 +15,7 @@ use std::path::PathBuf;
   name = "aura",
   about = "AURA toolchain — compile, validate, and manage .aura projects"
 )]
-#[command(version = "0.3.1-beta.1")]
+#[command(version = "0.3.3-beta.1")]
 struct Cli {
   #[command(subcommand)]
   command: Cmd,
@@ -71,6 +71,18 @@ enum Cmd {
     lang: Option<String>,
     #[arg(long)]
     dir: Option<PathBuf>,
+  },
+  /// Normalize .aura source files before compilation (removes escape sequences).
+  Sanitize {
+    /// Project root directory (default: current directory).
+    #[arg(long)]
+    project: Option<PathBuf>,
+    /// Print proposed changes without writing any files.
+    #[arg(long)]
+    dry_run: bool,
+    /// Sanitize only a single file (relative to project root).
+    #[arg(long)]
+    path: Option<PathBuf>,
   },
   /// Add a new content file to the current project.
   Add {
@@ -209,6 +221,15 @@ fn main() -> Result<()> {
       name,
       lang,
       dir,
+    }),
+    Cmd::Sanitize {
+      project,
+      dry_run,
+      path,
+    } => cmd::sanitize::run(&cmd::sanitize::SanitizeOpts {
+      project: project.unwrap_or_else(|| cwd.clone()),
+      dry_run,
+      path,
     }),
     Cmd::Add {
       type_name,

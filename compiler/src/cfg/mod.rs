@@ -6,8 +6,10 @@
 //!
 //! | Module   | Responsibility                              |
 //! | -------- | ------------------------------------------- |
-//! | `load`   | Reads `configs/llm.aura` and `stores.aura`  |
-//! | `ignore` | Reads `configs/ignore.aura` exclusion list  |
+//! | `load`        | Reads `configs/llm.aura` and `stores.aura`           |
+//! | `ignore`      | Reads `configs/ignore.aura` exclusion list           |
+//! | `metaboolean` | Reads `meta/metaboolean.aura` custom boolean map     |
+//! | `metaaccess`  | Reads `meta/metaaccess.aura` ReBAC DAG + topo-sort   |
 //!
 //! # Module access paths
 //!
@@ -18,10 +20,16 @@
 //! compiler::cfg::load::StoreDecl
 //! compiler::cfg::ignore::IgnoreList
 //! compiler::cfg::ignore::BUILTIN
+//! compiler::cfg::metaboolean::BooleanMap
+//! compiler::cfg::metaaccess::AccessWeights
 //! ```
 
 pub mod ignore;
 pub mod load;
+pub mod metaaccess;
+pub mod metaboolean;
 
 pub use ignore::IgnoreList;
 pub use load::{Config, ConfigLoader, LlmProvider, StoreDecl};
+pub use metaaccess::AccessWeights;
+pub use metaboolean::BooleanMap;

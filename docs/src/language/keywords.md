@@ -2,7 +2,7 @@
 
 > Single-page lookup for every keyword, sigil, domain, enumerated value,
 > standard key, and toolchain command in the AURA language.
-> For full explanations, see `flux.md`, `structure.md`, and `chages.md`.
+> For full explanations, see `syntax.md`, `structure.md`, and `conventions.md`.
 
 ---
 
@@ -24,8 +24,10 @@ Every sigil in AURA has exactly one meaning. No context-dependent overloading.
 | `[` `]`| List Bracket   | Time triple `[start, end, duration]` or multi-ID list      |
 | `>>`   | Inherits From  | Extend a template or base schema                           |
 | `*`    | Wildcard       | Match all nodes in a namespace query                       |
-| `::`   | Leap Operator  | Cross-boundary reference when combined with a file ID      |
 | `%`    | Custom Mark    | Suppresses unknown key linting for domain-specific fields  |
+| `$`    | Vocab Escape   | Prefixes a namespace block name that is a raw vocabulary slug (e.g. `$live::`) — prevents collision with AURA keywords; W006 key-checking is disabled inside the block |
+
+> **Note — `::` as a leap operator:** When combined with a file ID, `::` acts as a cross-boundary reference: `@track/t7xab3c::verse/two/line/one`. The sigil itself is the same; the parser infers the leap context from the preceding file-ID token.
 
 ---
 
@@ -232,8 +234,8 @@ Namespace blocks open with `::` and contain key-value pairs or sub-nodes.
 | `related::`       | Relational links to other works                                |
 | `links::`         | External URL block inside a person or manifest node            |
 | `info::`          | Inline info reference block                                    |
-| `namespace::`     | Project or folder namespace descriptor (in namespace.aura)     |
-| `exports::`       | Re-exports of sub-namespaces in root namespace.aura            |
+| `namespace::`     | Project or folder namespace descriptor (in `name.aura`)        |
+| `exports::`       | Re-exports of sub-namespaces in root `name.aura`               |
 | `availability::`  | Content platform availability block in a manifest              |
 
 ### People and Annotators
@@ -847,16 +849,19 @@ All commands are issued via the `aura` CLI.
 | `info/availability.aura`   | `watch::` + `buy::` + `rent::` + `download::` | When availability declared |
 | `info/releases.aura`       | varies                    | When applicable                  |
 
-### `namespace.aura` Files — Project and Folder Manifests
+### `name.aura` Index Files — Project and Folder Manifests
 
-| File                       | Purpose                                                         |
-| -------------------------- | --------------------------------------------------------------- |
-| `namespace.aura` (root)    | Project entry point: declares namespace, exports sub-namespaces |
-| `info/namespace.aura`      | Lists all files contained in the `info/` folder                 |
-| `meta/namespace.aura`      | Lists all files contained in the `meta/` folder                 |
-| `tracks/namespace.aura`    | Lists all tracks with their names                               |
-| `episodes/namespace.aura`  | Lists all episodes                                              |
-| `scenes/namespace.aura`    | Lists all scene files                                           |
+Every folder in an AURA project contains exactly one `name.aura` index file. The compiler
+looks for this file first when entering any folder.
+
+| File                 | Purpose                                                         |
+| -------------------- | --------------------------------------------------------------- |
+| `name.aura` (root)   | Project entry point: declares namespace, exports sub-namespaces |
+| `info/name.aura`     | Lists all files contained in the `info/` folder                 |
+| `meta/name.aura`     | Lists all files contained in the `meta/` folder                 |
+| `tracks/name.aura`   | Lists all tracks with their names                               |
+| `episodes/name.aura` | Lists all episodes                                              |
+| `scenes/name.aura`   | Lists all scene files                                           |
 
 ### `configs/` Folder — Non-Compiled Toolchain Config
 

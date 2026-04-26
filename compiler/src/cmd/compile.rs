@@ -10,6 +10,7 @@ use crate::ns::NamespaceLoader;
 use crate::parse::ast::Document;
 use crate::parse::parse::Parser;
 use crate::parse::resolve::Resolver;
+use rayon::prelude::*;
 use std::fs;
 use std::path::{Path, PathBuf};
 
@@ -58,6 +59,10 @@ pub fn run(opts: &CompileOpts) -> Result<()> {
     ));
   }
 
+  // Load metaboolean + metaaccess vocabularies.
+  let bool_map = crate::cfg::metaboolean::load(&opts.project);
+  let access_weights = crate::cfg::metaaccess::load(&opts.project);
+
   // Collect source files.
   let files = collect_aura_files(&opts.project, &ignore)?;
   if files.is_empty() {
@@ -71,37 +76,55 @@ pub fn run(opts: &CompileOpts) -> Result<()> {
   fs::create_dir_all(&out_dir)
     .map_err(|e| CompileError::msg(format!("cannot create {}: {}", out_dir.display(), e)))?;
 
-  // Parse all files and merge into a single document.
+  // ------------------------------------------------------------------ //
+  // Parallel parse pass — parse + lint every file on the rayon thread pool.
+  //
+  // Each file gets its own independent Parser call (zero shared state).
+  // Results are collected into a Vec and then merged serially below.
+  // ------------------------------------------------------------------ //
+  let project = &opts.project;
+  let strict = opts.strict;
+
+  let parse_results: Vec<(PathBuf, Result<Document<'static>>)> = files
+    .par_iter()
+    .map(|file| {
+      let doc = parse_file(file);
+      (file.clone(), doc)
+    })
+    .collect();
+
+  // Serial merge — absorb parsed documents and run resolver registration.
   let mut merged = Document {
     namespaces: Vec::new(),
     path: None,
   };
-  let mut resolver = Resolver::new(opts.strict);
+  let mut resolver = Resolver::new(strict);
   let mut parse_errors = 0usize;
 
-  for file in &files {
-    let rel_path = file.strip_prefix(&opts.project).unwrap_or(file);
+  for (file, result) in parse_results {
+    let rel_path = file.strip_prefix(project).unwrap_or(&file);
     let rel_str = rel_path.display().to_string();
 
     log.parse(&rel_str);
-    match parse_file(file) {
+    match result {
       Err(e) => {
         log.error(&rel_str, 0, None, &e.to_string(), None);
         parse_errors += 1;
       }
       Ok(doc) => {
-        let lint = Linter::new(opts.strict).lint(&doc, file);
-        lint.print(Some(&opts.project));
+        let lint = Linter::new(strict).lint(&doc, &file);
+        lint.print(Some(project));
         if lint.has_errors() {
           parse_errors += 1;
           continue;
         }
-        resolver.register_document(&doc, file.to_path_buf());
-        // Absorb this file's namespaces into the merged document.
+        resolver.register_document(&doc, file.clone());
         merged.namespaces.extend(doc.namespaces);
       }
     }
   }
+
+  let _ = bool_map; // consumed by emitters in future metaboolean linting pass
 
   if parse_errors > 0 {
     return Err(CompileError::msg(format!(
@@ -140,7 +163,8 @@ pub fn run(opts: &CompileOpts) -> Result<()> {
     .map_err(|e| CompileError::msg(format!("cannot write {}: {}", hami_path.display(), e)))?;
 
   // Emit ONE .atom file only if the project has interval-indexed nodes.
-  let mut atom = AtomEmitter::new();
+  // Pass access weights so the emitter packs them into node_class.
+  let mut atom = AtomEmitter::with_access_weights(access_weights);
   let atom_bytes = atom.emit(&merged)?;
 
   let output_line = if atom.node_count() > 0 {
